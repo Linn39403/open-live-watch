@@ -1,0 +1,14 @@
+node_modules/
+target/
+dist/
+*.log
+*.elf
+*.axf
+*.bin
+*.hex
+*.csv
+__pycache__/
+.env
+.env.*
+work/
+.DS_Store

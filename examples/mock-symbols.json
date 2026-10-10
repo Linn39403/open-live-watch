@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "symbols": [
+    {"path": "motor.speed", "type": "f32", "address": "0x20000000", "access": "read", "mock": {"signal": "sine", "mean": 1860, "amplitude": 200, "frequencyHz": 0.5}},
+    {"path": "motor.setpoint", "type": "f32", "address": "0x20000004", "access": "read-write", "mock": {"value": 1860}},
+    {"path": "motor.enabled", "type": "bool", "address": "0x20000008", "access": "read-write", "mock": {"value": true}},
+    {"path": "motor.temperature", "type": "f32", "address": "0x2000000c", "access": "read", "mock": {"signal": "sine", "mean": 42.5, "amplitude": 2, "frequencyHz": 0.05}},
+    {"path": "motor.mode", "type": "u32", "address": "0x20000010", "access": "read-write", "enum": {"0": "Off", "1": "Manual", "2": "Automatic"}, "mock": {"value": 1}},
+    {"path": "motor.counter", "type": "u64", "address": "0x20000018", "access": "read-write", "mock": {"value": "9007199254740993"}}
+  ]
+}
