@@ -1,5 +1,7 @@
 import type { Widget } from "./model";
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
+import { instrumentPalette } from "./colors";
 export function Instrument({
   w,
   value,
@@ -17,6 +19,15 @@ export function Instrument({
     angle = ((-135 + p * 270) * Math.PI) / 180;
   const display = Number(value).toFixed(w.settings.precision ?? 0);
   const id = "face-" + w.id;
+  const palette = instrumentPalette(w.settings);
+  const appearance = {
+    "--instrument-color": palette.color,
+    "--instrument-light": palette.light,
+    "--instrument-dark": palette.dark,
+    "--instrument-pale": palette.pale,
+    "--instrument-ink": palette.ink,
+    "--instrument-button-ink": palette.buttonInk,
+  } as CSSProperties;
   const [draft, setDraft] = useState(Number(value));
   useEffect(() => {
     setDraft(Number(value));
@@ -36,7 +47,7 @@ export function Instrument({
       </div>
     );
   return (
-    <div className={"instrument " + w.kind}>
+    <div className={"instrument " + w.kind} style={appearance}>
       <div className="instrument-title">{w.title}</div>
       {w.kind === "radial" ? (
         <svg
@@ -62,7 +73,7 @@ export function Instrument({
           <path
             d="M 65 127 A 64 64 0 1 1 155 127"
             fill="none"
-            stroke="#72a054"
+            stroke={palette.color}
             strokeWidth="7"
           />
           {Array.from({ length: 11 }, (_, i) => {
@@ -93,7 +104,7 @@ export function Instrument({
             y1="82"
             x2={110 + Math.sin(angle) * 52}
             y2={82 - Math.cos(angle) * 52}
-            stroke="#b52b25"
+            stroke={palette.needle}
             strokeWidth="3"
           />
           <circle cx="110" cy="82" r="6" fill="#536068" />
@@ -103,10 +114,16 @@ export function Instrument({
             width="60"
             height="20"
             rx="2"
-            fill="#dde6d6"
-            stroke="#a1ad9d"
+            fill={palette.pale}
+            stroke={palette.dark}
           />
-          <text x="110" y="125" textAnchor="middle" fontSize="13">
+          <text
+            x="110"
+            y="125"
+            textAnchor="middle"
+            fontSize="13"
+            fill={palette.ink}
+          >
             {display}
           </text>
           <text x="110" y="148" textAnchor="middle" fontSize="10">

@@ -20,6 +20,8 @@ import {
   type Kind,
 } from "./model";
 import { Instrument } from "./Instruments";
+import { ColorControl } from "./ColorControl";
+import { colorPresets, DEFAULT_COLOR, DEFAULT_NEEDLE_COLOR } from "./colors";
 type Panel = "explorer" | "toolbox" | "symbols" | "properties";
 type Edge = "left" | "right" | "bottom" | "hidden" | "floating";
 type Layout = Record<Panel, Edge>;
@@ -624,6 +626,91 @@ export function App() {
             }
           />
         </label>
+        <fieldset className="appearance" disabled={sim.running}>
+          <legend>Appearance</legend>
+          <label>
+            Preset
+            <select
+              aria-label="Instrument color preset"
+              value={
+                colorPresets.some(
+                  (p) =>
+                    p.color.toLowerCase() ===
+                    (chosen.settings.color ?? DEFAULT_COLOR).toLowerCase(),
+                )
+                  ? (chosen.settings.color ?? DEFAULT_COLOR).toLowerCase()
+                  : "custom"
+              }
+              onChange={(e) => {
+                if (e.target.value !== "custom")
+                  command({
+                    type: "patch",
+                    id: chosen.id,
+                    patch: {
+                      settings: { ...chosen.settings, color: e.target.value },
+                    },
+                  });
+              }}
+            >
+              {colorPresets.map((p) => (
+                <option key={p.color} value={p.color}>
+                  {p.name}
+                </option>
+              ))}
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+          <label>
+            Accent
+            <ColorControl
+              key={chosen.id + "-accent"}
+              label="Instrument accent"
+              value={chosen.settings.color ?? DEFAULT_COLOR}
+              onCommit={(color) =>
+                command({
+                  type: "patch",
+                  id: chosen.id,
+                  patch: {
+                    settings: { ...chosen.settings, color },
+                  },
+                })
+              }
+            />
+          </label>
+          {chosen.kind === "radial" && (
+            <label>
+              Needle
+              <ColorControl
+                key={chosen.id + "-needle"}
+                label="Gauge needle"
+                value={chosen.settings.needleColor ?? DEFAULT_NEEDLE_COLOR}
+                onCommit={(needleColor) =>
+                  command({
+                    type: "patch",
+                    id: chosen.id,
+                    patch: {
+                      settings: {
+                        ...chosen.settings,
+                        needleColor,
+                      },
+                    },
+                  })
+                }
+              />
+            </label>
+          )}
+          <button
+            onClick={() => {
+              const { color, needleColor, ...settings } = chosen.settings;
+              command({ type: "patch", id: chosen.id, patch: { settings } });
+            }}
+          >
+            Restore default colors
+          </button>
+          <p>
+            Each instrument keeps its own colors. Value contrast is automatic.
+          </p>
+        </fieldset>
         <label>
           Binding
           <select

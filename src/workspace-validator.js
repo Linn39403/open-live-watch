@@ -4,14 +4,15 @@ const runtime0=typeof runtime0Import==='function'?runtime0Import:runtime0Import.
 "use strict";
 export const validate = validate20;
 export default validate20;
-const schema31 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:open-live-watch:workspace:1","title":"Open Live Watch workspace v1 initial subset","type":"object","additionalProperties":false,"required":["schemaVersion","id","name","sources","screens"],"properties":{"schemaVersion":{"const":1},"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1},"sources":{"type":"array","items":{"$ref":"#/$defs/source"}},"screens":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/screen"}}},"$defs":{"source":{"type":"object","additionalProperties":false,"required":["id","provider","path"],"properties":{"id":{"type":"string","minLength":1},"provider":{"enum":["mock","elf","custom","svd"]},"path":{"type":"string","minLength":1}}},"binding":{"type":"object","additionalProperties":false,"required":["sourceId","symbolPath","gain","offset","units","periodMs","writable"],"properties":{"sourceId":{"type":"string","minLength":1},"symbolPath":{"type":"string","minLength":1},"gain":{"type":"number"},"offset":{"type":"number"},"units":{"type":"string"},"periodMs":{"type":"integer","minimum":1},"writable":{"type":"boolean"}}},"rect":{"type":"object","additionalProperties":false,"required":["x","y","width","height","rotation"],"properties":{"x":{"type":"number"},"y":{"type":"number"},"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"rotation":{"type":"number"}}},"settings":{"type":"object","additionalProperties":false,"properties":{"min":{"type":"number"},"max":{"type":"number"},"precision":{"type":"integer","minimum":0,"maximum":12},"commit":{"enum":["release","apply"]}}},"widget":{"type":"object","additionalProperties":false,"required":["id","kind","title","rect","settings"],"properties":{"id":{"type":"string","minLength":1},"kind":{"enum":["numeric","radial","linear","thermometer","led","slider","switch","button"]},"title":{"type":"string"},"rect":{"$ref":"#/$defs/rect"},"binding":{"$ref":"#/$defs/binding"},"settings":{"$ref":"#/$defs/settings"}}},"screen":{"type":"object","additionalProperties":false,"required":["id","name","kind","canvas","widgets"],"properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1},"kind":{"const":"dashboard"},"canvas":{"type":"object","additionalProperties":false,"required":["width","height","grid"],"properties":{"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"grid":{"type":"number","exclusiveMinimum":0}}},"widgets":{"type":"array","items":{"$ref":"#/$defs/widget"}}}}}};
+const schema31 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:open-live-watch:workspace:1","title":"Open Live Watch workspace v1 initial subset","type":"object","additionalProperties":false,"required":["schemaVersion","id","name","sources","screens"],"properties":{"schemaVersion":{"const":1},"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1},"sources":{"type":"array","items":{"$ref":"#/$defs/source"}},"screens":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/screen"}}},"$defs":{"source":{"type":"object","additionalProperties":false,"required":["id","provider","path"],"properties":{"id":{"type":"string","minLength":1},"provider":{"enum":["mock","elf","custom","svd"]},"path":{"type":"string","minLength":1}}},"binding":{"type":"object","additionalProperties":false,"required":["sourceId","symbolPath","gain","offset","units","periodMs","writable"],"properties":{"sourceId":{"type":"string","minLength":1},"symbolPath":{"type":"string","minLength":1},"gain":{"type":"number"},"offset":{"type":"number"},"units":{"type":"string"},"periodMs":{"type":"integer","minimum":1},"writable":{"type":"boolean"}}},"rect":{"type":"object","additionalProperties":false,"required":["x","y","width","height","rotation"],"properties":{"x":{"type":"number"},"y":{"type":"number"},"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"rotation":{"type":"number"}}},"settings":{"type":"object","additionalProperties":false,"properties":{"min":{"type":"number"},"max":{"type":"number"},"precision":{"type":"integer","minimum":0,"maximum":12},"commit":{"enum":["release","apply"]},"color":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$","minLength":7,"maxLength":7},"needleColor":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$","minLength":7,"maxLength":7}}},"widget":{"type":"object","additionalProperties":false,"required":["id","kind","title","rect","settings"],"properties":{"id":{"type":"string","minLength":1},"kind":{"enum":["numeric","radial","linear","thermometer","led","slider","switch","button"]},"title":{"type":"string"},"rect":{"$ref":"#/$defs/rect"},"binding":{"$ref":"#/$defs/binding"},"settings":{"$ref":"#/$defs/settings"}}},"screen":{"type":"object","additionalProperties":false,"required":["id","name","kind","canvas","widgets"],"properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1},"kind":{"const":"dashboard"},"canvas":{"type":"object","additionalProperties":false,"required":["width","height","grid"],"properties":{"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"grid":{"type":"number","exclusiveMinimum":0}}},"widgets":{"type":"array","items":{"$ref":"#/$defs/widget"}}}}}};
 const schema32 = {"type":"object","additionalProperties":false,"required":["id","provider","path"],"properties":{"id":{"type":"string","minLength":1},"provider":{"enum":["mock","elf","custom","svd"]},"path":{"type":"string","minLength":1}}};
 const func1 = runtime0;
 const schema33 = {"type":"object","additionalProperties":false,"required":["id","name","kind","canvas","widgets"],"properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1},"kind":{"const":"dashboard"},"canvas":{"type":"object","additionalProperties":false,"required":["width","height","grid"],"properties":{"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"grid":{"type":"number","exclusiveMinimum":0}}},"widgets":{"type":"array","items":{"$ref":"#/$defs/widget"}}}};
 const schema34 = {"type":"object","additionalProperties":false,"required":["id","kind","title","rect","settings"],"properties":{"id":{"type":"string","minLength":1},"kind":{"enum":["numeric","radial","linear","thermometer","led","slider","switch","button"]},"title":{"type":"string"},"rect":{"$ref":"#/$defs/rect"},"binding":{"$ref":"#/$defs/binding"},"settings":{"$ref":"#/$defs/settings"}}};
 const schema35 = {"type":"object","additionalProperties":false,"required":["x","y","width","height","rotation"],"properties":{"x":{"type":"number"},"y":{"type":"number"},"width":{"type":"number","exclusiveMinimum":0},"height":{"type":"number","exclusiveMinimum":0},"rotation":{"type":"number"}}};
 const schema36 = {"type":"object","additionalProperties":false,"required":["sourceId","symbolPath","gain","offset","units","periodMs","writable"],"properties":{"sourceId":{"type":"string","minLength":1},"symbolPath":{"type":"string","minLength":1},"gain":{"type":"number"},"offset":{"type":"number"},"units":{"type":"string"},"periodMs":{"type":"integer","minimum":1},"writable":{"type":"boolean"}}};
-const schema37 = {"type":"object","additionalProperties":false,"properties":{"min":{"type":"number"},"max":{"type":"number"},"precision":{"type":"integer","minimum":0,"maximum":12},"commit":{"enum":["release","apply"]}}};
+const schema37 = {"type":"object","additionalProperties":false,"properties":{"min":{"type":"number"},"max":{"type":"number"},"precision":{"type":"integer","minimum":0,"maximum":12},"commit":{"enum":["release","apply"]},"color":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$","minLength":7,"maxLength":7},"needleColor":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$","minLength":7,"maxLength":7}}};
+const pattern4 = new RegExp("^#[0-9a-fA-F]{6}$", "u");
 
 function validate22(data, {instancePath="", parentData, parentDataProperty, rootData=data, dynamicAnchors={}}={}){
 let vErrors = null;
@@ -528,7 +529,7 @@ if(data.settings !== undefined){
 let data17 = data.settings;
 if(data17 && typeof data17 == "object" && !Array.isArray(data17)){
 for(const key3 in data17){
-if(!((((key3 === "min") || (key3 === "max")) || (key3 === "precision")) || (key3 === "commit"))){
+if(!((((((key3 === "min") || (key3 === "max")) || (key3 === "precision")) || (key3 === "commit")) || (key3 === "color")) || (key3 === "needleColor"))){
 const err43 = {instancePath:instancePath+"/settings",schemaPath:"#/$defs/settings/additionalProperties",keyword:"additionalProperties",params:{additionalProperty: key3},message:"must NOT have additional properties"};
 if(vErrors === null){
 vErrors = [err43];
@@ -613,9 +614,11 @@ vErrors.push(err49);
 errors++;
 }
 }
-}
-else {
-const err50 = {instancePath:instancePath+"/settings",schemaPath:"#/$defs/settings/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(data17.color !== undefined){
+let data22 = data17.color;
+if(typeof data22 === "string"){
+if(func1(data22) > 7){
+const err50 = {instancePath:instancePath+"/settings/color",schemaPath:"#/$defs/settings/properties/color/maxLength",keyword:"maxLength",params:{limit: 7},message:"must NOT have more than 7 characters"};
 if(vErrors === null){
 vErrors = [err50];
 }
@@ -624,15 +627,103 @@ vErrors.push(err50);
 }
 errors++;
 }
-}
-}
-else {
-const err51 = {instancePath,schemaPath:"#/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(func1(data22) < 7){
+const err51 = {instancePath:instancePath+"/settings/color",schemaPath:"#/$defs/settings/properties/color/minLength",keyword:"minLength",params:{limit: 7},message:"must NOT have fewer than 7 characters"};
 if(vErrors === null){
 vErrors = [err51];
 }
 else {
 vErrors.push(err51);
+}
+errors++;
+}
+if(!pattern4.test(data22)){
+const err52 = {instancePath:instancePath+"/settings/color",schemaPath:"#/$defs/settings/properties/color/pattern",keyword:"pattern",params:{pattern: "^#[0-9a-fA-F]{6}$"},message:"must match pattern \""+"^#[0-9a-fA-F]{6}$"+"\""};
+if(vErrors === null){
+vErrors = [err52];
+}
+else {
+vErrors.push(err52);
+}
+errors++;
+}
+}
+else {
+const err53 = {instancePath:instancePath+"/settings/color",schemaPath:"#/$defs/settings/properties/color/type",keyword:"type",params:{type: "string"},message:"must be string"};
+if(vErrors === null){
+vErrors = [err53];
+}
+else {
+vErrors.push(err53);
+}
+errors++;
+}
+}
+if(data17.needleColor !== undefined){
+let data23 = data17.needleColor;
+if(typeof data23 === "string"){
+if(func1(data23) > 7){
+const err54 = {instancePath:instancePath+"/settings/needleColor",schemaPath:"#/$defs/settings/properties/needleColor/maxLength",keyword:"maxLength",params:{limit: 7},message:"must NOT have more than 7 characters"};
+if(vErrors === null){
+vErrors = [err54];
+}
+else {
+vErrors.push(err54);
+}
+errors++;
+}
+if(func1(data23) < 7){
+const err55 = {instancePath:instancePath+"/settings/needleColor",schemaPath:"#/$defs/settings/properties/needleColor/minLength",keyword:"minLength",params:{limit: 7},message:"must NOT have fewer than 7 characters"};
+if(vErrors === null){
+vErrors = [err55];
+}
+else {
+vErrors.push(err55);
+}
+errors++;
+}
+if(!pattern4.test(data23)){
+const err56 = {instancePath:instancePath+"/settings/needleColor",schemaPath:"#/$defs/settings/properties/needleColor/pattern",keyword:"pattern",params:{pattern: "^#[0-9a-fA-F]{6}$"},message:"must match pattern \""+"^#[0-9a-fA-F]{6}$"+"\""};
+if(vErrors === null){
+vErrors = [err56];
+}
+else {
+vErrors.push(err56);
+}
+errors++;
+}
+}
+else {
+const err57 = {instancePath:instancePath+"/settings/needleColor",schemaPath:"#/$defs/settings/properties/needleColor/type",keyword:"type",params:{type: "string"},message:"must be string"};
+if(vErrors === null){
+vErrors = [err57];
+}
+else {
+vErrors.push(err57);
+}
+errors++;
+}
+}
+}
+else {
+const err58 = {instancePath:instancePath+"/settings",schemaPath:"#/$defs/settings/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(vErrors === null){
+vErrors = [err58];
+}
+else {
+vErrors.push(err58);
+}
+errors++;
+}
+}
+}
+else {
+const err59 = {instancePath,schemaPath:"#/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(vErrors === null){
+vErrors = [err59];
+}
+else {
+vErrors.push(err59);
 }
 errors++;
 }

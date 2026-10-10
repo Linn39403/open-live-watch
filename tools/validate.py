@@ -27,7 +27,10 @@ def validate(value, schema, at='$'):
     if kind=='array':
         assert len(value)>=schema.get('minItems',0),at+' length'
         for i,v in enumerate(value):validate(v,schema.get('items',{}),f'{at}[{i}]')
-    if kind=='string':assert len(value)>=schema.get('minLength',0),at+' length'
+    if kind=='string':
+        assert len(value)>=schema.get('minLength',0),at+' length'
+        if 'maxLength' in schema:assert len(value)<=schema['maxLength'],at+' length'
+        if 'pattern' in schema:assert re.fullmatch(schema['pattern'],value),at+' pattern'
     for key,op in [('minimum',lambda v,b:v>=b),('maximum',lambda v,b:v<=b),('exclusiveMinimum',lambda v,b:v>b)]:
         if key in schema:assert op(value,schema[key]),at+' '+key
 
@@ -46,7 +49,7 @@ def check_workspace(doc):
 demo=json.loads((ROOT/'examples/demo.olw.json').read_text(encoding='utf-8'))
 check_workspace(demo)
 # Ensure representative malformed packages are rejected.
-for mutate in [lambda d:d.update(schemaVersion=99),lambda d:d['screens'][0]['widgets'][0]['rect'].update(width=0),lambda d:d['screens'][0]['widgets'][0]['binding'].update(sourceId='missing')]:
+for mutate in [lambda d:d.update(schemaVersion=99),lambda d:d['screens'][0]['widgets'][0]['rect'].update(width=0),lambda d:d['screens'][0]['widgets'][0]['binding'].update(sourceId='missing'),lambda d:d['screens'][0]['widgets'][0]['settings'].update(color='url(https://example.com)'),lambda d:d['screens'][0]['widgets'][0]['settings'].update(needleColor='#fff')]:
     bad=json.loads(json.dumps(demo));mutate(bad)
     try:check_workspace(bad)
     except AssertionError:pass
@@ -70,4 +73,4 @@ for path in svgs:
 for path in [ROOT/'README.md',*ROOT.glob('docs/*.md')]:
     for link in re.findall(r'\]\(([^)]+)\)',path.read_text(encoding='utf-8')):
         if not re.match(r'\w+://',link) and not link.startswith('#'):assert (path.parent/link.split('#')[0]).exists(),(path,link)
-print(f'PASS: workspace schema subset, 3 negative cases, symbol references, {len(svgs)} safe SVGs, Markdown links.')
+print(f'PASS: workspace schema subset, 5 negative cases, symbol references, {len(svgs)} safe SVGs, Markdown links.')

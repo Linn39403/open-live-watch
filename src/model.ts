@@ -31,6 +31,8 @@ export type Widget = {
     writable: boolean;
   };
   settings: {
+    color?: string;
+    needleColor?: string;
     min?: number;
     max?: number;
     precision?: number;

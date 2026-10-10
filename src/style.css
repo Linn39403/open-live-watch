@@ -347,12 +347,12 @@ main {
 .led-face.lit {
   background: radial-gradient(
     circle at 30% 25%,
-    #f1ffc3,
-    #8dd84b 40%,
-    #397821 75%
+    var(--instrument-pale),
+    var(--instrument-color) 40%,
+    var(--instrument-dark) 75%
   );
   box-shadow:
-    0 0 12px #b9ec86,
+    0 0 12px var(--instrument-light),
     0 2px 4px #859879;
 }
 .switch-face {
@@ -366,7 +366,9 @@ main {
   transform: perspective(180px) rotateX(-14deg);
 }
 .switch-face.on {
-  background: linear-gradient(#437527, #9dcc67);
+  background:
+    linear-gradient(#ffffff30, transparent 35%), var(--instrument-color);
+  color: var(--instrument-button-ink);
   transform: perspective(180px) rotateX(14deg);
 }
 .push-face {
@@ -374,22 +376,24 @@ main {
   width: 70px;
   height: 70px;
   border: 6px solid #81929b;
-  background: radial-gradient(circle at 30% 25%, #fdc8b7, #b34732 70%);
-  color: white;
+  background:
+    radial-gradient(ellipse at 30% 15%, #ffffff80, transparent 35%),
+    var(--instrument-color);
+  color: var(--instrument-button-ink);
   box-shadow: 0 2px 4px #a0a9ac;
 }
 .instrument input[type="range"] {
   width: 90%;
-  accent-color: #527a9c;
+  accent-color: var(--instrument-color);
 }
 .instrument output {
   font-family: Consolas, monospace;
-  color: #314936;
+  color: var(--instrument-ink);
   font-size: 18px;
 }
 .numeric-face {
-  background: linear-gradient(#d1dccd, #f0f5e7);
-  border: 4px inset #c1ccbc;
+  background: var(--instrument-pale);
+  border: 4px inset var(--instrument-light);
   padding: 12px;
   font-size: 32px !important;
   white-space: nowrap;
@@ -407,7 +411,7 @@ main {
 }
 .linear-track div {
   height: 100%;
-  background: linear-gradient(#b6df82, #558b2b);
+  background: linear-gradient(var(--instrument-light), var(--instrument-color));
 }
 .handle {
   position: absolute;
@@ -487,6 +491,54 @@ main {
 }
 .properties input[type="checkbox"] {
   width: auto;
+}
+.appearance {
+  border: 1px solid #c3cdd4;
+  border-radius: 3px;
+  margin: 12px 0;
+  padding: 8px;
+  min-width: 0;
+}
+.appearance legend {
+  font-weight: 600;
+  color: #425965;
+}
+.appearance label {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+.color-control {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.color-control input[type="color"] {
+  width: 34px;
+  height: 25px;
+  padding: 1px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.color-control input[type="text"] {
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  flex: 1;
+  width: 75px;
+}
+.color-error {
+  color: #9b3b2e;
+  font-size: 10px;
+  width: 100%;
+}
+.appearance button {
+  width: 100%;
+  font-size: 11px;
 }
 .empty {
   padding: 10px;

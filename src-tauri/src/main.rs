@@ -119,4 +119,37 @@ mod tests {
             .unwrap()
             .contains("Updated motor"));
     }
+    #[test]
+    fn colors_roundtrip_and_invalid_color_save_preserves_workspace() {
+        let directory = tempfile::tempdir().unwrap();
+        let path = directory
+            .path()
+            .join("colored.olw.json")
+            .to_string_lossy()
+            .to_string();
+        let mut workspace: serde_json::Value =
+            serde_json::from_str(include_str!("../../examples/demo.olw.json")).unwrap();
+        workspace["screens"][0]["widgets"][0]["settings"]["color"] = "#327fbd".into();
+        workspace["screens"][0]["widgets"][0]["settings"]["needleColor"] = "#F27C20".into();
+        save_workspace(path.clone(), workspace.to_string()).unwrap();
+        let saved = load_workspace(path.clone()).unwrap();
+        assert_eq!(
+            serde_json::from_str::<serde_json::Value>(&saved).unwrap(),
+            workspace
+        );
+        for invalid in [
+            "green",
+            "#fff",
+            "#12345678",
+            "url(https://example.com)",
+            "#ffffff\n",
+        ] {
+            for field in ["color", "needleColor"] {
+                let mut bad = workspace.clone();
+                bad["screens"][0]["widgets"][0]["settings"][field] = invalid.into();
+                assert!(save_workspace(path.clone(), bad.to_string()).is_err());
+                assert_eq!(load_workspace(path.clone()).unwrap(), saved);
+            }
+        }
+    }
 }

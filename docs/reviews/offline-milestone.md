@@ -81,3 +81,28 @@ The architect inspected final rebuilt Windows native process PID29264 and report
 - Native Save As/Open previously preserved edited x80: Reset demo produces x32, reopening saved JSON restores x80.
 
 These final runtime results resolve the native startup, redock and orphan-window blockers. Together with independently passing 11 frontend tests, 2 Rust tests and production frontend build, the bounded Windows offline prototype is accepted. No embedded-device interface or hardware compatibility is claimed. Cross-platform source/configuration exists, but macOS/Linux runtime acceptance remains explicitly unverified.
+
+## Focused instrument-color review
+
+The color change passes independent source/schema/model/render/persistence review. Actual color-picker/floating UI smoke is owned by the architect and is recorded separately below when available. No new code blocker remains.
+
+Independent execution: `npm test` passed 21 tests across three files, including original model/CSP checks and new appearance coverage. The focused Rust test `colors_roundtrip_and_invalid_color_save_preserves_workspace` passed (two unrelated tests filtered out). The repository validator passed five malformed-workspace cases and 36 safe SVG assets using the bundled Python runtime; the machine's `python` alias was unavailable, so that runtime was used directly.
+
+Reviewed behavior:
+
+- Optional `settings.color` and `settings.needleColor` preserve old workspace loading/defaults, survive JSON/native save and reopen, and remain per widget. Undo/redo restores appearance along with the document.
+- Both schema fields require exactly seven characters and a six-digit hexadecimal color. This fixed a discovered JS regular-expression edge case where `$` alone accepts a terminal newline. Frontend static validator, Rust schema validator and palette helper now agree.
+- Six presets, a native color picker and exact hex entry all route through existing authoritative document patch commands. The Appearance fieldset is disabled in Run, and the main command handler independently rejects Run-mode patches from floating views.
+- All eight instrument types receive individual palette variables; radial range and needle use separate SVG colors. CSS applies accents to the indicator/input faces without replacing neutral OFF states. Numeric readouts use dark ink on a pale derived face; switch/button text chooses black or white from accent luminance.
+- Hex draft state is keyed by selected widget identity, so choosing another same-color widget cannot retain a partial draft from the previous widget. Invalid drafts do not enter saved state and produce visible feedback on blur/Enter.
+- New tests cover legacy defaults, independent accent/needle roundtrip/undo, unsafe color strings including newline/URL/CSS payload, all eight rendered instrument palettes, separate radial needle, readable button text, LED ON/OFF distinction, and invalid native saves preserving the previous colored workspace.
+
+Source review does not prove every platform's native color-picker rendering. Slider styling follows host accent-color support as documented. Full macOS/Linux runtime interaction and broader AC14/AC15 remain open. The architect reported successful three-OS build/test CI for the preceding commit `45c5cdf` (run 38025371166); that evidence does not establish the new color commit's CI result.
+
+### Final architect native color smoke
+
+The architect verified the final Windows development executable (PID30788): gauge accent hex `#327fbd` rendered blue; needle `#e58b22` rendered orange; Undo restored the red default `#b52b25` and Redo restored orange. A native floating Properties window displayed both colors; editing its accent to `#3366cc` selected Custom and redocking retained the same shared color. LED independently rendered teal `#268e94`; temperature rendered orange `#da8426`. Run disabled presets/hex editing and retained appearances.
+
+Native Save As wrote `outputs/color-demo.olw.json` containing all three instrument accents plus the independent needle. Reset demo reverted defaults; native Open visually restored the saved colors. These are architect-run native UI observations, distinct from the reviewer's independently executed regression checks.
+
+The instrument-color change is accepted for the bounded Windows offline prototype. No new blocker remains. This acceptance does not extend to macOS/Linux runtime interactions or full advanced designer/docking acceptance; the new commit's three-platform CI result is to be established after push.
