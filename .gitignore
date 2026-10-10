@@ -12,3 +12,5 @@ __pycache__/
 .env.*
 work/
 .DS_Store
+*.tsbuildinfo
+src-tauri/gen/

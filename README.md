@@ -2,7 +2,20 @@
 
 An independently designed, open-source embedded dashboard and runtime inspection tool inspired by the workflows of Micrium µC/Probe.
 
-**Status: research and implementation specification. The desktop application and firmware have not been implemented.** This repository contains original vector assets, example data, schemas, and an actionable handoff for a coding agent. Repository visibility is private at the owner's request; the original material is MIT licensed.
+**Status: runnable first offline milestone.** Tauri 2/Rust hosts a React/TypeScript freeform designer with a worker-based motor simulator. The default UI uses a light ribbon, explorer/toolbox, grid/ruler canvas, symbol browser and inspector. Original gauges and controls can move, resize, rotate, bind, undo/redo and save/reopen. Native panel floating shares one simulator session. No embedded-device integration is implemented. Repository visibility is private at the owner's request; original material is MIT licensed.
+
+## Run the application
+
+Install Node.js 24 and Rust stable (verified here with Rust 1.99). Desktop builds also require the [Tauri platform prerequisites](https://v2.tauri.app/start/prerequisites/): Windows MSVC build tools/WebView2, macOS Xcode command-line tools, or Linux WebKitGTK 4.1 development libraries.
+
+```sh
+npm ci
+npm run desktop
+```
+
+Browser preview: `npm run dev`, then open `http://127.0.0.1:1420`. Native file dialogs and native floating windows require the desktop application. Build a desktop executable using `npm run desktop:build -- --no-bundle`; run model checks using `npm test` and native checks using `cargo test --manifest-path src-tauri/Cargo.toml`.
+
+Follow [the offline run guide and implementation limits](docs/16-offline-run-guide.md). Windows native build/launch and automated checks are recorded there. macOS/Linux have CI build configuration but their actual runtime behavior remains unverified. This is a bounded milestone, not complete AC14/AC15 support.
 
 ## Start here
 

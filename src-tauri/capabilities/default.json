@@ -1,0 +1,14 @@
+{
+  "identifier": "default",
+  "description": "Editor windows and user-selected workspace files",
+  "windows": ["main", "panel-*"],
+  "permissions": [
+    "core:default",
+    "core:webview:allow-create-webview-window",
+    "core:window:allow-close",
+    "core:window:allow-destroy",
+    "core:window:allow-set-focus",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}
