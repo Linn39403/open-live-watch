@@ -17,6 +17,8 @@ Browser preview: `npm run dev`, then open `http://127.0.0.1:1420`. Native file d
 
 The application starts with a blank project. Choose **File → New project** to name a new instrument screen, then click or drag toolbox instruments onto the canvas and edit their geometry and colors in Properties. Unbound instruments show labeled Design previews so you can build a layout without a device. **File → Open motor demo** explicitly opens the optional simulator example. New/Open/demo replacement offers Save, Discard or Cancel when your project has changes.
 
+Instrument defaults use neutral physical faces with blue gauges/sliders, teal numeric readouts, amber LED/buttons, slate blue switches and red thermometers. Saved custom colors take precedence; Properties → Restore default colors restores that instrument's defaults. Older projects without color overrides intentionally adopt the new palette without migration.
+
 Follow [the offline run guide and implementation limits](docs/16-offline-run-guide.md). Windows native build/launch and automated checks are recorded there. macOS/Linux have CI build configuration but their actual runtime behavior remains unverified. This is a bounded milestone, not complete AC14/AC15 support.
 
 ## Start here
