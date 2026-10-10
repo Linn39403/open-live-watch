@@ -152,4 +152,31 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn blank_project_and_unbound_widget_roundtrip_without_sources() {
+        let mut workspace: serde_json::Value =
+            serde_json::from_str(include_str!("../../examples/demo.olw.json")).unwrap();
+        workspace["sources"] = serde_json::json!([]);
+        workspace["screens"][0]["widgets"] = serde_json::json!([]);
+        let directory = tempfile::tempdir().unwrap();
+        let path = directory
+            .path()
+            .join("Blank Ω.olw.json")
+            .to_string_lossy()
+            .to_string();
+        save_workspace(path.clone(), workspace.to_string()).unwrap();
+        let mut unbound =
+            serde_json::from_str::<serde_json::Value>(include_str!("../../examples/demo.olw.json"))
+                .unwrap()["screens"][0]["widgets"][0]
+                .clone();
+        unbound.as_object_mut().unwrap().remove("binding");
+        workspace["screens"][0]["widgets"] = serde_json::json!([unbound]);
+        save_workspace(path.clone(), workspace.to_string()).unwrap();
+        let reopened: serde_json::Value =
+            serde_json::from_str(&load_workspace(path).unwrap()).unwrap();
+        assert_eq!(reopened["sources"], serde_json::json!([]));
+        assert!(reopened["screens"][0]["widgets"][0]
+            .get("binding")
+            .is_none());
+    }
 }

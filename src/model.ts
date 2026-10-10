@@ -83,6 +83,92 @@ export function parseWorkspace(input: unknown): Workspace {
   return structuredClone(w);
 }
 export const initialWorkspace = () => parseWorkspace(demo);
+export function createBlankWorkspace(
+  name = "Untitled project",
+  id: string = crypto.randomUUID(),
+): Workspace {
+  const cleanName = name.trim();
+  if (!cleanName || cleanName.length > 120)
+    throw new Error("Project name must contain 1–120 characters");
+  return parseWorkspace({
+    schemaVersion: 1,
+    id,
+    name: cleanName,
+    sources: [],
+    screens: [
+      {
+        id: "screen-" + id,
+        name: "Screen 1",
+        kind: "dashboard",
+        canvas: { width: 1024, height: 768, grid: 16 },
+        widgets: [],
+      },
+    ],
+  });
+}
+export function createInstrument(kind: Kind, id: string, index = 0): Widget {
+  return {
+    id,
+    kind,
+    title:
+      kind === "radial"
+        ? "Analog gauge"
+        : kind === "linear"
+          ? "Linear gauge"
+          : kind === "numeric"
+            ? "Numeric display"
+            : kind[0].toUpperCase() + kind.slice(1),
+    rect: {
+      x: 48 + (index % 4) * 30,
+      y: 48 + (index % 4) * 30,
+      width: kind === "thermometer" ? 150 : 220,
+      height: kind === "thermometer" ? 250 : 190,
+      rotation: 0,
+    },
+    settings: {
+      min: kind === "thermometer" ? -20 : 0,
+      max:
+        kind === "thermometer"
+          ? 120
+          : ["led", "switch", "button"].includes(kind)
+            ? 1
+            : 100,
+      precision: kind === "thermometer" ? 1 : 0,
+    },
+  };
+}
+export function hasMotorSimulator(workspace: Workspace) {
+  return workspace.sources.some(
+    (source) => source.id === "mock-motor" && source.provider === "mock",
+  );
+}
+export function resetProjectSession(previous: Sim): Sim {
+  return { ...initialSim(), epoch: previous.epoch + 1 };
+}
+export function isDocumentDirty(workspace: Workspace, saved: string) {
+  return JSON.stringify(workspace) !== saved;
+}
+export function workspaceFileName(name: string) {
+  return name.replace(/[<>:"/\\|?*\x00-\x1f]/g, "-") + ".olw.json";
+}
+export function assertProjectEpoch(sim: Sim, epoch: unknown) {
+  if (epoch !== sim.epoch)
+    throw new Error("Editor command belongs to a previous project session");
+}
+export function beginDocument(
+  workspace: Workspace,
+  previous: Sim,
+  filePath: string | null = null,
+  unsaved = false,
+) {
+  const validated = parseWorkspace(workspace);
+  return {
+    history: { past: [], present: validated, future: [] } as History,
+    sim: resetProjectSession(previous),
+    saved: unsaved ? "" : JSON.stringify(validated),
+    filePath,
+  };
+}
 export type History = {
   past: Workspace[];
   present: Workspace;

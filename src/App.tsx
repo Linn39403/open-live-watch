@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
   initialWorkspace,
+  createBlankWorkspace,
+  workspaceFileName,
+  createInstrument,
+  hasMotorSimulator,
+  isDocumentDirty,
+  beginDocument,
+  assertProjectEpoch,
   initialSim,
   parseSim,
   acceptWorkerFrame,
@@ -44,11 +51,22 @@ const desktop = "__TAURI_INTERNALS__" in window;
 let publish: (message: unknown) => void = () => {};
 type Command = { type: string; [key: string]: unknown };
 export function App() {
-  const [history, setHistory] = useState<History>({
+  const [history, setHistory] = useState<History>(() => ({
     past: [],
-    present: initialWorkspace(),
+    present: createBlankWorkspace(),
     future: [],
-  });
+  }));
+  const [saved, setSaved] = useState(() => JSON.stringify(history.present));
+  const [filePath, setFilePath] = useState<string | null>(null);
+  const [newProjectOpen, setNewProjectOpen] = useState(false);
+  const [projectName, setProjectName] = useState("My project");
+  const [pendingReplacement, setPendingReplacement] = useState<{
+    workspace: Workspace;
+    path: string | null;
+    label: string;
+    unsaved: boolean;
+  } | null>(null);
+  const [saving, setSaving] = useState(false);
   const [sim, setSim] = useState(initialSim);
   const [selected, setSelected] = useState<string[]>([]);
   const [layout, setLayout] = useState<Layout>(() => {
@@ -93,6 +111,9 @@ export function App() {
   const workspace = history.present,
     screen = workspace.screens[0],
     chosen = screen.widgets.find((w) => w.id === selected[0]);
+  const simulatorAvailable = hasMotorSimulator(workspace);
+  const catalog = simulatorAvailable ? symbols : [];
+  const dirty = isDocumentDirty(workspace, saved);
   const replace = (w: Workspace) => {
     const validated = parseWorkspace(w);
     setHistory((h) => commit(h, validated));
@@ -103,12 +124,16 @@ export function App() {
     if (patch.rect && locked.includes(id))
       throw new Error("Geometry is locked");
     const w = structuredClone(current.current.history.present);
+    if (!w.screens[0].widgets.some((widget) => widget.id === id))
+      throw new Error("Instrument belongs to a previous project");
     w.screens[0].widgets = w.screens[0].widgets.map((v) =>
       v.id === id ? { ...v, ...patch } : v,
     );
     replace(w);
   }
   function command(c: Command) {
+    if (c.type === "patch" && c.epoch === undefined)
+      c = { ...c, epoch: current.current.sim.epoch };
     if (floating) {
       publish({ kind: "command", command: c });
       return;
@@ -148,6 +173,9 @@ export function App() {
             );
       }
       if (c.type === "patch") {
+        assertProjectEpoch(current.current.sim, c.epoch);
+        if (pendingReplacement || newProjectOpen)
+          throw new Error("Finish the project dialog before editing");
         if (current.current.sim.running)
           throw new Error("Stop simulation before editing");
         editWidget(String(c.id), c.patch as Partial<Widget>);
@@ -190,7 +218,13 @@ export function App() {
     }
     function receive(m: any) {
       if (!m || typeof m !== "object") return;
-      if (!floating && m.kind === "command") commandRef.current(m.command);
+      if (!floating && m.kind === "command") {
+        if (m.command?.type === "patch" && m.command.epoch === undefined) {
+          setError("Editor command missing project session");
+          return;
+        }
+        commandRef.current(m.command);
+      }
       if (floating && m.kind === "snapshot") {
         try {
           const d = m.data as Snapshot;
@@ -248,6 +282,13 @@ export function App() {
   }, [layout]);
   useEffect(() => {
     function key(e: KeyboardEvent) {
+      if (pendingReplacement || newProjectOpen) {
+        if (e.key === "Escape" && !saving) {
+          setPendingReplacement(null);
+          setNewProjectOpen(false);
+        }
+        return;
+      }
       if ((e.target as HTMLElement).matches("input,select,textarea")) return;
       const mod = e.ctrlKey || e.metaKey;
       if (e.key === "Escape" && gesture.current) {
@@ -286,38 +327,20 @@ export function App() {
     }
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [selected, sim.running, locked]);
+  }, [
+    selected,
+    sim.running,
+    locked,
+    pendingReplacement,
+    newProjectOpen,
+    saving,
+  ]);
   function add(kind: Kind) {
     const w = structuredClone(workspace);
-    const symbol =
-      kind === "led" || kind === "switch" || kind === "button"
-        ? symbols[3]
-        : kind === "slider"
-          ? symbols[1]
-          : symbols[0];
     const id = crypto.randomUUID();
-    w.screens[0].widgets.push({
-      id,
-      kind,
-      title: kind[0].toUpperCase() + kind.slice(1),
-      rect: {
-        x: 48 + (screen.widgets.length % 4) * 30,
-        y: 48 + (screen.widgets.length % 4) * 30,
-        width: 220,
-        height: 170,
-        rotation: 0,
-      },
-      binding: {
-        sourceId: workspace.sources[0]?.id ?? "mock-motor",
-        symbolPath: symbol.path,
-        gain: 1,
-        offset: 0,
-        units: symbol.units,
-        periodMs: 50,
-        writable: ["slider", "switch", "button"].includes(kind),
-      },
-      settings: { min: 0, max: 3000, precision: 0 },
-    });
+    w.screens[0].widgets.push(
+      createInstrument(kind, id, screen.widgets.length),
+    );
     replace(w);
     setSelected([id]);
   }
@@ -460,21 +483,66 @@ export function App() {
       setError(String(e));
     }
   }
-  async function save() {
+  function applyReplacement(next: NonNullable<typeof pendingReplacement>) {
+    const project = beginDocument(
+      next.workspace,
+      current.current.sim,
+      next.path,
+      next.unsaved,
+    );
+    gesture.current = null;
+    current.current = {
+      ...current.current,
+      history: project.history,
+      sim: project.sim,
+      selected: [],
+    };
+    setHistory(project.history);
+    setSim(project.sim);
+    setSaved(project.saved);
+    setFilePath(project.filePath);
+    setSelected([]);
+    setLocked([]);
+    setQuery("");
+    setZoom(1);
+    setPendingReplacement(null);
+    setError("");
+    viewport.current?.scrollTo(0, 0);
+  }
+  function requestReplacement(next: NonNullable<typeof pendingReplacement>) {
+    next = { ...next, workspace: parseWorkspace(next.workspace) };
+    if (isDocumentDirty(current.current.history.present, saved))
+      setPendingReplacement(next);
+    else applyReplacement(next);
+  }
+  async function save(saveAs = false): Promise<boolean> {
+    setSaving(true);
     try {
-      const data = JSON.stringify(parseWorkspace(workspace), null, 2);
+      const snapshot = parseWorkspace(current.current.history.present);
+      const data = JSON.stringify(snapshot, null, 2);
       if (desktop) {
         const { save } = await import("@tauri-apps/plugin-dialog");
-        const path = await save({
-          filters: [{ name: "Open Live Watch", extensions: ["json"] }],
-        });
-        if (path) {
+        const path =
+          !saveAs && filePath
+            ? filePath
+            : await save({
+                defaultPath: filePath ?? workspaceFileName(snapshot.name),
+                filters: [{ name: "Open Live Watch", extensions: ["json"] }],
+              });
+        if (!path) return false;
+        {
           const { invoke } = await import("@tauri-apps/api/core");
           await invoke("save_workspace", { path, data });
+          setFilePath(path);
         }
-      } else download(data, "workspace.olw.json", "application/json");
+      } else download(data, snapshot.name + ".olw.json", "application/json");
+      setSaved(JSON.stringify(snapshot));
+      return true;
     } catch (e) {
       setError(String(e));
+      return false;
+    } finally {
+      setSaving(false);
     }
   }
   async function open() {
@@ -487,12 +555,14 @@ export function App() {
         });
         if (path) {
           const { invoke } = await import("@tauri-apps/api/core");
-          replace(
-            parseWorkspace(
+          requestReplacement({
+            workspace: parseWorkspace(
               JSON.parse(await invoke<string>("load_workspace", { path })),
             ),
-          );
-          setSelected([]);
+            path,
+            label: "open another project",
+            unsaved: false,
+          });
         }
       } else document.getElementById("workspace-file")?.click();
     } catch (e) {
@@ -507,6 +577,32 @@ export function App() {
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+  function trapModalFocus(e: React.KeyboardEvent) {
+    if (e.key !== "Tab") return;
+    const dialog = e.currentTarget;
+    const controls = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        "button:not(:disabled),input:not(:disabled)",
+      ),
+    );
+    const first = controls[0],
+      last = controls.at(-1);
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last?.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first?.focus();
+    }
+  }
+  useEffect(() => {
+    if (newProjectOpen || pendingReplacement)
+      document
+        .querySelector<HTMLElement>(
+          '[role="dialog"] input,[role="dialog"] button',
+        )
+        ?.focus();
+  }, [newProjectOpen, pendingReplacement]);
   function content(panel: Panel) {
     if (panel === "explorer")
       return (
@@ -514,8 +610,14 @@ export function App() {
           <strong>▾ {workspace.name}</strong>
           <div>▾ Screens</div>
           <div className="tree-selected">▣ {screen.name}</div>
-          <div>▾ Simulator</div>
-          <div>◉ Motor model • offline</div>
+          <div>▾ Sources</div>
+          <div>
+            {simulatorAvailable
+              ? "Motor simulator • offline"
+              : workspace.sources.length
+                ? "Unsupported source • no runtime backend"
+                : "None • layout design only"}
+          </div>
           <p>
             Click a toolbox instrument to add it. Shift-click selects multiple
             objects.
@@ -542,23 +644,33 @@ export function App() {
               disabled={sim.running || !!floating}
               onClick={() => add(k)}
             >
-              <span>
-                {
-                  {
-                    radial: "◴",
-                    linear: "▰",
-                    numeric: "123",
-                    led: "●",
-                    slider: "↔",
-                    switch: "◉",
-                    button: "▣",
-                    thermometer: "♨",
-                  }[k]
-                }
-              </span>
+              <Instrument
+                w={createInstrument(k, "toolbox-" + k)}
+                value={NaN}
+                running={false}
+                thumbnail
+                onWrite={() => {}}
+              />
               {k}
             </button>
           ))}
+        </div>
+      );
+    if (panel === "symbols" && !simulatorAvailable)
+      return (
+        <div className="no-source">
+          <strong>
+              {workspace.sources.length
+              ? "Unsupported data source"
+              : "No data source configured"}
+          </strong>
+          <p>
+              {workspace.sources.length
+              ? "The configured sources are not supported by this offline simulator."
+              : "This project has no device or simulator bindings."}{" "}
+            Arrange instruments using Design previews.
+          </p>
+          <p>Use File → Open motor demo to explore simulated readings.</p>
         </div>
       );
     if (panel === "symbols")
@@ -582,7 +694,7 @@ export function App() {
               </tr>
             </thead>
             <tbody>
-              {symbols
+              {catalog
                 .filter((s) => s.path.includes(query))
                 .map((s) => (
                   <tr
@@ -717,7 +829,19 @@ export function App() {
             value={chosen.binding?.symbolPath ?? ""}
             disabled={sim.running}
             onChange={(e) => {
-              const s = symbols.find((s) => s.path === e.target.value)!;
+              if (!e.target.value) {
+                command({
+                  type: "patch",
+                  id: chosen.id,
+                  patch: { binding: undefined },
+                });
+                return;
+              }
+              const s = catalog.find((s) => s.path === e.target.value);
+              if (!s) {
+                setError("No compatible source is configured");
+                return;
+              }
               if (!bindingCompatible(chosen.kind, s.path)) {
                 setError("Binding type is incompatible with instrument");
                 return;
@@ -741,7 +865,8 @@ export function App() {
               });
             }}
           >
-            {symbols.map((s) => (
+            <option value="">Unbound</option>
+            {catalog.map((s) => (
               <option key={s.path}>{s.path}</option>
             ))}
           </select>
@@ -862,8 +987,13 @@ export function App() {
       <div className="titlebar">
         <span className="app-mark">◴</span>
         <strong>Open Live Watch</strong>
-        <span>— {workspace.name}</span>
-        <span className="offline-badge">OFFLINE SIMULATOR</span>
+        <span>
+          — {workspace.name}
+          {dirty ? " • unsaved" : ""}
+        </span>
+        <span className="offline-badge">
+          {simulatorAvailable ? "OFFLINE SIMULATOR" : "PROJECT DESIGNER"}
+        </span>
       </div>
       <nav>
         {["File", "Design", "View"].map((t) => (
@@ -880,11 +1010,25 @@ export function App() {
         {tab === "File" ? (
           <>
             <div className="group">
-              <button onClick={() => void open()}>📂 Open</button>
-              <button onClick={() => void save()}>▣ Save workspace</button>
+              <button
+                onClick={() => {
+                  setProjectName("My project");
+                  setNewProjectOpen(true);
+                }}
+              >
+                New project
+              </button>
+              <button onClick={() => void open()}>Open project</button>
+              <button disabled={saving} onClick={() => void save()}>
+                Save project
+              </button>
+              <button disabled={saving} onClick={() => void save(true)}>
+                Save as…
+              </button>
             </div>
             <div className="group">
               <button
+                disabled={!simulatorAvailable}
                 onClick={() =>
                   download(
                     "sample,time_ms,speed_rpm\n" +
@@ -898,8 +1042,17 @@ export function App() {
               >
                 Export recent CSV
               </button>
-              <button onClick={() => replace(initialWorkspace())}>
-                Reset demo
+              <button
+                onClick={() =>
+                  requestReplacement({
+                    workspace: initialWorkspace(),
+                    path: null,
+                    label: "open the motor demo",
+                    unsaved: false,
+                  })
+                }
+              >
+                Open motor demo
               </button>
             </div>
           </>
@@ -945,6 +1098,12 @@ export function App() {
             <div className="group">
               <button
                 className={sim.running ? "stop" : "run"}
+                disabled={!simulatorAvailable}
+                title={
+                  simulatorAvailable
+                    ? "Run the offline motor simulator"
+                    : "No source configured. Open the motor demo to simulate readings."
+                }
                 onClick={() =>
                   setSim((s) => ({
                     ...s,
@@ -955,7 +1114,13 @@ export function App() {
               >
                 {sim.running ? "■ Stop" : "▶ Run"}
               </button>
-              <small>{sim.running ? "Simulation active" : "Design mode"}</small>
+              <small>
+                {sim.running
+                  ? "Simulation active"
+                  : simulatorAvailable
+                    ? "Design mode"
+                    : "No source configured"}
+              </small>
             </div>
             <div className="group">
               <button
@@ -1077,6 +1242,64 @@ export function App() {
                 }}
                 onPointerDown={() => setSelected([])}
               >
+                {!screen.widgets.length && (
+                  <div className="empty-canvas">
+                    <svg
+                      width="68"
+                      height="60"
+                      viewBox="0 0 68 60"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="4"
+                        y="4"
+                        width="60"
+                        height="50"
+                        rx="4"
+                        fill="#f7fafc"
+                        stroke="#8da9b9"
+                      />
+                      <path
+                        d="M14 40L24 25L36 32L51 16M14 46H54"
+                        fill="none"
+                        stroke="#719aac"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    <h2>Build your instrument screen</h2>
+                    <p>
+                      Choose a control in the Toolbox, then drag, resize and
+                      customize it.
+                    </p>
+                    <p>
+                      Unbound instruments show clearly marked Design previews.
+                    </p>
+                    <div>
+                      <button
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => {
+                          setProjectName("My project");
+                          setNewProjectOpen(true);
+                        }}
+                      >
+                        New project…
+                      </button>
+                      <button
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() =>
+                          requestReplacement({
+                            workspace: initialWorkspace(),
+                            path: null,
+                            label: "open the motor demo",
+                            unsaved: false,
+                          })
+                        }
+                      >
+                        Open motor demo
+                      </button>
+                    </div>
+                  </div>
+                )}
                 {screen.widgets.map((w) => (
                   <div
                     key={w.id}
@@ -1097,7 +1320,7 @@ export function App() {
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
                       e.stopPropagation();
-                      const s = symbols.find(
+                      const s = catalog.find(
                         (s) => s.path === e.dataTransfer.getData("symbol"),
                       );
                       if (
@@ -1180,19 +1403,21 @@ export function App() {
               </div>
             </div>
           </div>
-          <div className="chart-strip">
-            <span>Speed history • last 6 s</span>
-            <svg viewBox="0 0 600 50" preserveAspectRatio="none">
-              <polyline
-                fill="none"
-                stroke="#468623"
-                strokeWidth="2"
-                points={sim.history
-                  .map((v, i) => `${(i * 600) / 119},${48 - (v / 3000) * 44}`)
-                  .join(" ")}
-              />
-            </svg>
-          </div>
+          {simulatorAvailable && (
+            <div className="chart-strip">
+              <span>Speed history • last 6 s</span>
+              <svg viewBox="0 0 600 50" preserveAspectRatio="none">
+                <polyline
+                  fill="none"
+                  stroke="#468623"
+                  strokeWidth="2"
+                  points={sim.history
+                    .map((v, i) => `${(i * 600) / 119},${48 - (v / 3000) * 44}`)
+                    .join(" ")}
+                />
+              </svg>
+            </div>
+          )}
         </div>
         <aside
           className="right-dock"
@@ -1224,13 +1449,18 @@ export function App() {
           ●{" "}
           {sim.running
             ? "Running • 20 Hz simulated acquisition"
-            : "Stopped • edit freely"}
+            : simulatorAvailable
+              ? "Stopped • edit freely"
+              : "Design • no data source"}
         </span>
         <span>
           {screen.widgets.length} instruments · {selected.length} selected ·
           session {sim.epoch}
         </span>
         <span>No embedded device connection</span>
+        <span title={filePath ?? "No file associated"}>
+          {filePath ? filePath.split(/[\\/]/).at(-1) : "Unsaved file"}
+        </span>
       </footer>
       <input
         id="workspace-file"
@@ -1241,8 +1471,12 @@ export function App() {
           try {
             const f = e.target.files?.[0];
             if (f) {
-              replace(parseWorkspace(JSON.parse(await f.text())));
-              setSelected([]);
+              requestReplacement({
+                workspace: parseWorkspace(JSON.parse(await f.text())),
+                path: null,
+                label: "open another project",
+                unsaved: false,
+              });
             }
           } catch (e) {
             setError(String(e));
@@ -1250,6 +1484,101 @@ export function App() {
           e.target.value = "";
         }}
       />
+      {newProjectOpen && (
+        <div className="modal-backdrop">
+          <form
+            className="project-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="New project"
+            onKeyDown={trapModalFocus}
+            onSubmit={(e) => {
+              e.preventDefault();
+              try {
+                const blank = createBlankWorkspace(projectName);
+                setNewProjectOpen(false);
+                requestReplacement({
+                  workspace: blank,
+                  path: null,
+                  label: "create a new project",
+                  unsaved: true,
+                });
+              } catch (error) {
+                setError(String(error));
+              }
+            }}
+          >
+            <h2>New project</h2>
+            <p>Start with a blank screen and no data source.</p>
+            <label>
+              Project name
+              <input
+                value={projectName}
+                maxLength={120}
+                onChange={(e) => setProjectName(e.target.value)}
+                autoFocus
+              />
+            </label>
+            <p className="dialog-note">
+              Arrange instruments now. Embedded-device interfaces are planned
+              for a later milestone.
+            </p>
+            <div className="dialog-actions">
+              <button type="button" onClick={() => setNewProjectOpen(false)}>
+                Cancel
+              </button>
+              <button type="submit" disabled={!projectName.trim()}>
+                Create project
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      {pendingReplacement && (
+        <div className="modal-backdrop">
+          <div
+            className="project-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Unsaved project"
+            onKeyDown={trapModalFocus}
+          >
+            <h2>Save changes to {workspace.name}?</h2>
+            <p>
+              Your instrument layout has unsaved changes. Save or discard them
+              to {pendingReplacement.label}.
+            </p>
+            {error && (
+              <p role="alert" className="dialog-error">
+                {error}
+              </p>
+            )}
+            <div className="dialog-actions">
+              <button
+                disabled={saving}
+                onClick={() => setPendingReplacement(null)}
+              >
+                Cancel
+              </button>
+              <button
+                disabled={saving}
+                onClick={() => applyReplacement(pendingReplacement)}
+              >
+                Discard changes
+              </button>
+              <button
+                disabled={saving}
+                onClick={async () => {
+                  const next = pendingReplacement;
+                  if (await save()) applyReplacement(next);
+                }}
+              >
+                {saving ? "Saving…" : "Save changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

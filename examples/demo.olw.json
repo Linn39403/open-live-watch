@@ -2,16 +2,127 @@
   "schemaVersion": 1,
   "id": "demo-workspace",
   "name": "Motor lab",
-  "sources": [{"id": "mock-motor", "provider": "mock", "path": "mock-symbols.json"}],
-  "screens": [{
-    "id": "overview", "name": "Overview", "kind": "dashboard",
-    "canvas": {"width": 1024, "height": 768, "grid": 16},
-    "widgets": [
-      {"id": "speed-gauge", "kind": "radial", "title": "Motor speed", "rect": {"x": 32, "y": 32, "width": 240, "height": 180, "rotation": 0}, "binding": {"sourceId": "mock-motor", "symbolPath": "motor.speed", "gain": 1, "offset": 0, "units": "rpm", "periodMs": 50, "writable": false}, "settings": {"min": 0, "max": 3000, "precision": 0}},
-      {"id": "setpoint-slider", "kind": "slider", "title": "Speed setpoint", "rect": {"x": 288, "y": 32, "width": 240, "height": 180, "rotation": 0}, "binding": {"sourceId": "mock-motor", "symbolPath": "motor.setpoint", "gain": 1, "offset": 0, "units": "rpm", "periodMs": 50, "writable": true}, "settings": {"min": 0, "max": 3000, "commit": "release"}},
-      {"id": "enabled-led", "kind": "led", "title": "Motor enabled", "rect": {"x": 544, "y": 32, "width": 240, "height": 180, "rotation": 0}, "binding": {"sourceId": "mock-motor", "symbolPath": "motor.enabled", "gain": 1, "offset": 0, "units": "", "periodMs": 100, "writable": false}, "settings": {}},
-      {"id": "temperature", "kind": "thermometer", "title": "Temperature", "rect": {"x": 32, "y": 240, "width": 240, "height": 180, "rotation": 0}, "binding": {"sourceId": "mock-motor", "symbolPath": "motor.temperature", "gain": 1, "offset": 0, "units": "°C", "periodMs": 100, "writable": false}, "settings": {"min": -20, "max": 120, "precision": 1}},
-      {"id": "enable-switch", "kind": "switch", "title": "Motor enable", "rect": {"x": 288, "y": 240, "width": 240, "height": 180, "rotation": 0}, "binding": {"sourceId": "mock-motor", "symbolPath": "motor.enabled", "gain": 1, "offset": 0, "units": "", "periodMs": 100, "writable": true}, "settings": {}}
-    ]
-  }]
+  "sources": [
+    { "id": "mock-motor", "provider": "mock", "path": "mock-symbols.json" }
+  ],
+  "screens": [
+    {
+      "id": "overview",
+      "name": "Overview",
+      "kind": "dashboard",
+      "canvas": { "width": 1024, "height": 768, "grid": 16 },
+      "widgets": [
+        {
+          "id": "speed-gauge",
+          "kind": "radial",
+          "title": "Motor speed",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 240,
+            "height": 180,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "mock-motor",
+            "symbolPath": "motor.speed",
+            "gain": 1,
+            "offset": 0,
+            "units": "rpm",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": { "min": 0, "max": 3000, "precision": 0 }
+        },
+        {
+          "id": "setpoint-slider",
+          "kind": "slider",
+          "title": "Speed setpoint",
+          "rect": {
+            "x": 288,
+            "y": 32,
+            "width": 240,
+            "height": 180,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "mock-motor",
+            "symbolPath": "motor.setpoint",
+            "gain": 1,
+            "offset": 0,
+            "units": "rpm",
+            "periodMs": 50,
+            "writable": true
+          },
+          "settings": { "min": 0, "max": 3000, "commit": "release" }
+        },
+        {
+          "id": "enabled-led",
+          "kind": "led",
+          "title": "Motor enabled",
+          "rect": {
+            "x": 544,
+            "y": 32,
+            "width": 240,
+            "height": 180,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "mock-motor",
+            "symbolPath": "motor.enabled",
+            "gain": 1,
+            "offset": 0,
+            "units": "",
+            "periodMs": 100,
+            "writable": false
+          },
+          "settings": {}
+        },
+        {
+          "id": "temperature",
+          "kind": "thermometer",
+          "title": "Temperature",
+          "rect": {
+            "x": 32,
+            "y": 240,
+            "width": 170,
+            "height": 260,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "mock-motor",
+            "symbolPath": "motor.temperature",
+            "gain": 1,
+            "offset": 0,
+            "units": "°C",
+            "periodMs": 100,
+            "writable": false
+          },
+          "settings": { "min": -20, "max": 120, "precision": 1 }
+        },
+        {
+          "id": "enable-switch",
+          "kind": "switch",
+          "title": "Motor enable",
+          "rect": {
+            "x": 288,
+            "y": 240,
+            "width": 240,
+            "height": 180,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "mock-motor",
+            "symbolPath": "motor.enabled",
+            "gain": 1,
+            "offset": 0,
+            "units": "",
+            "periodMs": 100,
+            "writable": true
+          },
+          "settings": {}
+        }
+      ]
+    }
+  ]
 }

@@ -15,6 +15,8 @@ npm run desktop
 
 Browser preview: `npm run dev`, then open `http://127.0.0.1:1420`. Native file dialogs and native floating windows require the desktop application. Build a desktop executable using `npm run desktop:build -- --no-bundle`; run model checks using `npm test` and native checks using `cargo test --manifest-path src-tauri/Cargo.toml`.
 
+The application starts with a blank project. Choose **File → New project** to name a new instrument screen, then click or drag toolbox instruments onto the canvas and edit their geometry and colors in Properties. Unbound instruments show labeled Design previews so you can build a layout without a device. **File → Open motor demo** explicitly opens the optional simulator example. New/Open/demo replacement offers Save, Discard or Cancel when your project has changes.
+
 Follow [the offline run guide and implementation limits](docs/16-offline-run-guide.md). Windows native build/launch and automated checks are recorded there. macOS/Linux have CI build configuration but their actual runtime behavior remains unverified. This is a bounded milestone, not complete AC14/AC15 support.
 
 ## Start here
