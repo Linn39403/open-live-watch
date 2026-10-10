@@ -1,12 +1,29 @@
-export const DEFAULT_COLOR = "#72a054";
+import type { Kind, Widget } from "./model";
+export const GREEN_COLOR = "#72a054";
 export const DEFAULT_NEEDLE_COLOR = "#b52b25";
+export const DEFAULT_COLORS: Readonly<Record<Kind, string>> = {
+  radial: "#327fbd",
+  linear: "#327fbd",
+  slider: "#327fbd",
+  numeric: "#268e94",
+  led: "#da8426",
+  button: "#da8426",
+  switch: "#597a92",
+  thermometer: "#bf443d",
+};
+export const defaultInstrumentColor = (kind: Kind) => DEFAULT_COLORS[kind];
+export function resetInstrumentColors(settings: Widget["settings"]) {
+  const { color, needleColor, ...rest } = settings;
+  return rest;
+}
 export const colorPresets = [
-  { name: "Green", color: DEFAULT_COLOR },
+  { name: "Green", color: GREEN_COLOR },
   { name: "Blue", color: "#327fbd" },
   { name: "Orange", color: "#da8426" },
   { name: "Red", color: "#bf443d" },
   { name: "Purple", color: "#8758b0" },
   { name: "Teal", color: "#268e94" },
+  { name: "Slate blue", color: "#597a92" },
 ];
 export const isHexColor = (color: string) =>
   color.length === 7 && /^#[0-9a-f]{6}$/i.test(color);
@@ -27,11 +44,11 @@ function blend(color: string, target: number, amount: number) {
       .join("")
   );
 }
-export function instrumentPalette(settings: {
-  color?: string;
-  needleColor?: string;
-}) {
-  const color = safeColor(settings.color, DEFAULT_COLOR);
+export function instrumentPalette(
+  settings: { color?: string; needleColor?: string },
+  kind: Kind,
+) {
+  const color = safeColor(settings.color, defaultInstrumentColor(kind));
   const channels = [1, 3, 5]
     .map((offset) => parseInt(color.slice(offset, offset + 2), 16) / 255)
     .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));

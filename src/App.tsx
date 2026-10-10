@@ -28,7 +28,12 @@ import {
 } from "./model";
 import { Instrument } from "./Instruments";
 import { ColorControl } from "./ColorControl";
-import { colorPresets, DEFAULT_COLOR, DEFAULT_NEEDLE_COLOR } from "./colors";
+import {
+  colorPresets,
+  defaultInstrumentColor,
+  resetInstrumentColors,
+  DEFAULT_NEEDLE_COLOR,
+} from "./colors";
 type Panel = "explorer" | "toolbox" | "symbols" | "properties";
 type Edge = "left" | "right" | "bottom" | "hidden" | "floating";
 type Layout = Record<Panel, Edge>;
@@ -660,12 +665,12 @@ export function App() {
       return (
         <div className="no-source">
           <strong>
-              {workspace.sources.length
+            {workspace.sources.length
               ? "Unsupported data source"
               : "No data source configured"}
           </strong>
           <p>
-              {workspace.sources.length
+            {workspace.sources.length
               ? "The configured sources are not supported by this offline simulator."
               : "This project has no device or simulator bindings."}{" "}
             Arrange instruments using Design previews.
@@ -748,9 +753,15 @@ export function App() {
                 colorPresets.some(
                   (p) =>
                     p.color.toLowerCase() ===
-                    (chosen.settings.color ?? DEFAULT_COLOR).toLowerCase(),
+                    (
+                      chosen.settings.color ??
+                      defaultInstrumentColor(chosen.kind)
+                    ).toLowerCase(),
                 )
-                  ? (chosen.settings.color ?? DEFAULT_COLOR).toLowerCase()
+                  ? (
+                      chosen.settings.color ??
+                      defaultInstrumentColor(chosen.kind)
+                    ).toLowerCase()
                   : "custom"
               }
               onChange={(e) => {
@@ -777,7 +788,9 @@ export function App() {
             <ColorControl
               key={chosen.id + "-accent"}
               label="Instrument accent"
-              value={chosen.settings.color ?? DEFAULT_COLOR}
+              value={
+                chosen.settings.color ?? defaultInstrumentColor(chosen.kind)
+              }
               onCommit={(color) =>
                 command({
                   type: "patch",
@@ -813,14 +826,15 @@ export function App() {
           )}
           <button
             onClick={() => {
-              const { color, needleColor, ...settings } = chosen.settings;
+              const settings = resetInstrumentColors(chosen.settings);
               command({ type: "patch", id: chosen.id, patch: { settings } });
             }}
           >
             Restore default colors
           </button>
           <p>
-            Each instrument keeps its own colors. Value contrast is automatic.
+            Defaults follow the instrument type; custom colors are saved per
+            instrument. Value contrast is automatic.
           </p>
         </fieldset>
         <label>

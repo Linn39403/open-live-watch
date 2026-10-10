@@ -14,7 +14,7 @@ export function Instrument({
   running: boolean;
   thumbnail?: boolean;
 }) {
-  const palette = instrumentPalette(w.settings),
+  const palette = instrumentPalette(w.settings, w.kind),
     id = "instrument-" + w.id;
   const min = w.settings.min ?? 0,
     max = w.settings.max ?? 100;
@@ -482,7 +482,7 @@ export function Instrument({
           width="172"
           height="62"
           rx="2"
-          fill={palette.pale}
+          fill="#f2f3ed"
         />
         <path d="M26 41H194V59H26Z" fill="#ffffff50" />
         <text
