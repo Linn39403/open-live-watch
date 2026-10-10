@@ -92,19 +92,9 @@ svg('pump',pump,category='industrial')
 valve='<path d="M55 55l65 60 65-60v60l-65-60-65 60z" fill="#162235" stroke="#60a5fa" stroke-width="4"/>'+line(10,85,55,85)+line(185,85,230,85)+line(120,55,120,24)+line(95,24,145,24)+text(120,171,'Valve',16)
 svg('valve',valve,category='industrial')
 
-# Original concept, assembled from this script's new instrument geometry.
-dashboard=rect(0,0,1280,820,BG,0)+rect(0,0,1280,58,PANEL,0)+text(25,37,'OPEN LIVE WATCH',20,TEXT,'start')+text(690,36,'Simulator · Connected · Run',14,'#34d399')
-dashboard+=rect(16,74,190,726)+text(32,106,'WORKSPACE',12,MUTED,'start')+text(32,145,'Motor lab',16,TEXT,'start')+text(42,177,'Overview',14,BLUE,'start')+text(42,209,'Scope',14,TEXT,'start')+text(32,273,'TOOLBOX',12,MUTED,'start')
-for i,s in enumerate(['Numeric','Gauge','LED','Slider','Chart','Logger']):dashboard+=text(32,310+i*34,s,14,TEXT,'start')
-for x,y,b in [(222,74,radial),(478,74,numeric),(734,74,led),(222,270,slider),(478,270,thermo),(734,270,linear)]:dashboard+=f'<g transform="translate({x} {y})">{b}</g>'
-dashboard+=rect(222,466,752,252)+text(598,498,'SPEED HISTORY',14,MUTED)
-for y in [526,566,606,646]: dashboard+=line(246,y,950,y,'#334155',1)
-wave=' '.join(f'{246+i*11},{586-45*math.sin(i*.15)}' for i in range(65))
-dashboard+=f'<polyline points="{wave}" fill="none" stroke="{BLUE}" stroke-width="3"/>'+text(598,696,'Acquisition time (s)',13,MUTED)
-dashboard+=rect(994,74,270,726)+text(1010,105,'INSPECTOR',12,MUTED,'start')
-for i,s in enumerate(['Speed setpoint','Binding: motor.setpoint','Type: float32','Units: rpm','Range: 0–3,000','Commit: on release','Quality: good']):dashboard+=text(1010,148+i*36,s,14,TEXT,'start')
-dashboard+=rect(222,738,752,62)+text(238,765,'SYMBOLS   motor.speed   motor.setpoint   motor.enabled',14,TEXT,'start')+text(238,788,'100 bindings/s · No dropped samples · MOCK DATA',12,MUTED,'start')
-svg('dashboard-concept',dashboard,1280,820,'concepts')
+# Required concept direction: light freeform instrument designer.
+from designer_concept import build as build_designer_concept
+build_designer_concept(svg, rect, text, line, arc)
 paths=sorted(ASSETS.glob('*/*.svg'))
 cards=''.join(f'<article><img src="{p.relative_to(ASSETS).as_posix()}" alt="{p.stem}"><p>{p.stem}</p></article>' for p in paths)
 (ASSETS/'preview.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open Live Watch original vectors</title><style>body{background:#0b1220;color:#e2e8f0;font:16px sans-serif;margin:32px}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}article{background:#162235;border:1px solid #334155;border-radius:12px;padding:16px;text-align:center}img{width:100%;height:180px;object-fit:contain}article:has(img[src*="icons"]){background:#e2e8f0;color:#0b1220}article:has(img[src*="icons"]) img{height:48px}article:has(img[src*="concepts"]){grid-column:1/-1}article:has(img[src*="concepts"]) img{height:auto}</style><h1>Original vector library</h1><p>MIT licensed. Static design starters; instrument behavior remains to implement.</p><main>'+cards+'</main></html>',encoding='utf-8')

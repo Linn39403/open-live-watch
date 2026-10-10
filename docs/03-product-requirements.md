@@ -6,18 +6,21 @@ An embedded engineer opens an ELF or mock symbol source, finds `motor.speed`, dr
 
 ## Scope and goals
 
-Windows-first desktop application with a portable core. Local/offline use must work without an account or cloud dependency. First deliverable: end-to-end simulator dashboard; second: real ELF and one tested Cortex-M debug transport. No mandatory RTOS, no mandatory target firmware for supported debug-memory polling. Target firmware is required for custom serial/network communication and deterministic scope capture.
+Windows, macOS and Linux are equally required desktop platforms, sharing one portable application core and workspace format. Local/offline use must work without an account or cloud dependency. First deliverable: end-to-end simulator dashboard; second: real ELF and one tested Cortex-M debug transport. No mandatory RTOS, no mandatory target firmware for supported debug-memory polling. Target firmware is required for custom serial/network communication and deterministic scope capture.
 
 Do not make legacy .wsp, CSF/CDF, µC/Probe wire protocol, vendor DLL, or script-language compatibility an MVP requirement. Add such compatibility only through separate documented parsers/adapters and licensed fixtures.
 
 ## Editor
 
+The required visual direction and docking behavior are defined in [designer and platforms](14-designer-and-platforms.md). Use a light µC/Probe-like ribbon, dense toolbox, white ruled/grid canvas, bottom symbol browser, instrument-style widgets and contextual property controls. The earlier dark card-dashboard direction is superseded. Widgets use arbitrary canvas coordinates and can overlap; they must not be constrained to cards, responsive rows or a fixed tile grid.
+
+- Panels: freely dock/undock/reorder/split/tab/auto-hide the explorer, toolbox, symbol browser and property inspector; float them as native desktop windows; persist layouts and recover offscreen windows. Document screens can be rearranged or floated.
 - Workspace tree: projects/groups/screens; screen type dashboard/scope/memory/awareness. Rename, move, duplicate, import/export; duplicate regenerates node/widget IDs and preserves intentional source bindings.
 - Toolbox: filter by name/category; keyboard insertion; symbol drag/drop onto selected widget with compatibility preview.
 - Canvas: SVG instruments, optional grid and rulers, snapping, move/resize/rotation, selection rectangle, multi-select, align/distribute, group, z-order, locked items, text/image/connector/shape objects. Undo each completed gesture as one operation.
 - Inspector tabs: binding, appearance, range/colors, input behavior, series. Show unresolved/error/stale status separately from numeric values. Validate before committing properties.
 - Save versioned JSON with atomic replacement, recovery copy, relative source paths, dirty indicator, and explicit unsaved-changes flow. Opening/importing must not initiate connections or writes.
-- Shortcuts: Ctrl+S save, Ctrl+Z/Y undo/redo, Ctrl+C/V duplicate via clipboard, Esc cancel gesture, arrows nudge, Shift for coarse nudge. Keyboard alternatives for dragging and numeric properties.
+- Shortcuts: Ctrl on Windows/Linux and Command on macOS for save, undo/redo and copy/paste, Esc cancel gesture, arrows nudge, Shift for coarse nudge. Keyboard alternatives for dragging and numeric properties.
 
 ## Runtime
 
@@ -35,7 +38,7 @@ Validate engineering-to-raw inverse `(value-offset)/gain`; gain zero is read-onl
 
 ## Charts, logs, scope
 
-Chart data stores acquisition timestamps and quality independent of rendering. Ring buffers are bounded; display min/max decimation preserves spikes. Modes: strip, sweep, scalar XY pairs and full-array burst. Configure axes/units/scaling/color/legend/buffer capacity; no requirement to duplicate the original glossy appearance.
+Chart data stores acquisition timestamps and quality independent of rendering. Ring buffers are bounded; display min/max decimation preserves spikes. Modes: strip, sweep, scalar XY pairs and full-array burst. Configure axes/units/scaling/color/legend/buffer capacity; use original instrument artwork with bevels, highlights, needles and colored scales visually close to µC/Probe; charts and canvas remain freely placeable.
 
 CSV logs carry UTC timestamp, monotonic elapsed time, value and quality for each symbol. Locale-independent numeric serialization; one row per planned tick with missing samples marked. Separate logged data from display-decimated data. Output file selection is explicit; do not silently overwrite. Pause/resume/start-stop conditions have deterministic state transitions.
 
@@ -47,4 +50,4 @@ These are proposed benchmarks, not measured results: responsive editor with 200 
 
 ## Accessibility and distribution
 
-Every icon button has a text label/tooltip. Gauges include readable numeric equivalents. State uses text/shape as well as color. Light/dark/high-contrast palettes, DPI scaling, keyboard navigation and reduced animation are required. Build Windows installer and portable test package after the MVP works. Linux/macOS support follows platform proof, not just successful compilation.
+Every icon button has a text label/tooltip. Gauges include readable numeric equivalents. State uses text/shape as well as color. Light/dark/high-contrast palettes, DPI scaling, keyboard navigation and reduced animation are required. Build and test Windows, macOS and Linux packages for every release. Simulator, designer, persistence and logging must work on all three before MVP completion; hardware adapters publish a separately tested host/board/probe matrix. Unsupported vendor integrations must not disable the cross-platform core.

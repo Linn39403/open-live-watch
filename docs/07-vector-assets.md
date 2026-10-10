@@ -4,13 +4,13 @@ All supplied vectors are new geometry authored for this repository by `tools/gen
 
 ## Visual direction
 
-Readable flat engineering instruments: dark navy surfaces, pale text, blue accent, distinct semantic green/amber/red, restrained borders. Light mode swaps surfaces/text while keeping channel identity stable. Avoid reproducing Micrium branding, layouts at pixel level, glossy skins or distinctive icon silhouettes. Native controls and text are preferable to faux instrument decoration for inputs.
+Required default: light µC/Probe-like engineering designer with a ribbon, dense toolboxes, a white grid/ruler canvas, bottom symbol browser and freely positioned glossy instruments. Author original beveled faces, highlights, needles, tri-color scales and industrial controls that feel close to the reference. Do not copy branding or proprietary geometry. The initial dark standalone instrument files are retained as secondary visual studies, not the approved default skin; implement the light designer concept and new instrument direction first. See docs/14-designer-and-platforms.md.
 
 Icon geometry: 24x24 viewBox, 2-unit strokes, rounded caps/joins, currentColor for primary strokes, no embedded fonts/bitmaps/scripts/external URLs. Larger instruments use 240x180 or 240x240 viewBoxes. IDs in instantiated components must be unique if gradients/clips are added later. Labels are text and remain editable/accessibility-readable.
 
 ## Included library
 
-Toolbar: connect/disconnect/play/stop/save/open/undo/redo/settings/search/lock/unlock/add/chart/scope/memory/log/terminal/export/align/grid. Instruments: radial gauge, linear gauge, thermometer, tank, compass, numeric display, LED, slider, switch, push button, line chart. Industrial symbols: motor, pump, valve. Dashboard concept assembles original instruments with an inspector and symbol table. `assets/preview.html` is a standalone asset gallery, not the final application.
+Toolbar: connect/disconnect/play/stop/save/open/undo/redo/settings/search/lock/unlock/add/chart/scope/memory/log/terminal/export/align/grid. Instruments: radial gauge, linear gauge, thermometer, tank, compass, numeric display, LED, slider, switch, push button, line chart. Industrial symbols: motor, pump, valve. Dashboard concept now depicts the required light ribbon/designer and freeform instrument canvas, with original geometry. `assets/preview.html` is a standalone asset gallery, not the final application.
 
 These SVGs are visual starter assets. They do not yet bind data or implement interaction. The coding agent must turn instruments into parameterized accessible components: min/max/value, gain/offset/unit, bands, title, precision, quality and theme. Toolbar assets can be consumed directly.
 

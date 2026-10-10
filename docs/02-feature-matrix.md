@@ -31,5 +31,8 @@ O/D/P are defined in 01-research.md. P0 = MVP; P1 = next release; P2 = specialis
 | F25 | Shapes/media/compass [O icons,D pp.59-61,83-87] | Original shapes, SVG state imagery, compass | P1 M4 | AC07 |
 | F26 | Debugger coexistence [D pp.73-76] | Per-adapter tested sharing; clear ownership errors | P1 M3 | AC05 |
 | F27 | µC/Trace trigger [D pp.142-144] | Optional external trace connector; no analyzer claim | P2 M7 | AC13 |
+| F28 | Three desktop platforms [owner requirement] | Equivalent core on Windows/macOS/Linux | P0 M0/M1 | AC14 |
+| F29 | Free designer movement [owner requirement] | Dock/split/tab/auto-hide/native float; arbitrary widget geometry | P0 M0/M1 | AC15 |
+| F30 | Reference-close design [owner requirement] | Light ribbon/grid/symbol browser and original glossy instruments | P0 M1 | AC16 |
 
 All O rows prove UI exposure only. Transport, acquisition, export, terminal, scripts and RTOS functionality were not exercised against a target. Alternative skins and legacy integrations can follow after semantic coverage.

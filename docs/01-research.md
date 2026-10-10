@@ -64,4 +64,4 @@ HID: selected host game controller, input-event to target-symbol mapping, status
 
 ## Conclusions for implementation
 
-Preserve the low-friction symbol-to-widget workflow, strong typed bindings, screen reuse, and transport independence. Build simulator-first so the editor and runtime are useful without hardware. Make original vector components consistent and readable instead of reproducing the original's glossy skins. Keep a provenance trail and explicit compatibility boundaries. Hardware read/write, RTOS decoding, legacy formats and scope throughput remain unverified in this session. [P]
+Preserve the low-friction symbol-to-widget workflow, strong typed bindings, screen reuse, and transport independence. Build simulator-first on Windows, macOS and Linux. The owner requires a light µC/Probe-like freeform designer and original glossy instrument skins; this supersedes the initial dark-card proposal. Keep a provenance trail and explicit compatibility boundaries. Hardware read/write, RTOS decoding, legacy formats and scope throughput remain unverified in this session. [P; owner clarification in docs/14-designer-and-platforms.md]

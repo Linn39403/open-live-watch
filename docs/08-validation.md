@@ -20,6 +20,8 @@ Current package validation checks schemas/examples/assets/links. Application and
 
 ## Test layers
 
+Additional mandatory gates **AC14** (three-platform runtime), **AC15** (freeform designer and native docking/floating), and **AC16** (reference-close visual direction) are specified in [designer and platforms](14-designer-and-platforms.md). They are required for M1 acceptance, not later optional enhancements.
+
 Unit/property tests: codecs, range math, path resolution, masks, interval coalescing, frame parser, trigger state machine. Golden fixtures: compiler-generated ELF/DWARF, authored SVD, protocol bytes and sample frames. Integration: simulator adapter through backend IPC to widgets/logger. UI tests: editor gestures, shortcuts, persistence, accessibility and stale/error presentation. Hardware tests: separate opt-in job with exact board/probe/configuration and waveform comparison.
 
 Use fault injection for slow provider, missing responses, reordered completion, malformed files, firmware rebuild during write, clock wrap, queue overflow, disk full and lost target release. Avoid tests that merely assert a function returns the value the same implementation hardcodes.

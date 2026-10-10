@@ -10,3 +10,7 @@ Date: 2026-10-10. Scope: documentation, declarative fixtures, original vectors a
 - Research used the installed V4.8 user/target manuals plus linked primary documentation. No manuals or proprietary screenshots were committed.
 
 Application acceptance tests AC01-AC13 remain planned. Do not confuse these package checks with implementation, performance or hardware validation.
+
+## Owner-directed revision
+
+The Windows-first and initial dark-card concept are superseded. All three desktop platforms and native dock/float/freeform editing are mandatory. Added AC14-AC16 and the detailed designer/platform contract. Replaced the dashboard concept with original light ribbon, dense left toolbox, white ruler/grid canvas, freely positioned instruments, property grid and bottom symbol browser. Generated assets and package validator passed again; revised concept rendered for visual inspection. Platform runtime and docking remain implementation gates, not verified functionality.

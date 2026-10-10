@@ -12,6 +12,8 @@ An independently designed, open-source embedded dashboard and runtime inspection
 4. Use the original assets described in [the vector design system](docs/07-vector-assets.md).
 5. Begin the next agent session with [the implementation prompt](docs/10-agent-handoff.md).
 
+Mandatory design direction: [cross-platform freeform designer](docs/14-designer-and-platforms.md).
+
 Additional references: [target firmware and protocol](docs/06-target-protocol.md), [sources and unresolved questions](docs/11-sources-and-gaps.md), and [local observation log](docs/12-observation-log.md).
 
 Validation scope and limitations: [package verification](docs/13-package-verification.md).
@@ -20,7 +22,7 @@ Validation scope and limitations: [package verification](docs/13-package-verific
 
 - Evidence-tagged analysis of Professional 4.8.2.0 and installed V4.8 manuals.
 - MVP and later feature requirements with acceptance criteria.
-- Windows-first, portable desktop architecture proposal.
+- Windows, macOS, and Linux desktop architecture with a freely dockable GUI designer.
 - Versioned workspace schema, mock symbols, sample dashboard, and typed API contract.
 - Original SVG icons, instruments, industrial symbols, and dashboard concept.
 - Reproducible asset generator and repository validation script.

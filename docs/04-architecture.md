@@ -6,7 +6,11 @@ This is a proposed design, not the internal architecture of µC/Probe.
 
 Default: Tauri 2 desktop shell, Rust backend, TypeScript/React UI. Use SVG for reusable instruments and editor geometry, Canvas for dense chart traces, normal DOM for inspectors and accessible controls. Rust suits binary parsers, bounded protocol handling and probe-rs integration; web rendering supports original vector components and a browser-testable offline demo. Tauri's documented cross-platform shell makes this a plausible route, not proof of real-time rendering or USB behavior. [Tauri](https://v2.tauri.app/)
 
-Alternative: Qt 6/C++/QML if native deployment, existing C++ expertise or measured WebView limitations dominate. Electron if Node-centric delivery speed outweighs package size. Avoid maintaining multiple desktop shells. M0 must prove the chosen stack on Windows before building the hardware features. Evaluate dependency licenses and installer prerequisites; pin versions after that proof.
+Alternative: Qt 6/C++/QML if native deployment, existing C++ expertise or measured WebView limitations dominate. Electron if Node-centric delivery speed outweighs package size. Avoid maintaining multiple desktop shells. M0 must prove the chosen stack on Windows, macOS and Linux, including docking and floating native windows, before building the hardware features. Evaluate dependency licenses and installer prerequisites; pin versions after that proof.
+
+## Designer architecture
+
+See [mandatory designer/platform contract](14-designer-and-platforms.md). Maintain a shared layout graph and command bus for dockable panels, document tabs and native floating windows. Persist logical geometry and reconcile monitor/DPI changes on restore. Each window subscribes to one backend session; floating a view must not create another hardware connection. Pointer drag capture, coordinate transforms, undo commands and snapping are independent of rendering. Docking-library choice is gated by a working three-platform spike, including native multi-window support; an HTML overlay alone does not satisfy floating windows.
 
 ## Boundaries
 
