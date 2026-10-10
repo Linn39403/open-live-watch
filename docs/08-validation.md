@@ -1,6 +1,6 @@
 # Acceptance and validation
 
-Current package validation checks schemas/examples/assets/links. Application and hardware acceptance below is **planned** and has not passed yet.
+Current package validation checks schemas/examples/assets/links. Bounded offline application subsets have passed automated and Windows GUI checks; see [the run guide](16-offline-run-guide.md) and [review evidence](reviews/offline-milestone.md). The full acceptance gates below remain requirements, not completion claims. Their milestone mapping and remaining gaps are tracked in [the project plan](18-project-plan.md). Hardware acceptance has not passed.
 
 | ID | Test and pass condition |
 |---|---|

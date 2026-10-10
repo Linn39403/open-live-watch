@@ -1,10 +1,36 @@
-# Architecture proposal
+# Software design and architecture
 
-This is a proposed design, not the internal architecture of µC/Probe.
+Revision: 2026-10-10. This describes our original software. The implemented offline architecture below is distinct from the later device architecture proposals. Milestone dependencies and design decisions are maintained in [the project plan](18-project-plan.md).
+
+## Implemented offline architecture
+
+The chosen stack is Tauri 2/Rust and React 19/TypeScript. Original instruments and current graph traces use SVG/CSS. The browser preview exercises frontend behavior; native dialogs, files and floating windows require the desktop shell. Canvas traces remain an option for a measured performance need, not the current renderer.
+
+| Component | Responsibility | Current source |
+|---|---|---|
+| Main document authority | Project commands, selection, undo, Run/Stop, session replacement, shared floating-view snapshots | `src/App.tsx`, `src/model.ts` |
+| Workspace boundary | Shared versioned schema, frontend static validator and semantic checks; Rust native load/save checks | `schemas/workspace.schema.json`, `src/workspace-validator.js`, `src/model.ts`, `src-tauri/src/main.rs` |
+| Provider boundary | Source-qualified catalog, typed binding mapping, validated messages, sample acceptance and write correlation | `src/provider.ts` |
+| Acquisition engine | Declarative offline waves, manual-variable writes, bounded coherent samples and replay checks | `src/engine.ts`, `src/simulator.worker.ts` |
+| Source/binding editors | Configure inline variables and select compatible bindings with units, transform, interval and access | `src/SourceEditor.tsx`, `src/BindingEditor.tsx` |
+| Rendering | Original scalar instruments, colors and one-series time/XY plots; no device I/O | `src/Instruments.tsx`, `src/colors.ts`, `src/Graph.tsx` |
+| Desktop services | Rust native file services; Tauri frontend creation and event sharing for floating-panel windows | `src-tauri/src/main.rs`, `src/App.tsx` |
+
+Data flow: project configuration → validated worker configure → catalog and coherent sample batches → main-window acceptance → scalar instruments/graphs and shared floating snapshots. Input flow: user control commit → inverse mapping and access check → worker write → correlated acknowledged/rejected/unknown result. One worker belongs to the main window; floating views cannot start another acquisition engine.
+
+The [provider/GUI contract](17-provider-and-graph-contract.md) specifies protocol version, epoch, catalog and command revisions, quality, timing and bounds. JSON pair identity prevents cross-source collisions. Project replacement/source changes invalidate runtime history and pending commands. Saved initial values differ from runtime writes. Bad-quality values remain unavailable and graphs break their paths across invalid data.
+
+Persist portable widget geometry, colors, source definitions and bindings in a workspace. Keep machine-specific panel placement separate. The current panel mapping is simple edge placement; the versioned docking tree below is still required. Runtime authority currently resides in the main frontend; moving durable session ownership into Rust requires an explicit migration design and preserves the same provider interface.
+
+Design decisions: use one portable shell; one provider interface for all elements; declarative offline configuration without executable scripts; catalog permissions override widget write intent; validate received data at runtime; keep vectors original. Hardware adapters must implement this interface rather than adding transport-specific branches inside instruments.
+
+## Future architecture scope
+
+The remaining sections specify the planned complete designer, symbol service, transport scheduler and extensions. Proposed directories and APIs are not claims that those modules exist.
 
 ## Stack decision
 
-Default: Tauri 2 desktop shell, Rust backend, TypeScript/React UI. Use SVG for reusable instruments and editor geometry, Canvas for dense chart traces, normal DOM for inspectors and accessible controls. Rust suits binary parsers, bounded protocol handling and probe-rs integration; web rendering supports original vector components and a browser-testable offline demo. Tauri's documented cross-platform shell makes this a plausible route, not proof of real-time rendering or USB behavior. [Tauri](https://v2.tauri.app/)
+Selected: Tauri 2 desktop shell, Rust backend, TypeScript/React UI. Use SVG for reusable instruments and editor geometry, optional Canvas for dense traces after benchmarking, and normal DOM for inspectors and accessible controls. Rust suits binary parsers, bounded protocol handling and probe-rs integration; web rendering supports original vector components and a browser-testable offline demo. Tauri's documented cross-platform shell makes this a plausible route, not proof of real-time rendering or USB behavior. [Tauri](https://v2.tauri.app/)
 
 Alternative: Qt 6/C++/QML if native deployment, existing C++ expertise or measured WebView limitations dominate. Electron if Node-centric delivery speed outweighs package size. Avoid maintaining multiple desktop shells. M0 must prove the chosen stack on Windows, macOS and Linux, including docking and floating native windows, before building the hardware features. Evaluate dependency licenses and installer prerequisites; pin versions after that proof.
 

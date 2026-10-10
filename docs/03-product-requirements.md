@@ -1,6 +1,29 @@
 # Product requirements
 
+Revision: 2026-10-10. This is the product requirement baseline, including future requirements. A requirement listed here is not a completion claim. Current implementation, priorities and milestone gates are tracked in [the project plan](18-project-plan.md), with evidence in [the run guide](16-offline-run-guide.md) and [review report](reviews/offline-milestone.md).
+
+## Owner requirements and current delivery scope
+
+| ID | Required behavior | Acceptance boundary |
+|---|---|---|
+| R01 | Run on Windows, macOS and Linux with one portable project format | Actual install/launch/edit/save/runtime evidence on each declared platform; CI alone is insufficient |
+| R02 | Use a light engineering editor organized similarly to µC/Probe | Ribbon, explorer/toolbox, white ruled canvas, symbol browser and inspector; independently authored artwork |
+| R03 | Freely place and manipulate GUI elements like a visual GUI designer | Arbitrary position/overlap, move/resize/rotate, selection, undo and keyboard operation; complete advanced editing remains required |
+| R04 | Create a new independent project without a mandatory motor demo | Named blank project, explicitly configured sources and bindings, save/reopen and unsaved-change protection |
+| R05 | Give users independent natural and custom instrument colors | Per-element saved colors, original vector faces, readable values and state indications beyond color |
+| R06 | Configure how a data source controls each element | Typed source-qualified variables, engineering mapping, units, rate, quality and authoritative access checks |
+| R07 | Provide a freely placeable 2D graph | Time-series and coherent XY mode, configurable bindings/axes/color/history, bounded samples and quality gaps |
+| R08 | Define one protocol/interface for providers and all elements | Versioned validated catalog/sample/write/result contract; future transports adapt to it |
+| R09 | Deliver the first milestone without embedded-device integration | Configurable offline provider and optional motor example; opening a project never connects a device |
+| R10 | Provide an open-source implementation with original assets and a coding-agent plan | Public MIT repository, architecture, contracts, milestones, tests and documented remaining gaps |
+
+R01–R10 are mandatory owner requirements. R04–R08 have implemented offline slices; R01 and the complete R03 docking/editing scope remain open. Current graphs have one series. Generic logging, richer plotting and hardware support below are future requirements. Full roadmap M0/M1 acceptance remains open until its cross-platform and editor gates pass; the bounded Windows offline slice is already accepted.
+
 ## Primary workflow
+
+First offline workflow: create a blank project, declare typed constant or waveform variables, insert instruments and graphs, configure each binding, Run/Stop, and save/reopen. Users control writable manual variables through bound controls. Generated signals are read-only. The motor simulator is an optional example, not the project model.
+
+Later embedded workflow:
 
 An embedded engineer opens an ELF or mock symbol source, finds `motor.speed`, drops a radial gauge on a screen, binds it, chooses a probe/target, and starts reading the running firmware. A slider bound to `motor.setpoint` changes only that validated variable after a deliberate input commit. A logger records values and acquisition times. Saving/reopening preserves the dashboard and symbolic binding, even if an ELF rebuild moves the variable.
 

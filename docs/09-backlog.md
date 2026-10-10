@@ -1,28 +1,32 @@
 # Implementation backlog
 
-Each row is an implementation-sized workstream; complete dependencies in order. Estimates are deliberately omitted until M0 proves the stack.
+Revision: 2026-10-10. The authoritative sequencing, owner-requirement traceability, architecture boundaries and exit gates are in [the project plan](18-project-plan.md). M0–M8 IDs are retained for continuity. M0/M1 have an accepted Windows offline slice; their complete cross-platform/editor gates remain open.
 
-| Milestone | Tasks | Depends | Exit gate |
-|---|---|---|---|
-| M0 Contracts and demo provider | Prove Windows/macOS/Linux builds and native dock/float/restore spike; pin versions; implement model validators/codecs, mock catalog/provider, session epochs; turn three original instruments into components; document stack decision | This package | Offline app works on all three platforms; AC02/04/14/15 subset |
-| M1 Editor and runtime MVP | Light grouped ribbon; dock/float/tab/split/auto-hide panels; tree/toolbox; freeform canvas gesture command model; original glossy instrument skins; inspector/binding; chart ring buffer; save/load; CSV logger | M0 | Full simulator journey on Windows/macOS/Linux; AC01/02/04/06/07/11/14/15/16 |
-| M2 ELF and binding | object/gimli parser, type graph, qualified IDs, lazy browser, complex paths, file watcher/reload, compiler fixtures | M0, integrates M1 | DWARF4/5 fixtures correct; ambiguous/unsupported diagnostics; AC03 |
-| M3 Real debug transport | probe discovery/selection, device/core/config, capability reporting, live memory polling, session cancellation, optional tested sharing | M1/M2 | One actual board/probe read/write demo without stopping firmware; AC05/06 |
-| M4 Engineering views | SVD semantics, bit editor, memory dump, arrays/XY/bar, range bands, compass/state images, RAM footprint, predicate logger | M2/M3 | AC07/08/11; no MMIO side-effect regressions |
-| M5 Original target service | Freeze protocol/golden vectors; C99 bounded decoder/dispatcher; memory policy; UART/CDC/TCP hooks; trace/command UI | M1 | AC09 in simulator and actual firmware; release target integration guide |
-| M6 Oscilloscope | Freeze scope ABI; original C sampling/trigger/buffers; host ownership/download; channel/timebase/trigger UI; export/cursors/stats | M5, or debug-memory mailbox alternative specified first | AC10 on synthetic and actual target signals; measured CPU/RAM/rates |
-| M7 Extensions | Versioned FreeRTOS snapshot integration; limited scripts; table formulas/export; MQTT; HID; optional trace connector; other adapters/legacy imports | M3-M6 as relevant | AC12/13 per extension, provenance/license audit |
-| M8 Distribution | Windows/macOS/Linux packaging and CI; accessibility/performance audit; offline startup; migration/recovery; docs/tutorials | M1-M3 minimum | Reproducible signed/unsigned packaging policy and tested installation/runtime on all three OSes |
+| Milestone | Status | Work remaining or planned | Depends | Exit gate |
+|---|---|---|---|---|
+| M0 Foundation/platform proof | Partial | Current-commit CI and actual macOS/Linux runtime; native dock/float/monitor spike; supported codec and fault coverage; record stack/ownership decisions | Current offline baseline | Portable contracts, bounded provider and real three-platform runtime evidence |
+| M1 Offline editor/runtime | Partial; next milestone | Full dock tree/tab/split/auto-hide/restore; multi-screen/advanced canvas; lifecycle recovery; generic logger; write lifecycle; accessible original instruments and plots; performance | M0 with current closure overlap | Complete offline workflow, applicable AC01/02/06/07/11 and AC14/15/16 on all hosts |
+| M2 ELF/binding | Planned | DWARF4/5 compiler fixtures; static-location resolver, type graph, qualified paths, ambiguity and reload handling | Accepted M0/M1 | AC03; typed bindings survive supported relocation or become explicitly unresolved |
+| M3 Debug adapter | Planned | Rust device authority, chosen probe/board/driver, capabilities and live memory polling/writes | M1/M2 | AC05/06 on named hardware without stopping firmware on connect |
+| M4 Engineering views | Planned | Arrays/multi-series plots, SVD/bit/memory views, range bands and logger predicates | M2/M3 for device features | AC07/08/11 as applicable; MMIO semantics and recording preserved |
+| M5 Target service | Planned | Freeze wire vectors, bounded C99 codec/service, policy and UART/CDC/TCP hooks, trace/commands | M1 and adapter ownership/protocol review | AC09 simulator/loopback plus actual firmware evidence |
+| M6 Target scope | Planned | Freeze sampling/trigger ABI, target buffers and host transfer/cursors/export | M5 or reviewed mailbox alternative | AC10 with actual clocks, trigger/ownership and CPU/RAM evidence |
+| M7 Extensions | Planned | RTOS snapshots, limited scripting/tables/MQTT/HID and optional adapters | Relevant M3–M6 | AC12/13 per extension and permission/provenance review |
+| M8 Distribution | Planned; development packages ongoing | Install/runtime matrix, signing policy, versioning/migrations, accessibility/performance and tutorials | M1 offline; M2/M3 hardware release | Reproducible packages and actual installation/runtime on declared OSes |
 
-## Suggested first issue boundaries
+## Next coding-agent tasks
 
-1. M0: model validation and exact integer codecs.
-2. M0: deterministic mock provider with injected faults and epoch rules.
-3. M0: desktop build and three parameterized original instruments.
-4. M1: canvas command history and geometry transforms.
-5. M1: binding inspector and typed input semantics.
-6. M1: independent acquisition/history/log pipeline.
-7. M2: DWARF fixtures and static-location resolver.
-8. M3: live-memory adapter with measured hardware evidence.
+Use bounded P01–P08 task definitions in [the project plan](18-project-plan.md), in dependency order:
 
-Record completed feature IDs and AC results in each PR. Avoid allocating work by visual skin before the shared behavior and typed contracts are sound.
+1. P01: commit-specific build/runtime evidence and platform gap matrix.
+2. P02: complete native docking/tree design and three-platform spike.
+3. P03: multi-screen/freeform editor command completion.
+4. P04: application-close protection and recovery/migrations.
+5. P05: bounded monotonic write operations and input/session lifecycle.
+6. P06: generic timestamp/quality-aware source logging and sink failures.
+7. P07: plot decimation/multi-series settings and accessibility/DPI completion.
+8. P08: full offline acceptance, measured performance/fault run and packages.
+
+P09/P10 then cover offline ELF resolution and the first explicitly selected embedded interface. No hardware transport belongs to the first offline milestone. Do not claim that the current graph replaces continuous logging, the toggle button proves momentary semantics, or number/boolean provider tests prove exact device integer codecs.
+
+Each implementation change identifies R/AC IDs, applicable test subset, persistence/protocol compatibility, independent review and actual platform evidence. Keep current completed behavior in the [run guide](16-offline-run-guide.md); do not represent unimplemented backlog rows as working modules. Estimates follow the platform/design spikes; there are no invented delivery dates.

@@ -1,5 +1,7 @@
 # Implementation agent prompt
 
+Use [the project plan](18-project-plan.md) as the current task order and requirement/acceptance mapping. Complete M0/M1 closure tasks P01–P08 before beginning P09/P10 embedded work. Preserve the accepted offline slice; full milestone acceptance is separate from its current Windows evidence.
+
 For the implemented configurable offline sources and one-series time/XY graph, also read [provider/GUI protocol v1](17-provider-and-graph-contract.md) and its source mapping. Preserve source-qualified namespaces, 50 ms effective refresh, catalog/write permission checks and coherent bounded quality-aware plots when adding real providers.
 
 Continue Open Live Watch using this repository's evidence-tagged specification and working offline application. The objective is an original open-source embedded runtime dashboard with a workflow similar to µC/Probe, including original vectors. The current bounded milestone includes a blank-project designer, original instruments, explicit motor simulation, native floating panels, validated save/load and per-instrument colors. Read docs/16-offline-run-guide.md for verified behavior and remaining gaps; embedded-device integration is not implemented.

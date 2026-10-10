@@ -25,6 +25,8 @@ To feed your own screen, choose **Design → Configure data sources**, add an of
 
 ## Start here
 
+Current requirements, software design, milestone status and next implementation batches: [project delivery plan](docs/18-project-plan.md). The Windows offline prototype is accepted as a bounded slice; complete M0/M1 platform/editor acceptance remains open.
+
 1. Read [the research report](docs/01-research.md) and [feature matrix](docs/02-feature-matrix.md).
 2. Follow [product requirements](docs/03-product-requirements.md), [architecture](docs/04-architecture.md), and [data contracts](docs/05-data-contracts.md).
 3. Implement milestones in [the backlog](docs/09-backlog.md), using [the validation plan](docs/08-validation.md).

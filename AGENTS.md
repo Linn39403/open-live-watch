@@ -3,6 +3,7 @@
 This repository contains a runnable offline designer and its specification. Read README, docs/10-agent-handoff.md, docs/16-offline-run-guide.md and docs/17-provider-and-graph-contract.md before coding. New projects start blank; the motor simulator is an explicit example, and embedded-device integration remains unimplemented.
 
 - Distinguish observed facts, documented capabilities, proposals, and unverified claims. Do not describe proposed functionality as implemented.
+- Follow docs/18-project-plan.md for current requirement IDs, milestone status, task dependencies and exit gates. The accepted Windows offline slice does not close full M0/M1 or AC14/AC15.
 - Windows, macOS and Linux are required release platforms. Read docs/14-designer-and-platforms.md; the default UI must closely follow the µC/Probe editor workflow and light instrument styling. Implement milestone M0 first, then M1. A complete offline demo is the first acceptance gate.
 - Follow versioned contracts. Validate incoming data in the Rust backend and frontend boundary; TypeScript declarations alone are insufficient.
 - Keep target I/O out of the rendering thread. Every target session has an epoch; reject stale reads and writes after reconnect or firmware reload.
