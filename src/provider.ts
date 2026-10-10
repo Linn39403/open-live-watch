@@ -110,7 +110,13 @@ export function stepRuntime(state: Sim, sources: Source[]): Sim {
     values,
     frames: [
       ...(state.frames ?? []).slice(-599),
-      { sequence: next.tick, sessionTimeMs: timeMs, values: samples, quality },
+      {
+        sequence: next.tick,
+        sessionTimeMs: timeMs,
+        commandRevision: next.revision,
+        values: samples,
+        quality,
+      },
     ],
   };
 }
@@ -451,6 +457,7 @@ export function applyBatch(state: Sim, input: unknown, sources: Source[]): Sim {
   const catalog = catalogFor(sources),
     values = { ...state.values },
     acquired: Record<string, number | boolean> = {},
+    reasons: Record<string, string> = {},
     quality: NonNullable<Sim["frames"]>[number]["quality"] = {};
   if (m.samples.length !== catalog.length)
     throw new Error("Incomplete provider batch");
@@ -469,6 +476,7 @@ export function applyBatch(state: Sim, input: unknown, sources: Source[]): Sim {
       throw new Error("Sample outside catalog range");
     const key = qualifiedKey(sample.sourceId, sample.symbolPath);
     quality[key] = sample.quality;
+    if (sample.reason !== undefined) reasons[key] = sample.reason;
     if (sample.quality === "good") {
       acquired[key] = sample.value!;
       values[key] = sample.value!;
@@ -485,7 +493,12 @@ export function applyBatch(state: Sim, input: unknown, sources: Source[]): Sim {
       ...(state.frames ?? []).slice(-599),
       {
         sequence: m.sequence,
+        epoch: m.epoch,
+        catalogRevision: m.catalogRevision,
         sessionTimeMs: m.timeMs,
+        commandRevision: m.commandRevision,
+        hostReceivedAtUtc: new Date().toISOString(),
+        reasons,
         values: acquired,
         quality,
       },

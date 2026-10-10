@@ -1,0 +1,6356 @@
+{
+  "schemaVersion": 1,
+  "id": "performance-200",
+  "name": "Offline performance: 200 widgets / 100 variables",
+  "sources": [
+    {
+      "id": "performance",
+      "provider": "offline",
+      "path": "inline",
+      "variables": [
+        {
+          "id": "signal-1",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": true,
+          "waveform": "constant",
+          "periodMs": 1000
+        },
+        {
+          "id": "signal-2",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1100
+        },
+        {
+          "id": "signal-3",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1200
+        },
+        {
+          "id": "signal-4",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1300
+        },
+        {
+          "id": "signal-5",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1400
+        },
+        {
+          "id": "signal-6",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1500
+        },
+        {
+          "id": "signal-7",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1600
+        },
+        {
+          "id": "signal-8",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1700
+        },
+        {
+          "id": "signal-9",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1800
+        },
+        {
+          "id": "signal-10",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1900
+        },
+        {
+          "id": "signal-11",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2000
+        },
+        {
+          "id": "signal-12",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2100
+        },
+        {
+          "id": "signal-13",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2200
+        },
+        {
+          "id": "signal-14",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2300
+        },
+        {
+          "id": "signal-15",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2400
+        },
+        {
+          "id": "signal-16",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2500
+        },
+        {
+          "id": "signal-17",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2600
+        },
+        {
+          "id": "signal-18",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2700
+        },
+        {
+          "id": "signal-19",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2800
+        },
+        {
+          "id": "signal-20",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2900
+        },
+        {
+          "id": "signal-21",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1000
+        },
+        {
+          "id": "signal-22",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1100
+        },
+        {
+          "id": "signal-23",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1200
+        },
+        {
+          "id": "signal-24",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1300
+        },
+        {
+          "id": "signal-25",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1400
+        },
+        {
+          "id": "signal-26",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1500
+        },
+        {
+          "id": "signal-27",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1600
+        },
+        {
+          "id": "signal-28",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1700
+        },
+        {
+          "id": "signal-29",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1800
+        },
+        {
+          "id": "signal-30",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1900
+        },
+        {
+          "id": "signal-31",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2000
+        },
+        {
+          "id": "signal-32",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2100
+        },
+        {
+          "id": "signal-33",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2200
+        },
+        {
+          "id": "signal-34",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2300
+        },
+        {
+          "id": "signal-35",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2400
+        },
+        {
+          "id": "signal-36",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2500
+        },
+        {
+          "id": "signal-37",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2600
+        },
+        {
+          "id": "signal-38",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2700
+        },
+        {
+          "id": "signal-39",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2800
+        },
+        {
+          "id": "signal-40",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2900
+        },
+        {
+          "id": "signal-41",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1000
+        },
+        {
+          "id": "signal-42",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1100
+        },
+        {
+          "id": "signal-43",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1200
+        },
+        {
+          "id": "signal-44",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1300
+        },
+        {
+          "id": "signal-45",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1400
+        },
+        {
+          "id": "signal-46",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1500
+        },
+        {
+          "id": "signal-47",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1600
+        },
+        {
+          "id": "signal-48",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1700
+        },
+        {
+          "id": "signal-49",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1800
+        },
+        {
+          "id": "signal-50",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1900
+        },
+        {
+          "id": "signal-51",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2000
+        },
+        {
+          "id": "signal-52",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2100
+        },
+        {
+          "id": "signal-53",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2200
+        },
+        {
+          "id": "signal-54",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2300
+        },
+        {
+          "id": "signal-55",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2400
+        },
+        {
+          "id": "signal-56",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2500
+        },
+        {
+          "id": "signal-57",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2600
+        },
+        {
+          "id": "signal-58",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2700
+        },
+        {
+          "id": "signal-59",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2800
+        },
+        {
+          "id": "signal-60",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2900
+        },
+        {
+          "id": "signal-61",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1000
+        },
+        {
+          "id": "signal-62",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1100
+        },
+        {
+          "id": "signal-63",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1200
+        },
+        {
+          "id": "signal-64",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1300
+        },
+        {
+          "id": "signal-65",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1400
+        },
+        {
+          "id": "signal-66",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1500
+        },
+        {
+          "id": "signal-67",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1600
+        },
+        {
+          "id": "signal-68",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1700
+        },
+        {
+          "id": "signal-69",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1800
+        },
+        {
+          "id": "signal-70",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1900
+        },
+        {
+          "id": "signal-71",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2000
+        },
+        {
+          "id": "signal-72",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2100
+        },
+        {
+          "id": "signal-73",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2200
+        },
+        {
+          "id": "signal-74",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2300
+        },
+        {
+          "id": "signal-75",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2400
+        },
+        {
+          "id": "signal-76",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2500
+        },
+        {
+          "id": "signal-77",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2600
+        },
+        {
+          "id": "signal-78",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2700
+        },
+        {
+          "id": "signal-79",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2800
+        },
+        {
+          "id": "signal-80",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2900
+        },
+        {
+          "id": "signal-81",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1000
+        },
+        {
+          "id": "signal-82",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1100
+        },
+        {
+          "id": "signal-83",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1200
+        },
+        {
+          "id": "signal-84",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1300
+        },
+        {
+          "id": "signal-85",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1400
+        },
+        {
+          "id": "signal-86",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1500
+        },
+        {
+          "id": "signal-87",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1600
+        },
+        {
+          "id": "signal-88",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1700
+        },
+        {
+          "id": "signal-89",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 1800
+        },
+        {
+          "id": "signal-90",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 1900
+        },
+        {
+          "id": "signal-91",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2000
+        },
+        {
+          "id": "signal-92",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2100
+        },
+        {
+          "id": "signal-93",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2200
+        },
+        {
+          "id": "signal-94",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2300
+        },
+        {
+          "id": "signal-95",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2400
+        },
+        {
+          "id": "signal-96",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2500
+        },
+        {
+          "id": "signal-97",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2600
+        },
+        {
+          "id": "signal-98",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2700
+        },
+        {
+          "id": "signal-99",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "ramp",
+          "periodMs": 2800
+        },
+        {
+          "id": "signal-100",
+          "type": "number",
+          "units": "V",
+          "initial": 50,
+          "min": 0,
+          "max": 100,
+          "writable": false,
+          "waveform": "sine",
+          "periodMs": 2900
+        }
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "id": "performance-screen",
+      "name": "Performance",
+      "kind": "dashboard",
+      "canvas": {
+        "width": 2048,
+        "height": 2048,
+        "grid": 16
+      },
+      "widgets": [
+        {
+          "id": "graph-1",
+          "kind": "graph",
+          "title": "Performance graph 1",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 470,
+            "height": 280,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-2",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1,
+            "graph": {
+              "mode": "time",
+              "capacity": 600,
+              "windowMs": 30000,
+              "autoY": true,
+              "traceMode": "line"
+            }
+          }
+        },
+        {
+          "id": "graph-2",
+          "kind": "graph",
+          "title": "Performance graph 2",
+          "rect": {
+            "x": 506,
+            "y": 16,
+            "width": 470,
+            "height": 280,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-3",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1,
+            "graph": {
+              "mode": "time",
+              "capacity": 600,
+              "windowMs": 30000,
+              "autoY": true,
+              "traceMode": "line"
+            }
+          }
+        },
+        {
+          "id": "graph-3",
+          "kind": "graph",
+          "title": "Performance graph 3",
+          "rect": {
+            "x": 996,
+            "y": 16,
+            "width": 470,
+            "height": 280,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-4",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1,
+            "graph": {
+              "mode": "time",
+              "capacity": 600,
+              "windowMs": 30000,
+              "autoY": true,
+              "traceMode": "line"
+            }
+          }
+        },
+        {
+          "id": "graph-4",
+          "kind": "graph",
+          "title": "Performance graph 4",
+          "rect": {
+            "x": 1486,
+            "y": 16,
+            "width": 470,
+            "height": 280,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-5",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1,
+            "graph": {
+              "mode": "time",
+              "capacity": 600,
+              "windowMs": 30000,
+              "autoY": true,
+              "traceMode": "line"
+            }
+          }
+        },
+        {
+          "id": "numeric-1",
+          "kind": "numeric",
+          "title": "Signal 1",
+          "rect": {
+            "x": 16,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-1",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-2",
+          "kind": "numeric",
+          "title": "Signal 2",
+          "rect": {
+            "x": 156,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-2",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-3",
+          "kind": "numeric",
+          "title": "Signal 3",
+          "rect": {
+            "x": 296,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-3",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-4",
+          "kind": "numeric",
+          "title": "Signal 4",
+          "rect": {
+            "x": 436,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-4",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-5",
+          "kind": "numeric",
+          "title": "Signal 5",
+          "rect": {
+            "x": 576,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-5",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-6",
+          "kind": "numeric",
+          "title": "Signal 6",
+          "rect": {
+            "x": 716,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-6",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-7",
+          "kind": "numeric",
+          "title": "Signal 7",
+          "rect": {
+            "x": 856,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-7",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-8",
+          "kind": "numeric",
+          "title": "Signal 8",
+          "rect": {
+            "x": 996,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-8",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-9",
+          "kind": "numeric",
+          "title": "Signal 9",
+          "rect": {
+            "x": 1136,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-9",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-10",
+          "kind": "numeric",
+          "title": "Signal 10",
+          "rect": {
+            "x": 1276,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-10",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-11",
+          "kind": "numeric",
+          "title": "Signal 11",
+          "rect": {
+            "x": 1416,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-11",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-12",
+          "kind": "numeric",
+          "title": "Signal 12",
+          "rect": {
+            "x": 1556,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-12",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-13",
+          "kind": "numeric",
+          "title": "Signal 13",
+          "rect": {
+            "x": 1696,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-13",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-14",
+          "kind": "numeric",
+          "title": "Signal 14",
+          "rect": {
+            "x": 1836,
+            "y": 320,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-14",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-15",
+          "kind": "numeric",
+          "title": "Signal 15",
+          "rect": {
+            "x": 16,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-15",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-16",
+          "kind": "numeric",
+          "title": "Signal 16",
+          "rect": {
+            "x": 156,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-16",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-17",
+          "kind": "numeric",
+          "title": "Signal 17",
+          "rect": {
+            "x": 296,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-17",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-18",
+          "kind": "numeric",
+          "title": "Signal 18",
+          "rect": {
+            "x": 436,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-18",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-19",
+          "kind": "numeric",
+          "title": "Signal 19",
+          "rect": {
+            "x": 576,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-19",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-20",
+          "kind": "numeric",
+          "title": "Signal 20",
+          "rect": {
+            "x": 716,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-20",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-21",
+          "kind": "numeric",
+          "title": "Signal 21",
+          "rect": {
+            "x": 856,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-21",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-22",
+          "kind": "numeric",
+          "title": "Signal 22",
+          "rect": {
+            "x": 996,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-22",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-23",
+          "kind": "numeric",
+          "title": "Signal 23",
+          "rect": {
+            "x": 1136,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-23",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-24",
+          "kind": "numeric",
+          "title": "Signal 24",
+          "rect": {
+            "x": 1276,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-24",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-25",
+          "kind": "numeric",
+          "title": "Signal 25",
+          "rect": {
+            "x": 1416,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-25",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-26",
+          "kind": "numeric",
+          "title": "Signal 26",
+          "rect": {
+            "x": 1556,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-26",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-27",
+          "kind": "numeric",
+          "title": "Signal 27",
+          "rect": {
+            "x": 1696,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-27",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-28",
+          "kind": "numeric",
+          "title": "Signal 28",
+          "rect": {
+            "x": 1836,
+            "y": 430,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-28",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-29",
+          "kind": "numeric",
+          "title": "Signal 29",
+          "rect": {
+            "x": 16,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-29",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-30",
+          "kind": "numeric",
+          "title": "Signal 30",
+          "rect": {
+            "x": 156,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-30",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-31",
+          "kind": "numeric",
+          "title": "Signal 31",
+          "rect": {
+            "x": 296,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-31",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-32",
+          "kind": "numeric",
+          "title": "Signal 32",
+          "rect": {
+            "x": 436,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-32",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-33",
+          "kind": "numeric",
+          "title": "Signal 33",
+          "rect": {
+            "x": 576,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-33",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-34",
+          "kind": "numeric",
+          "title": "Signal 34",
+          "rect": {
+            "x": 716,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-34",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-35",
+          "kind": "numeric",
+          "title": "Signal 35",
+          "rect": {
+            "x": 856,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-35",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-36",
+          "kind": "numeric",
+          "title": "Signal 36",
+          "rect": {
+            "x": 996,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-36",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-37",
+          "kind": "numeric",
+          "title": "Signal 37",
+          "rect": {
+            "x": 1136,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-37",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-38",
+          "kind": "numeric",
+          "title": "Signal 38",
+          "rect": {
+            "x": 1276,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-38",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-39",
+          "kind": "numeric",
+          "title": "Signal 39",
+          "rect": {
+            "x": 1416,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-39",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-40",
+          "kind": "numeric",
+          "title": "Signal 40",
+          "rect": {
+            "x": 1556,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-40",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-41",
+          "kind": "numeric",
+          "title": "Signal 41",
+          "rect": {
+            "x": 1696,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-41",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-42",
+          "kind": "numeric",
+          "title": "Signal 42",
+          "rect": {
+            "x": 1836,
+            "y": 540,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-42",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-43",
+          "kind": "numeric",
+          "title": "Signal 43",
+          "rect": {
+            "x": 16,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-43",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-44",
+          "kind": "numeric",
+          "title": "Signal 44",
+          "rect": {
+            "x": 156,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-44",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-45",
+          "kind": "numeric",
+          "title": "Signal 45",
+          "rect": {
+            "x": 296,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-45",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-46",
+          "kind": "numeric",
+          "title": "Signal 46",
+          "rect": {
+            "x": 436,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-46",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-47",
+          "kind": "numeric",
+          "title": "Signal 47",
+          "rect": {
+            "x": 576,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-47",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-48",
+          "kind": "numeric",
+          "title": "Signal 48",
+          "rect": {
+            "x": 716,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-48",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-49",
+          "kind": "numeric",
+          "title": "Signal 49",
+          "rect": {
+            "x": 856,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-49",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-50",
+          "kind": "numeric",
+          "title": "Signal 50",
+          "rect": {
+            "x": 996,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-50",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-51",
+          "kind": "numeric",
+          "title": "Signal 51",
+          "rect": {
+            "x": 1136,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-51",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-52",
+          "kind": "numeric",
+          "title": "Signal 52",
+          "rect": {
+            "x": 1276,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-52",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-53",
+          "kind": "numeric",
+          "title": "Signal 53",
+          "rect": {
+            "x": 1416,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-53",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-54",
+          "kind": "numeric",
+          "title": "Signal 54",
+          "rect": {
+            "x": 1556,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-54",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-55",
+          "kind": "numeric",
+          "title": "Signal 55",
+          "rect": {
+            "x": 1696,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-55",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-56",
+          "kind": "numeric",
+          "title": "Signal 56",
+          "rect": {
+            "x": 1836,
+            "y": 650,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-56",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-57",
+          "kind": "numeric",
+          "title": "Signal 57",
+          "rect": {
+            "x": 16,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-57",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-58",
+          "kind": "numeric",
+          "title": "Signal 58",
+          "rect": {
+            "x": 156,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-58",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-59",
+          "kind": "numeric",
+          "title": "Signal 59",
+          "rect": {
+            "x": 296,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-59",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-60",
+          "kind": "numeric",
+          "title": "Signal 60",
+          "rect": {
+            "x": 436,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-60",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-61",
+          "kind": "numeric",
+          "title": "Signal 61",
+          "rect": {
+            "x": 576,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-61",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-62",
+          "kind": "numeric",
+          "title": "Signal 62",
+          "rect": {
+            "x": 716,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-62",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-63",
+          "kind": "numeric",
+          "title": "Signal 63",
+          "rect": {
+            "x": 856,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-63",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-64",
+          "kind": "numeric",
+          "title": "Signal 64",
+          "rect": {
+            "x": 996,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-64",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-65",
+          "kind": "numeric",
+          "title": "Signal 65",
+          "rect": {
+            "x": 1136,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-65",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-66",
+          "kind": "numeric",
+          "title": "Signal 66",
+          "rect": {
+            "x": 1276,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-66",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-67",
+          "kind": "numeric",
+          "title": "Signal 67",
+          "rect": {
+            "x": 1416,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-67",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-68",
+          "kind": "numeric",
+          "title": "Signal 68",
+          "rect": {
+            "x": 1556,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-68",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-69",
+          "kind": "numeric",
+          "title": "Signal 69",
+          "rect": {
+            "x": 1696,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-69",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-70",
+          "kind": "numeric",
+          "title": "Signal 70",
+          "rect": {
+            "x": 1836,
+            "y": 760,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-70",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-71",
+          "kind": "numeric",
+          "title": "Signal 71",
+          "rect": {
+            "x": 16,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-71",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-72",
+          "kind": "numeric",
+          "title": "Signal 72",
+          "rect": {
+            "x": 156,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-72",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-73",
+          "kind": "numeric",
+          "title": "Signal 73",
+          "rect": {
+            "x": 296,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-73",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-74",
+          "kind": "numeric",
+          "title": "Signal 74",
+          "rect": {
+            "x": 436,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-74",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-75",
+          "kind": "numeric",
+          "title": "Signal 75",
+          "rect": {
+            "x": 576,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-75",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-76",
+          "kind": "numeric",
+          "title": "Signal 76",
+          "rect": {
+            "x": 716,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-76",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-77",
+          "kind": "numeric",
+          "title": "Signal 77",
+          "rect": {
+            "x": 856,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-77",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-78",
+          "kind": "numeric",
+          "title": "Signal 78",
+          "rect": {
+            "x": 996,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-78",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-79",
+          "kind": "numeric",
+          "title": "Signal 79",
+          "rect": {
+            "x": 1136,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-79",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-80",
+          "kind": "numeric",
+          "title": "Signal 80",
+          "rect": {
+            "x": 1276,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-80",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-81",
+          "kind": "numeric",
+          "title": "Signal 81",
+          "rect": {
+            "x": 1416,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-81",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-82",
+          "kind": "numeric",
+          "title": "Signal 82",
+          "rect": {
+            "x": 1556,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-82",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-83",
+          "kind": "numeric",
+          "title": "Signal 83",
+          "rect": {
+            "x": 1696,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-83",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-84",
+          "kind": "numeric",
+          "title": "Signal 84",
+          "rect": {
+            "x": 1836,
+            "y": 870,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-84",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-85",
+          "kind": "numeric",
+          "title": "Signal 85",
+          "rect": {
+            "x": 16,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-85",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-86",
+          "kind": "numeric",
+          "title": "Signal 86",
+          "rect": {
+            "x": 156,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-86",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-87",
+          "kind": "numeric",
+          "title": "Signal 87",
+          "rect": {
+            "x": 296,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-87",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-88",
+          "kind": "numeric",
+          "title": "Signal 88",
+          "rect": {
+            "x": 436,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-88",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-89",
+          "kind": "numeric",
+          "title": "Signal 89",
+          "rect": {
+            "x": 576,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-89",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-90",
+          "kind": "numeric",
+          "title": "Signal 90",
+          "rect": {
+            "x": 716,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-90",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-91",
+          "kind": "numeric",
+          "title": "Signal 91",
+          "rect": {
+            "x": 856,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-91",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-92",
+          "kind": "numeric",
+          "title": "Signal 92",
+          "rect": {
+            "x": 996,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-92",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-93",
+          "kind": "numeric",
+          "title": "Signal 93",
+          "rect": {
+            "x": 1136,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-93",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-94",
+          "kind": "numeric",
+          "title": "Signal 94",
+          "rect": {
+            "x": 1276,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-94",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-95",
+          "kind": "numeric",
+          "title": "Signal 95",
+          "rect": {
+            "x": 1416,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-95",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-96",
+          "kind": "numeric",
+          "title": "Signal 96",
+          "rect": {
+            "x": 1556,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-96",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-97",
+          "kind": "numeric",
+          "title": "Signal 97",
+          "rect": {
+            "x": 1696,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-97",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-98",
+          "kind": "numeric",
+          "title": "Signal 98",
+          "rect": {
+            "x": 1836,
+            "y": 980,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-98",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-99",
+          "kind": "numeric",
+          "title": "Signal 99",
+          "rect": {
+            "x": 16,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-99",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-100",
+          "kind": "numeric",
+          "title": "Signal 100",
+          "rect": {
+            "x": 156,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-100",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-101",
+          "kind": "numeric",
+          "title": "Signal 1",
+          "rect": {
+            "x": 296,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-1",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-102",
+          "kind": "numeric",
+          "title": "Signal 2",
+          "rect": {
+            "x": 436,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-2",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-103",
+          "kind": "numeric",
+          "title": "Signal 3",
+          "rect": {
+            "x": 576,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-3",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-104",
+          "kind": "numeric",
+          "title": "Signal 4",
+          "rect": {
+            "x": 716,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-4",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-105",
+          "kind": "numeric",
+          "title": "Signal 5",
+          "rect": {
+            "x": 856,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-5",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-106",
+          "kind": "numeric",
+          "title": "Signal 6",
+          "rect": {
+            "x": 996,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-6",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-107",
+          "kind": "numeric",
+          "title": "Signal 7",
+          "rect": {
+            "x": 1136,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-7",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-108",
+          "kind": "numeric",
+          "title": "Signal 8",
+          "rect": {
+            "x": 1276,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-8",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-109",
+          "kind": "numeric",
+          "title": "Signal 9",
+          "rect": {
+            "x": 1416,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-9",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-110",
+          "kind": "numeric",
+          "title": "Signal 10",
+          "rect": {
+            "x": 1556,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-10",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-111",
+          "kind": "numeric",
+          "title": "Signal 11",
+          "rect": {
+            "x": 1696,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-11",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-112",
+          "kind": "numeric",
+          "title": "Signal 12",
+          "rect": {
+            "x": 1836,
+            "y": 1090,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-12",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-113",
+          "kind": "numeric",
+          "title": "Signal 13",
+          "rect": {
+            "x": 16,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-13",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-114",
+          "kind": "numeric",
+          "title": "Signal 14",
+          "rect": {
+            "x": 156,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-14",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-115",
+          "kind": "numeric",
+          "title": "Signal 15",
+          "rect": {
+            "x": 296,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-15",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-116",
+          "kind": "numeric",
+          "title": "Signal 16",
+          "rect": {
+            "x": 436,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-16",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-117",
+          "kind": "numeric",
+          "title": "Signal 17",
+          "rect": {
+            "x": 576,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-17",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-118",
+          "kind": "numeric",
+          "title": "Signal 18",
+          "rect": {
+            "x": 716,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-18",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-119",
+          "kind": "numeric",
+          "title": "Signal 19",
+          "rect": {
+            "x": 856,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-19",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-120",
+          "kind": "numeric",
+          "title": "Signal 20",
+          "rect": {
+            "x": 996,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-20",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-121",
+          "kind": "numeric",
+          "title": "Signal 21",
+          "rect": {
+            "x": 1136,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-21",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-122",
+          "kind": "numeric",
+          "title": "Signal 22",
+          "rect": {
+            "x": 1276,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-22",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-123",
+          "kind": "numeric",
+          "title": "Signal 23",
+          "rect": {
+            "x": 1416,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-23",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-124",
+          "kind": "numeric",
+          "title": "Signal 24",
+          "rect": {
+            "x": 1556,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-24",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-125",
+          "kind": "numeric",
+          "title": "Signal 25",
+          "rect": {
+            "x": 1696,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-25",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-126",
+          "kind": "numeric",
+          "title": "Signal 26",
+          "rect": {
+            "x": 1836,
+            "y": 1200,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-26",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-127",
+          "kind": "numeric",
+          "title": "Signal 27",
+          "rect": {
+            "x": 16,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-27",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-128",
+          "kind": "numeric",
+          "title": "Signal 28",
+          "rect": {
+            "x": 156,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-28",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-129",
+          "kind": "numeric",
+          "title": "Signal 29",
+          "rect": {
+            "x": 296,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-29",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-130",
+          "kind": "numeric",
+          "title": "Signal 30",
+          "rect": {
+            "x": 436,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-30",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-131",
+          "kind": "numeric",
+          "title": "Signal 31",
+          "rect": {
+            "x": 576,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-31",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-132",
+          "kind": "numeric",
+          "title": "Signal 32",
+          "rect": {
+            "x": 716,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-32",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-133",
+          "kind": "numeric",
+          "title": "Signal 33",
+          "rect": {
+            "x": 856,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-33",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-134",
+          "kind": "numeric",
+          "title": "Signal 34",
+          "rect": {
+            "x": 996,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-34",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-135",
+          "kind": "numeric",
+          "title": "Signal 35",
+          "rect": {
+            "x": 1136,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-35",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-136",
+          "kind": "numeric",
+          "title": "Signal 36",
+          "rect": {
+            "x": 1276,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-36",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-137",
+          "kind": "numeric",
+          "title": "Signal 37",
+          "rect": {
+            "x": 1416,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-37",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-138",
+          "kind": "numeric",
+          "title": "Signal 38",
+          "rect": {
+            "x": 1556,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-38",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-139",
+          "kind": "numeric",
+          "title": "Signal 39",
+          "rect": {
+            "x": 1696,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-39",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-140",
+          "kind": "numeric",
+          "title": "Signal 40",
+          "rect": {
+            "x": 1836,
+            "y": 1310,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-40",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-141",
+          "kind": "numeric",
+          "title": "Signal 41",
+          "rect": {
+            "x": 16,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-41",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-142",
+          "kind": "numeric",
+          "title": "Signal 42",
+          "rect": {
+            "x": 156,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-42",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-143",
+          "kind": "numeric",
+          "title": "Signal 43",
+          "rect": {
+            "x": 296,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-43",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-144",
+          "kind": "numeric",
+          "title": "Signal 44",
+          "rect": {
+            "x": 436,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-44",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-145",
+          "kind": "numeric",
+          "title": "Signal 45",
+          "rect": {
+            "x": 576,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-45",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-146",
+          "kind": "numeric",
+          "title": "Signal 46",
+          "rect": {
+            "x": 716,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-46",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-147",
+          "kind": "numeric",
+          "title": "Signal 47",
+          "rect": {
+            "x": 856,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-47",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-148",
+          "kind": "numeric",
+          "title": "Signal 48",
+          "rect": {
+            "x": 996,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-48",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-149",
+          "kind": "numeric",
+          "title": "Signal 49",
+          "rect": {
+            "x": 1136,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-49",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-150",
+          "kind": "numeric",
+          "title": "Signal 50",
+          "rect": {
+            "x": 1276,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-50",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-151",
+          "kind": "numeric",
+          "title": "Signal 51",
+          "rect": {
+            "x": 1416,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-51",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-152",
+          "kind": "numeric",
+          "title": "Signal 52",
+          "rect": {
+            "x": 1556,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-52",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-153",
+          "kind": "numeric",
+          "title": "Signal 53",
+          "rect": {
+            "x": 1696,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-53",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-154",
+          "kind": "numeric",
+          "title": "Signal 54",
+          "rect": {
+            "x": 1836,
+            "y": 1420,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-54",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-155",
+          "kind": "numeric",
+          "title": "Signal 55",
+          "rect": {
+            "x": 16,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-55",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-156",
+          "kind": "numeric",
+          "title": "Signal 56",
+          "rect": {
+            "x": 156,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-56",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-157",
+          "kind": "numeric",
+          "title": "Signal 57",
+          "rect": {
+            "x": 296,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-57",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-158",
+          "kind": "numeric",
+          "title": "Signal 58",
+          "rect": {
+            "x": 436,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-58",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-159",
+          "kind": "numeric",
+          "title": "Signal 59",
+          "rect": {
+            "x": 576,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-59",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-160",
+          "kind": "numeric",
+          "title": "Signal 60",
+          "rect": {
+            "x": 716,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-60",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-161",
+          "kind": "numeric",
+          "title": "Signal 61",
+          "rect": {
+            "x": 856,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-61",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-162",
+          "kind": "numeric",
+          "title": "Signal 62",
+          "rect": {
+            "x": 996,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-62",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-163",
+          "kind": "numeric",
+          "title": "Signal 63",
+          "rect": {
+            "x": 1136,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-63",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-164",
+          "kind": "numeric",
+          "title": "Signal 64",
+          "rect": {
+            "x": 1276,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-64",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-165",
+          "kind": "numeric",
+          "title": "Signal 65",
+          "rect": {
+            "x": 1416,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-65",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-166",
+          "kind": "numeric",
+          "title": "Signal 66",
+          "rect": {
+            "x": 1556,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-66",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-167",
+          "kind": "numeric",
+          "title": "Signal 67",
+          "rect": {
+            "x": 1696,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-67",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-168",
+          "kind": "numeric",
+          "title": "Signal 68",
+          "rect": {
+            "x": 1836,
+            "y": 1530,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-68",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-169",
+          "kind": "numeric",
+          "title": "Signal 69",
+          "rect": {
+            "x": 16,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-69",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-170",
+          "kind": "numeric",
+          "title": "Signal 70",
+          "rect": {
+            "x": 156,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-70",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-171",
+          "kind": "numeric",
+          "title": "Signal 71",
+          "rect": {
+            "x": 296,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-71",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-172",
+          "kind": "numeric",
+          "title": "Signal 72",
+          "rect": {
+            "x": 436,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-72",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-173",
+          "kind": "numeric",
+          "title": "Signal 73",
+          "rect": {
+            "x": 576,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-73",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-174",
+          "kind": "numeric",
+          "title": "Signal 74",
+          "rect": {
+            "x": 716,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-74",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-175",
+          "kind": "numeric",
+          "title": "Signal 75",
+          "rect": {
+            "x": 856,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-75",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-176",
+          "kind": "numeric",
+          "title": "Signal 76",
+          "rect": {
+            "x": 996,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-76",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-177",
+          "kind": "numeric",
+          "title": "Signal 77",
+          "rect": {
+            "x": 1136,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-77",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-178",
+          "kind": "numeric",
+          "title": "Signal 78",
+          "rect": {
+            "x": 1276,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-78",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-179",
+          "kind": "numeric",
+          "title": "Signal 79",
+          "rect": {
+            "x": 1416,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-79",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-180",
+          "kind": "numeric",
+          "title": "Signal 80",
+          "rect": {
+            "x": 1556,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-80",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-181",
+          "kind": "numeric",
+          "title": "Signal 81",
+          "rect": {
+            "x": 1696,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-81",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-182",
+          "kind": "numeric",
+          "title": "Signal 82",
+          "rect": {
+            "x": 1836,
+            "y": 1640,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-82",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-183",
+          "kind": "numeric",
+          "title": "Signal 83",
+          "rect": {
+            "x": 16,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-83",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-184",
+          "kind": "numeric",
+          "title": "Signal 84",
+          "rect": {
+            "x": 156,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-84",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-185",
+          "kind": "numeric",
+          "title": "Signal 85",
+          "rect": {
+            "x": 296,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-85",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-186",
+          "kind": "numeric",
+          "title": "Signal 86",
+          "rect": {
+            "x": 436,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-86",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-187",
+          "kind": "numeric",
+          "title": "Signal 87",
+          "rect": {
+            "x": 576,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-87",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-188",
+          "kind": "numeric",
+          "title": "Signal 88",
+          "rect": {
+            "x": 716,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-88",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-189",
+          "kind": "numeric",
+          "title": "Signal 89",
+          "rect": {
+            "x": 856,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-89",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-190",
+          "kind": "numeric",
+          "title": "Signal 90",
+          "rect": {
+            "x": 996,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-90",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-191",
+          "kind": "numeric",
+          "title": "Signal 91",
+          "rect": {
+            "x": 1136,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-91",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-192",
+          "kind": "numeric",
+          "title": "Signal 92",
+          "rect": {
+            "x": 1276,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-92",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-193",
+          "kind": "numeric",
+          "title": "Signal 93",
+          "rect": {
+            "x": 1416,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-93",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-194",
+          "kind": "numeric",
+          "title": "Signal 94",
+          "rect": {
+            "x": 1556,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-94",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-195",
+          "kind": "numeric",
+          "title": "Signal 95",
+          "rect": {
+            "x": 1696,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-95",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        },
+        {
+          "id": "numeric-196",
+          "kind": "numeric",
+          "title": "Signal 96",
+          "rect": {
+            "x": 1836,
+            "y": 1750,
+            "width": 130,
+            "height": 100,
+            "rotation": 0
+          },
+          "binding": {
+            "sourceId": "performance",
+            "symbolPath": "signal-96",
+            "gain": 1,
+            "offset": 0,
+            "units": "V",
+            "periodMs": 50,
+            "writable": false
+          },
+          "settings": {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -36,12 +36,22 @@ export type Binding = {
   periodMs: number;
   writable: boolean;
 };
+export type GraphSeries = {
+  id: string;
+  name: string;
+  color: string;
+  visible: boolean;
+  binding?: Binding;
+};
 export type GraphConfig = {
   mode: "time" | "xy";
   x?: Binding;
   capacity: number;
   windowMs: number;
   autoY?: boolean;
+  traceMode?: "line" | "points";
+  primaryName?: string;
+  series?: GraphSeries[];
 };
 export type Rect = {
   x: number;
@@ -52,6 +62,8 @@ export type Rect = {
 };
 export type Widget = {
   id: string;
+  locked?: boolean;
+  groupId?: string;
   kind: Kind;
   title: string;
   rect: Rect;
@@ -71,6 +83,8 @@ export type Widget = {
     max?: number;
     precision?: number;
     commit?: "release" | "apply";
+    buttonMode?: "toggle" | "momentary" | "repeat";
+    repeatMs?: number;
     graph?: GraphConfig;
   };
 };
@@ -148,8 +162,20 @@ export function parseWorkspace(input: unknown): Workspace {
         throw new Error("Unknown graph X source");
       if (v.settings.graph?.mode === "xy" && !v.settings.graph.x)
         throw new Error("XY graph requires X binding");
-      for (const binding of [v.binding, v.settings.graph?.x]) {
+      const seriesIds = new Set<string>();
+      for (const series of v.settings.graph?.series ?? []) {
+        if (series.id === "primary" || seriesIds.has(series.id))
+          throw new Error("Duplicate graph series ID");
+        seriesIds.add(series.id);
+      }
+      for (const binding of [
+        v.binding,
+        v.settings.graph?.x,
+        ...(v.settings.graph?.series ?? []).map((s) => s.binding),
+      ]) {
         if (!binding) continue;
+        if (!ids.has(binding.sourceId))
+          throw new Error("Unknown graph series source");
         const source = w.sources.find((s) => s.id === binding.sourceId);
         if (
           source?.provider === "offline" ||
@@ -241,6 +267,9 @@ export function createInstrument(kind: Kind, id: string, index = 0): Widget {
       precision: kind === "thermometer" ? 1 : 0,
       ...(kind === "graph"
         ? { graph: { mode: "time" as const, capacity: 200, windowMs: 10000 } }
+        : {}),
+      ...(kind === "button"
+        ? { buttonMode: "momentary" as const, repeatMs: 500 }
         : {}),
     },
   };
@@ -365,8 +394,13 @@ export type Sim = {
   frames?: RuntimeFrame[];
 };
 export type RuntimeFrame = {
+  epoch?: number;
+  catalogRevision?: number;
   sequence: number;
   sessionTimeMs: number;
+  commandRevision?: number;
+  hostReceivedAtUtc?: string;
+  reasons?: Record<string, string>;
   values: Record<string, number | boolean>;
   quality: Record<
     string,
@@ -483,7 +517,13 @@ export function parseSim(input: unknown): Sim {
     for (const frame of s.frames) {
       if (
         !frame ||
+        [frame.epoch, frame.catalogRevision].some(
+          (v) => v !== undefined && (!Number.isSafeInteger(v) || v < 0),
+        ) ||
         !Number.isSafeInteger(frame.sequence) ||
+        (frame.commandRevision !== undefined &&
+          (!Number.isSafeInteger(frame.commandRevision) ||
+            frame.commandRevision < 0)) ||
         frame.sequence <= sequence ||
         !Number.isSafeInteger(frame.sessionTimeMs) ||
         frame.sessionTimeMs <= time ||
@@ -494,6 +534,31 @@ export function parseSim(input: unknown): Sim {
         Object.keys(frame.quality).length > 128
       )
         throw new Error("Invalid coherent frame");
+      if (
+        frame.hostReceivedAtUtc !== undefined &&
+        (typeof frame.hostReceivedAtUtc !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(
+            frame.hostReceivedAtUtc,
+          ) ||
+          !Number.isFinite(Date.parse(frame.hostReceivedAtUtc)) ||
+          new Date(frame.hostReceivedAtUtc).toISOString() !==
+            frame.hostReceivedAtUtc)
+      )
+        throw new Error("Invalid host receipt UTC");
+      if (
+        frame.reasons !== undefined &&
+        (!frame.reasons ||
+          Array.isArray(frame.reasons) ||
+          typeof frame.reasons !== "object" ||
+          Object.keys(frame.reasons).length > 128 ||
+          Object.entries(frame.reasons).some(
+            ([key, value]) =>
+              !(key in frame.quality) ||
+              typeof value !== "string" ||
+              value.length > 256,
+          ))
+      )
+        throw new Error("Invalid frame reasons");
       for (const [key, quality] of Object.entries(frame.quality)) {
         if (
           ![

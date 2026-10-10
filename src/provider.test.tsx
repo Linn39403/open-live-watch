@@ -348,7 +348,7 @@ describe("offline provider contract", () => {
       ...messageBase(main),
       kind: "write" as const,
       commandRevision: 0,
-      operationId: "op1",
+      operationId: "2:1",
       sourceId: "lab",
       symbolPath: "manual",
       value: 5,
@@ -375,11 +375,50 @@ describe("offline provider contract", () => {
     expect(
       engine.receive({
         ...write,
-        operationId: "readonly",
+        operationId: "2:2",
         commandRevision: 1,
         symbolPath: "wave",
       })[0],
     ).toMatchObject({ status: "rejected" });
+  });
+  it("supports sustained writes with constant replay memory and rejects malformed/consumed counters", () => {
+    const engine = new OfflineEngine();
+    engine.receive(configure());
+    for (let i = 1; i <= 1000; i++) {
+      const command = {
+        ...messageBase(engine.state),
+        kind: "write",
+        commandRevision: engine.state.revision,
+        operationId: `2:${i}`,
+        sourceId: "lab",
+        symbolPath: "manual",
+        value: i % 10,
+      };
+      expect(engine.receive(command)[0]).toMatchObject({
+        status: "acknowledged",
+      });
+    }
+    const value = engine.state.values[qualifiedKey("lab", "manual")];
+    for (const operationId of [
+      "2:1",
+      "2:1000",
+      "2:001001",
+      "old-uuid",
+      "2:9007199254740992",
+      "1:1001",
+    ])
+      expect(
+        engine.receive({
+          ...messageBase(engine.state),
+          kind: "write",
+          commandRevision: engine.state.revision,
+          operationId,
+          sourceId: "lab",
+          symbolPath: "manual",
+          value: 5,
+        })[0],
+      ).toMatchObject({ status: "rejected" });
+    expect(engine.state.values[qualifiedKey("lab", "manual")]).toBe(value);
   });
   it("rejects stale/reversed batches, type mismatch and bad quality without fabricating values", () => {
     const engine = new OfflineEngine();
@@ -500,6 +539,7 @@ describe("coherent 2D graph", () => {
     expect(graphPoints(w, frames, workspace())).toEqual([
       { x: 0.15, y: 1 },
       null,
+      { x: 0.25, y: 2 },
       { x: 0.3, y: 3 },
     ]);
     const many = Array.from({ length: 1000 }, (_, i) =>

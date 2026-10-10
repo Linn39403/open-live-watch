@@ -1,5 +1,6 @@
 import type { Widget } from "./model";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { PressController } from "./PressController";
 import { instrumentPalette } from "./colors";
 export function Instrument({
   w,
@@ -7,10 +8,16 @@ export function Instrument({
   onWrite,
   running,
   thumbnail = false,
+  sessionEpoch = 0,
 }: {
   w: Widget;
   value: number | boolean;
-  onWrite: (value: number | boolean) => void;
+  onWrite: (
+    value: number | boolean,
+    safetyRelease?: boolean,
+    finalRelease?: boolean,
+  ) => void;
+  sessionEpoch?: number;
   running: boolean;
   thumbnail?: boolean;
 }) {
@@ -38,6 +45,43 @@ export function Instrument({
   const units =
     w.binding?.units ?? (preview && w.kind === "thermometer" ? "°C" : "");
   const canWrite = running && resolved && !!w.binding?.writable;
+  const writeRef = useRef(onWrite);
+  writeRef.current = onWrite;
+  const press = useRef<PressController | null>(null);
+  if (!press.current)
+    press.current = new PressController((v, safety, final) =>
+      writeRef.current(v, safety, final),
+    );
+  const buttonMode = w.settings.buttonMode ?? "toggle";
+  const validity = useRef({ canWrite, sessionEpoch, id: w.id });
+  validity.current = { canWrite, sessionEpoch, id: w.id };
+  useEffect(() => {
+    press.current?.cancel();
+    return () => {
+      if (
+        validity.current.canWrite &&
+        validity.current.sessionEpoch === sessionEpoch &&
+        validity.current.id === w.id
+      )
+        press.current?.release();
+      else press.current?.cancel();
+    };
+  }, [canWrite, sessionEpoch, w.id, buttonMode]);
+  useEffect(() => {
+    const release = () => {
+      if (canWrite) press.current?.release();
+      else press.current?.cancel();
+    };
+    const visibility = () => {
+      if (document.hidden) release();
+    };
+    window.addEventListener("blur", release);
+    document.addEventListener("visibilitychange", visibility);
+    return () => {
+      window.removeEventListener("blur", release);
+      document.removeEventListener("visibilitychange", visibility);
+    };
+  }, [canWrite]);
   const [draft, setDraft] = useState(Number(actual));
   useEffect(() => setDraft(Number(actual)), [actual, running]);
   const style = {
@@ -168,10 +212,18 @@ export function Instrument({
           fontWeight="600"
           fill={palette.buttonInk}
         >
-          Toggle
+          {buttonMode === "toggle"
+            ? "Toggle"
+            : buttonMode === "repeat"
+              ? "Repeat"
+              : "Hold"}
         </text>
         <text x="110" y="139" textAnchor="middle" fontSize="11" fill="#526974">
-          TOGGLE CONTROL
+          {buttonMode === "toggle"
+            ? "TOGGLE CONTROL"
+            : buttonMode === "repeat"
+              ? "REPEAT WHILE HELD"
+              : "MOMENTARY CONTROL"}
         </text>
       </>,
     );
@@ -476,14 +528,7 @@ export function Instrument({
           rx="4"
           fill={palette.dark}
         />
-        <rect
-          x="24"
-          y="39"
-          width="172"
-          height="62"
-          rx="2"
-          fill="#f2f3ed"
-        />
+        <rect x="24" y="39" width="172" height="62" rx="2" fill="#f2f3ed" />
         <path d="M26 41H194V59H26Z" fill="#ffffff50" />
         <text
           x="184"
@@ -559,7 +604,38 @@ export function Instrument({
         className="physical-control push-control"
         disabled={!canWrite}
         aria-label={w.title}
-        onClick={() => onWrite(!value)}
+        onClick={() => {
+          if (buttonMode === "toggle") onWrite(!value);
+        }}
+        onPointerDown={(e) => {
+          if (buttonMode === "toggle" || !canWrite) return;
+          e.preventDefault();
+          e.stopPropagation();
+          e.currentTarget.focus();
+          e.currentTarget.setPointerCapture(e.pointerId);
+          press.current?.begin(buttonMode, w.settings.repeatMs ?? 500);
+        }}
+        onPointerUp={() => press.current?.release()}
+        onPointerCancel={() => press.current?.release()}
+        onLostPointerCapture={() => press.current?.release()}
+        onBlur={() => press.current?.release()}
+        onKeyDown={(e) => {
+          if (
+            buttonMode !== "toggle" &&
+            canWrite &&
+            [" ", "Enter"].includes(e.key)
+          ) {
+            e.preventDefault();
+            if (!e.repeat)
+              press.current?.begin(buttonMode, w.settings.repeatMs ?? 500);
+          }
+        }}
+        onKeyUp={(e) => {
+          if (buttonMode !== "toggle" && [" ", "Enter"].includes(e.key)) {
+            e.preventDefault();
+            press.current?.release();
+          }
+        }}
       >
         {push()}
       </button>

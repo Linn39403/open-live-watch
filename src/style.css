@@ -93,7 +93,9 @@ nav button.active {
   box-shadow: 0 0 0 1px #b8c8d5;
 }
 .ribbon {
-  height: 82px;
+  min-height: 82px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
   background: linear-gradient(#fff, #eaf0f5);
   display: flex;
   align-items: center;
@@ -102,7 +104,9 @@ nav button.active {
   border-bottom: 1px solid #a5b7c5;
 }
 .group {
-  height: 64px;
+  min-height: 64px;
+  height: auto;
+  align-self: stretch;
   border-right: 1px solid #c4cfd8;
   padding-right: 14px;
   display: flex;
@@ -783,4 +787,285 @@ footer {
 }
 .graph .instrument-face {
   min-height: 0;
+  height: 0;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+.graph {
+  overflow: hidden;
+  min-width: 0;
+}
+.graph .instrument-title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 16px;
+}
+.graph-values {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 13px;
+  flex-shrink: 0;
+}
+.selection-marquee {
+  position: absolute;
+  border: 1px solid #327fbd;
+  background: #327fbd20;
+  pointer-events: none;
+  z-index: 10000;
+}
+.screen-tabs {
+  gap: 4px;
+  align-items: center;
+  overflow-x: auto;
+}
+.screen-tabs button[aria-selected="true"] {
+  background: #e6f0f7;
+  border-bottom: 2px solid #327fbd;
+}
+.screen-tabs input {
+  width: 130px;
+}
+.overlap-warning {
+  color: #926118;
+}
+.diagnostics {
+  position: fixed;
+  right: 18px;
+  bottom: 26px;
+  z-index: 20;
+  width: min(600px, calc(100vw - 36px));
+  max-height: 48vh;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid #8e9da4;
+  background: #fafbf9;
+  box-shadow: 0 3px 16px #0003;
+  font-size: 12px;
+}
+.diagnostics pre {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.diagnostics-toggle {
+  position: absolute;
+  right: 20px;
+  top: 38px;
+  z-index: 3;
+  font-size: 12px;
+}
+.series-editor {
+  border-top: 1px solid #c9d2d5;
+  padding: 10px 0;
+}
+.graph-values {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dock-host {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template: auto minmax(0, 1fr) auto / auto minmax(0, 1fr) auto;
+  padding: 4px;
+  gap: 3px;
+  overflow: hidden;
+}
+.dock-tree {
+  grid-area: 2/2;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.dock-split {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.dock-child {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.dock-divider {
+  flex: 0 0 6px;
+  background: #d7e0e6;
+  cursor: col-resize;
+  outline-offset: -2px;
+}
+.dock-split.vertical > .dock-divider {
+  cursor: row-resize;
+}
+.dock-leaf {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #f7f9fa;
+  border: 1px solid #bdcbd4;
+}
+.dock-tab-content {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+}
+.dock-tab-content > .panel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+.dock-tabs {
+  display: flex;
+  flex-shrink: 0;
+  overflow: auto;
+  gap: 2px;
+  background: #e6edf2;
+  padding: 2px;
+}
+.dock-tabs button {
+  white-space: nowrap;
+  border-radius: 2px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  background: transparent;
+}
+.dock-tabs button[aria-selected="true"] {
+  background: #fff;
+  border-color: #b5c6d1;
+}
+.dock-canvas > .document {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+.dock-drop-targets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template: 1fr 1fr 1fr/1fr 1fr 1fr;
+  background: #eef6fb30;
+  z-index: 10;
+}
+.dock-target {
+  pointer-events: auto;
+  align-self: center;
+  justify-self: center;
+  padding: 10px;
+  background: #d9eefa;
+  border: 1px solid #7195ae;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+.dock-target.top {
+  grid-area: 1/2;
+}
+.dock-target.left {
+  grid-area: 2/1;
+}
+.dock-target.tab {
+  grid-area: 2/2;
+}
+.dock-target.right {
+  grid-area: 2/3;
+}
+.dock-target.bottom {
+  grid-area: 3/2;
+}
+.auto-hide-strip {
+  display: flex;
+  gap: 2px;
+}
+.auto-hide-strip.top {
+  grid-area: 1/2;
+}
+.auto-hide-strip.bottom {
+  grid-area: 3/2;
+}
+.auto-hide-strip.left {
+  grid-area: 2/1;
+  flex-direction: column;
+}
+.auto-hide-strip.right {
+  grid-area: 2/3;
+  flex-direction: column;
+}
+.auto-hide-strip.left button,
+.auto-hide-strip.right button {
+  writing-mode: vertical-rl;
+  padding: 8px 3px;
+}
+.auto-hide-drawer {
+  position: absolute;
+  background: #fafcfd;
+  border: 1px solid #8eabba;
+  box-shadow: 0 4px 18px #0003;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.auto-hide-drawer.left {
+  left: 25px;
+  top: 25px;
+  bottom: 25px;
+  width: min(340px, 80%);
+}
+.auto-hide-drawer.right {
+  right: 25px;
+  top: 25px;
+  bottom: 25px;
+  width: min(340px, 80%);
+}
+.auto-hide-drawer.top {
+  left: 25px;
+  right: 25px;
+  top: 25px;
+  height: 250px;
+}
+.auto-hide-drawer.bottom {
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  height: 250px;
+}
+.auto-hide-drawer > .panel {
+  flex: 1;
+  min-height: 0;
+}
+.drawer-close {
+  align-self: flex-end;
+  font-size: 11px;
+}
+.secondary-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  padding: 4px;
+}
+.secondary-screen > p {
+  font-size: 11px;
+  margin: 3px 0;
+}
+.secondary-screen-viewport {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
 }

@@ -2,7 +2,7 @@
 
 An independently designed, open-source embedded dashboard and runtime inspection tool inspired by the workflows of Micrium µC/Probe.
 
-**Status: runnable first offline milestone.** Tauri 2/Rust hosts a React/TypeScript freeform designer with worker-based configurable offline sources and an optional motor demo. The default UI uses a light ribbon, explorer/toolbox, grid/ruler canvas, symbol browser and inspector. Original gauges and controls can move, resize, rotate, bind, undo/redo and save/reopen. Native panel floating shares one simulator session. No embedded-device integration is implemented. The repository is public; original material is MIT licensed.
+**Status: runnable offline designer; closure acceptance in progress.** Tauri 2/Rust hosts a React/TypeScript freeform designer with worker-based configurable offline sources and an optional motor demo. The default UI uses a light ribbon, explorer/toolbox, grid/ruler canvas, symbol browser and inspector. Original gauges and controls can move, resize, rotate, bind, undo/redo and save/reopen. Multi-screen/group editing, split/tab/auto-hide docking, native views, recovery, multi-series plots and bounded CSV recording share one offline session. No embedded-device integration is implemented. The repository is public; original material is MIT licensed.
 
 ## Run the application
 
@@ -21,7 +21,7 @@ Instrument defaults use neutral physical faces with blue gauges/sliders, teal nu
 
 Follow [the offline run guide and implementation limits](docs/16-offline-run-guide.md). Windows native build/launch and automated checks are recorded there. macOS/Linux have CI build configuration but their actual runtime behavior remains unverified. This is a bounded milestone, not complete AC14/AC15 support.
 
-To feed your own screen, choose **Design → Configure data sources**, add an offline source and typed variables, and Apply. Select an instrument, then choose its **Properties → Binding → Source / variable**. Set display limits, units, gain/offset, refresh interval and permitted control writes there. Add a **graph** from the toolbox: its ordinary Binding is Y; choose Time series or XY in the 2D graph settings and configure **Graph X** for XY. Run samples your configured sources; Stop retains the capture. The [provider/GUI protocol v1](docs/17-provider-and-graph-contract.md) defines the common interface for instruments and plots. Hardware/network transports are future adapters.
+To feed your own screen, choose **Design → Configure data sources**, add an offline source and typed variables, and Apply. Select an instrument, then choose its **Properties → Binding → Source / variable**. Set display limits, units, gain/offset, refresh interval and permitted control writes there. Add a **graph** from the toolbox: its ordinary Binding is Y; choose Time series or XY in the 2D graph settings and configure **Graph X** for XY. Run samples your configured sources; Stop retains the capture. The [provider/GUI protocol v1](docs/17-provider-and-graph-contract.md) defines the common interface for instruments and plots. Hardware/network transports are future adapters. Graph series adds up to seven named Y bindings beside the primary. File exports all retained variables; native Start recording captures every accepted frame before plot reduction.
 
 ## Start here
 

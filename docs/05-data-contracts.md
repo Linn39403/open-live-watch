@@ -8,7 +8,7 @@ Top-level: `schemaVersion`, `id`, `name`, `sources[]`, `screens[]`. Sources iden
 
 Persist stable source-qualified symbolic paths, not just addresses. Binding: source ID, symbol path, gain, offset, units, requested period, writable intent. Actual write permission is determined by the backend. Runtime address/type/quality/session epoch is not serialized as permanent authority.
 
-Each widget can extend to named ports and multiple series. The implemented scalar/one-series graph uses `binding` for its value/Y and `settings.graph.x` for an optional numeric XY X binding. Graph mode, capacity, window and optional automatic Y scaling are persisted. Later multi-series charts require separate bindings/style/scales. Full arrays/structures are typed collections; they must not be coerced into numbers. Keep group references acyclic and screen/widget IDs unique.
+Each widget can extend to named ports and multiple series. The implemented scalar/multi-series graph uses `binding` for its value/Y and `settings.graph.x` for an optional numeric XY X binding. Graph mode, capacity, window and optional automatic Y scaling are persisted. Optional `settings.graph.series` adds up to seven named, colored, visibility-controlled numeric Y bindings; XY uses a shared coherent X binding. Full arrays/structures are typed collections; they must not be coerced into numbers. Keep group references acyclic and screen/widget IDs unique.
 
 ## Type graph
 

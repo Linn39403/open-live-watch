@@ -15,3 +15,5 @@ This repository contains a runnable offline designer and its specification. Read
 - Use meaningful codec, schema, protocol, state-machine, and integration tests; avoid merely duplicating getters.
 - Finish each milestone with a runnable demo, acceptance evidence, updated traceability, and remaining gaps.
 - Do not claim hardware validation based on simulator tests.
+
+Owner update 2026-10-10: defer macOS/Linux native runtime verification while implementing the remaining offline features and graph fixes. Keep portable architecture/CI. Do not use the deferred runtime gate to block this authorized implementation; do not label it passed. Embedded-device work remains deferred.

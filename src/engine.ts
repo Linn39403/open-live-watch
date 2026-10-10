@@ -13,7 +13,7 @@ import {
 export class OfflineEngine {
   state: Sim = initialSim();
   sources: Source[] = [];
-  private operations = new Set<string>();
+  private operationCounter = 0;
   receive(input: unknown): ProviderMessage[] {
     const m = validateMessage(input);
     if (m.kind === "configure") {
@@ -39,7 +39,7 @@ export class OfflineEngine {
           m.running,
           m.commandRevision,
         );
-        this.operations.clear();
+        this.operationCounter = 0;
       }
       this.sources = structuredClone(m.sources);
       this.state = { ...this.state, running: m.running };
@@ -56,15 +56,24 @@ export class OfflineEngine {
     let status: "acknowledged" | "rejected" = "acknowledged",
       reason = "";
     try {
-      if (this.operations.has(m.operationId))
-        throw new Error("Operation already processed; no replay");
+      if (
+        m.epoch !== this.state.epoch ||
+        m.catalogRevision !== this.state.catalogRevision
+      )
+        throw new Error("Stale write session/catalog");
+      const parts = /^(0|[1-9][0-9]*):([1-9][0-9]*)$/.exec(m.operationId);
+      const counter = parts ? Number(parts[2]) : NaN;
+      if (
+        !parts ||
+        Number(parts[1]) !== m.epoch ||
+        !Number.isSafeInteger(counter)
+      )
+        throw new Error("Invalid monotonic operation identity");
+      if (counter <= this.operationCounter)
+        throw new Error("Operation already consumed; no replay");
+      this.operationCounter = counter;
       if (m.commandRevision !== this.state.revision)
         throw new Error("Stale command revision");
-      if (this.operations.size >= 128)
-        throw new Error(
-          "Session operation limit reached; restart Run before more writes",
-        );
-      this.operations.add(m.operationId);
       this.state = writeRuntime(
         this.state,
         this.sources,

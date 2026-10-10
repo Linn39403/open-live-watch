@@ -4,36 +4,75 @@
   "title": "Open Live Watch workspace v1 initial subset",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "id", "name", "sources", "screens"],
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "sources",
+    "screens"
+  ],
   "properties": {
-    "schemaVersion": { "const": 1 },
-    "id": { "type": "string", "minLength": 1 },
-    "name": { "type": "string", "minLength": 1 },
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
     "sources": {
       "type": "array",
       "maxItems": 8,
-      "items": { "$ref": "#/$defs/source" }
+      "items": {
+        "$ref": "#/$defs/source"
+      }
     },
     "screens": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/screen" }
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/screen"
+      }
     }
   },
   "$defs": {
     "source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "provider", "path"],
+      "required": [
+        "id",
+        "provider",
+        "path"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "provider": { "enum": ["mock", "elf", "custom", "svd", "offline"] },
-        "path": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "enum": [
+            "mock",
+            "elf",
+            "custom",
+            "svd",
+            "offline"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
         "variables": {
           "type": "array",
           "minItems": 1,
           "maxItems": 128,
-          "items": { "$ref": "#/$defs/variable" }
+          "items": {
+            "$ref": "#/$defs/variable"
+          }
         }
       }
     },
@@ -52,9 +91,21 @@
         "periodMs"
       ],
       "properties": {
-        "id": { "type": "string", "minLength": 1, "maxLength": 80 },
-        "type": { "enum": ["number", "boolean"] },
-        "units": { "type": "string", "maxLength": 40 },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "type": {
+          "enum": [
+            "number",
+            "boolean"
+          ]
+        },
+        "units": {
+          "type": "string",
+          "maxLength": 40
+        },
         "initial": {
           "anyOf": [
             {
@@ -62,7 +113,9 @@
               "minimum": -1000000000000,
               "maximum": 1000000000000
             },
-            { "type": "boolean" }
+            {
+              "type": "boolean"
+            }
           ]
         },
         "min": {
@@ -75,21 +128,73 @@
           "minimum": -1000000000000,
           "maximum": 1000000000000
         },
-        "writable": { "type": "boolean" },
-        "waveform": { "enum": ["constant", "sine", "ramp", "toggle"] },
-        "periodMs": { "type": "integer", "minimum": 100, "maximum": 3600000 }
+        "writable": {
+          "type": "boolean"
+        },
+        "waveform": {
+          "enum": [
+            "constant",
+            "sine",
+            "ramp",
+            "toggle"
+          ]
+        },
+        "periodMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 3600000
+        }
       }
     },
     "graph": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mode", "capacity", "windowMs"],
+      "required": [
+        "mode",
+        "capacity",
+        "windowMs"
+      ],
       "properties": {
-        "mode": { "enum": ["time", "xy"] },
-        "capacity": { "type": "integer", "minimum": 10, "maximum": 600 },
-        "windowMs": { "type": "integer", "minimum": 100, "maximum": 30000 },
-        "autoY": { "type": "boolean" },
-        "x": { "$ref": "#/$defs/binding" }
+        "mode": {
+          "enum": [
+            "time",
+            "xy"
+          ]
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 600
+        },
+        "windowMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 30000
+        },
+        "autoY": {
+          "type": "boolean"
+        },
+        "traceMode": {
+          "enum": [
+            "line",
+            "points"
+          ]
+        },
+        "x": {
+          "$ref": "#/$defs/binding"
+        },
+        "primaryName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "series": {
+          "type": "array",
+          "maxItems": 7,
+          "items": {
+            "$ref": "#/$defs/graphSeries"
+          }
+        }
       }
     },
     "binding": {
@@ -105,36 +210,99 @@
         "writable"
       ],
       "properties": {
-        "sourceId": { "type": "string", "minLength": 1 },
-        "symbolPath": { "type": "string", "minLength": 1 },
-        "gain": { "type": "number" },
-        "offset": { "type": "number" },
-        "units": { "type": "string" },
-        "periodMs": { "type": "integer", "minimum": 1, "maximum": 30000 },
-        "writable": { "type": "boolean" }
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbolPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gain": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "units": {
+          "type": "string"
+        },
+        "periodMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30000
+        },
+        "writable": {
+          "type": "boolean"
+        }
       }
     },
     "rect": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["x", "y", "width", "height", "rotation"],
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "rotation"
+      ],
       "properties": {
-        "x": { "type": "number" },
-        "y": { "type": "number" },
-        "width": { "type": "number", "exclusiveMinimum": 0 },
-        "height": { "type": "number", "exclusiveMinimum": 0 },
-        "rotation": { "type": "number" }
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rotation": {
+          "type": "number"
+        }
       }
     },
     "settings": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "min": { "type": "number" },
-        "max": { "type": "number" },
-        "precision": { "type": "integer", "minimum": 0, "maximum": 12 },
-        "commit": { "enum": ["release", "apply"] },
-        "graph": { "$ref": "#/$defs/graph" },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "precision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "buttonMode": {
+          "enum": [
+            "toggle",
+            "momentary",
+            "repeat"
+          ]
+        },
+        "repeatMs": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 5000
+        },
+        "commit": {
+          "enum": [
+            "release",
+            "apply"
+          ]
+        },
+        "graph": {
+          "$ref": "#/$defs/graph"
+        },
         "color": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$",
@@ -152,9 +320,26 @@
     "widget": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "kind", "title", "rect", "settings"],
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "rect",
+        "settings"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "groupId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
         "kind": {
           "enum": [
             "numeric",
@@ -168,31 +353,106 @@
             "graph"
           ]
         },
-        "title": { "type": "string" },
-        "rect": { "$ref": "#/$defs/rect" },
-        "binding": { "$ref": "#/$defs/binding" },
-        "settings": { "$ref": "#/$defs/settings" }
+        "title": {
+          "type": "string"
+        },
+        "rect": {
+          "$ref": "#/$defs/rect"
+        },
+        "binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "settings": {
+          "$ref": "#/$defs/settings"
+        }
       }
     },
     "screen": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "kind", "canvas", "widgets"],
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "canvas",
+        "widgets"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "name": { "type": "string", "minLength": 1 },
-        "kind": { "const": "dashboard" },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "dashboard"
+        },
         "canvas": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["width", "height", "grid"],
+          "required": [
+            "width",
+            "height",
+            "grid"
+          ],
           "properties": {
-            "width": { "type": "number", "exclusiveMinimum": 0 },
-            "height": { "type": "number", "exclusiveMinimum": 0 },
-            "grid": { "type": "number", "exclusiveMinimum": 0 }
+            "width": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "height": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "grid": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
           }
         },
-        "widgets": { "type": "array", "items": { "$ref": "#/$defs/widget" } }
+        "widgets": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/widget"
+          }
+        }
+      }
+    },
+    "graphSeries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "color",
+        "visible"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "color": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 7,
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "binding": {
+          "$ref": "#/$defs/binding"
+        }
       }
     }
   }

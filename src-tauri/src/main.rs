@@ -1,5 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use std::collections::HashSet;
+mod recording;
+mod recovery;
 fn validate(data: &str) -> Result<(), String> {
     let v: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
     let schema: serde_json::Value =
@@ -86,9 +88,23 @@ fn validate(data: &str) -> Result<(), String> {
             {
                 return Err("XY graph requires X binding".into());
             }
+            let series = widget["settings"]["graph"]["series"].as_array();
+            let mut series_ids = std::collections::HashSet::new();
+            for item in series.into_iter().flatten() {
+                let id = item["id"].as_str().ok_or("Missing graph series ID")?;
+                if id == "primary" || !series_ids.insert(id) {
+                    return Err("Duplicate graph series ID".into());
+                }
+            }
             for binding in [widget.get("binding"), widget["settings"]["graph"].get("x")]
                 .into_iter()
                 .flatten()
+                .chain(
+                    series
+                        .into_iter()
+                        .flatten()
+                        .filter_map(|s| s.get("binding")),
+                )
             {
                 let source = v["sources"]
                     .as_array()
@@ -185,6 +201,8 @@ fn save_workspace(path: String, data: String) -> Result<(), String> {
 }
 fn main() {
     tauri::Builder::default()
+        .manage(recovery::RecoveryState::default())
+        .manage(recording::RecordingState::default())
         .plugin(tauri_plugin_dialog::init())
         .on_window_event(|window, event| {
             if window.label() == "main" && matches!(event, tauri::WindowEvent::Destroyed) {
@@ -192,9 +210,24 @@ fn main() {
                 window.app_handle().exit(0);
             }
         })
-        .invoke_handler(tauri::generate_handler![load_workspace, save_workspace])
+        .invoke_handler(tauri::generate_handler![
+            load_workspace,
+            save_workspace,
+            recovery::recovery_read,
+            recovery::recovery_begin,
+            recovery::recovery_write,
+            recovery::recovery_clear,
+            recording::start_recording,
+            recording::append_recording,
+            recording::finish_recording,
+            close_app
+        ])
         .run(tauri::generate_context!())
         .expect("desktop application failed");
+}
+#[tauri::command]
+fn close_app(app: tauri::AppHandle) {
+    app.exit(0);
 }
 #[cfg(test)]
 mod tests {
@@ -259,6 +292,58 @@ mod tests {
         }
     }
     #[test]
+    fn graph_series_native_roundtrip_and_rejections() {
+        let mut workspace = configured_workspace();
+        let binding = workspace["screens"][0]["widgets"][0]["binding"].clone();
+        workspace["screens"][0]["widgets"][0]["settings"]["graph"]["series"] = serde_json::json!([{"id":"second","name":"Other voltage","color":"#327fbd","visible":true,"binding":binding}]);
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir
+            .path()
+            .join("series.olw.json")
+            .to_string_lossy()
+            .to_string();
+        save_workspace(path.clone(), workspace.to_string()).unwrap();
+        assert_eq!(
+            serde_json::from_str::<serde_json::Value>(&load_workspace(path.clone()).unwrap())
+                .unwrap(),
+            workspace
+        );
+        for case in 0..5 {
+            let mut bad = workspace.clone();
+            let series = &mut bad["screens"][0]["widgets"][0]["settings"]["graph"]["series"];
+            match case {
+                0 => {
+                    let item = series[0].clone();
+                    series.as_array_mut().unwrap().push(item);
+                }
+                1 => series[0]["id"] = "primary".into(),
+                2 => series[0]["binding"]["symbolPath"] = "missing".into(),
+                3 => series[0]["binding"]["symbolPath"] = "enabled".into(),
+                _ => {
+                    let item = series[0].clone();
+                    *series = serde_json::Value::Array(
+                        (0..8)
+                            .map(|i| {
+                                let mut v = item.clone();
+                                v["id"] = format!("s{i}").into();
+                                v
+                            })
+                            .collect(),
+                    );
+                }
+            }
+            assert!(
+                save_workspace(path.clone(), bad.to_string()).is_err(),
+                "case {case}"
+            );
+            assert_eq!(
+                serde_json::from_str::<serde_json::Value>(&load_workspace(path.clone()).unwrap())
+                    .unwrap(),
+                workspace
+            );
+        }
+    }
+    #[test]
     fn legacy_catalog_binding_type_access_and_boolean_identity() {
         let original: serde_json::Value =
             serde_json::from_str(include_str!("../../examples/demo.olw.json")).unwrap();
@@ -281,6 +366,30 @@ mod tests {
         assert!(validate(include_str!("../../examples/demo.olw.json")).is_ok());
         assert!(validate("{\"schemaVersion\":2}").is_err());
         assert!(validate("{}").is_err());
+    }
+    #[test]
+    fn editor_and_graph_options_roundtrip_and_reject_invalid_fields() {
+        let mut workspace: serde_json::Value =
+            serde_json::from_str(include_str!("../../examples/demo.olw.json")).unwrap();
+        let widget = &mut workspace["screens"][0]["widgets"][0];
+        widget["locked"] = true.into();
+        widget["groupId"] = "engineering-group".into();
+        widget["kind"] = "graph".into();
+        widget["settings"]["graph"] =
+            serde_json::json!({"mode":"time","capacity":200,"windowMs":10000,"traceMode":"points"});
+        assert!(validate(&workspace.to_string()).is_ok());
+        workspace["screens"][0]["widgets"][0]["settings"]["graph"]["traceMode"] = "line".into();
+        assert!(validate(&workspace.to_string()).is_ok());
+        for (field, value) in [
+            ("locked", serde_json::json!("true")),
+            ("groupId", serde_json::json!("")),
+        ] {
+            let mut bad = workspace.clone();
+            bad["screens"][0]["widgets"][0][field] = value;
+            assert!(validate(&bad.to_string()).is_err());
+        }
+        workspace["screens"][0]["widgets"][0]["settings"]["graph"]["traceMode"] = "script".into();
+        assert!(validate(&workspace.to_string()).is_err());
     }
     #[test]
     fn invalid_save_preserves_previous_file_and_valid_save_replaces_it() {
