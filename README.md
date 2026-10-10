@@ -2,7 +2,7 @@
 
 An independently designed, open-source embedded dashboard and runtime inspection tool inspired by the workflows of Micrium µC/Probe.
 
-**Status: runnable first offline milestone.** Tauri 2/Rust hosts a React/TypeScript freeform designer with a worker-based configurable offline sources and an optional motor demo. The default UI uses a light ribbon, explorer/toolbox, grid/ruler canvas, symbol browser and inspector. Original gauges and controls can move, resize, rotate, bind, undo/redo and save/reopen. Native panel floating shares one simulator session. No embedded-device integration is implemented. Repository visibility is private at the owner's request; original material is MIT licensed.
+**Status: runnable first offline milestone.** Tauri 2/Rust hosts a React/TypeScript freeform designer with worker-based configurable offline sources and an optional motor demo. The default UI uses a light ribbon, explorer/toolbox, grid/ruler canvas, symbol browser and inspector. Original gauges and controls can move, resize, rotate, bind, undo/redo and save/reopen. Native panel floating shares one simulator session. No embedded-device integration is implemented. The repository is public; original material is MIT licensed.
 
 ## Run the application
 
