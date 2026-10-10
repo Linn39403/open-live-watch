@@ -727,3 +727,60 @@ footer {
 .floating-panel footer {
   flex-shrink: 0;
 }
+.source-dialog {
+  width: min(1050px, 94vw);
+  max-height: 90vh;
+}
+.source-dialog .source-list {
+  overflow: auto;
+  max-height: 62vh;
+  padding: 4px;
+}
+.source-dialog section {
+  border: 1px solid #b5c3cc;
+  background: #f5f8f9;
+  margin: 8px 0;
+  padding: 10px;
+}
+.source-dialog header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.source-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+.source-dialog label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+}
+.variable-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.variable-list fieldset {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  background: white;
+}
+.source-dialog input:not([type="checkbox"]),
+.source-dialog select {
+  width: 100%;
+  min-width: 0;
+}
+.source-dialog p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.binding-editor {
+  min-width: 0;
+}
+.graph .instrument-face {
+  min-height: 0;
+}

@@ -1,5 +1,7 @@
 # Implementation agent prompt
 
+For the implemented configurable offline sources and one-series time/XY graph, also read [provider/GUI protocol v1](17-provider-and-graph-contract.md) and its source mapping. Preserve source-qualified namespaces, 50 ms effective refresh, catalog/write permission checks and coherent bounded quality-aware plots when adding real providers.
+
 Continue Open Live Watch using this repository's evidence-tagged specification and working offline application. The objective is an original open-source embedded runtime dashboard with a workflow similar to µC/Probe, including original vectors. The current bounded milestone includes a blank-project designer, original instruments, explicit motor simulation, native floating panels, validated save/load and per-instrument colors. Read docs/16-offline-run-guide.md for verified behavior and remaining gaps; embedded-device integration is not implemented.
 
 Start by reading AGENTS.md and docs/14-designer-and-platforms.md, then the research, requirements, architecture, contracts, validation and backlog. Use examples/demo.olw.json and assets/ as seeds. The proposed stack is Tauri 2, Rust and TypeScript/React; prove it on Windows, macOS and Linux including native floating/dockable windows. All three platforms are mandatory. The initial dark-card direction is superseded by the light µC/Probe-like designer and original instrument artwork.

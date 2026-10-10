@@ -8,7 +8,41 @@ export type Kind =
   | "led"
   | "slider"
   | "switch"
-  | "button";
+  | "button"
+  | "graph";
+export type OfflineVariable = {
+  id: string;
+  type: "number" | "boolean";
+  units: string;
+  initial: number | boolean;
+  min: number;
+  max: number;
+  writable: boolean;
+  waveform: "constant" | "sine" | "ramp" | "toggle";
+  periodMs: number;
+};
+export type Source = {
+  id: string;
+  provider: string;
+  path: string;
+  variables?: OfflineVariable[];
+};
+export type Binding = {
+  sourceId: string;
+  symbolPath: string;
+  gain: number;
+  offset: number;
+  units: string;
+  periodMs: number;
+  writable: boolean;
+};
+export type GraphConfig = {
+  mode: "time" | "xy";
+  x?: Binding;
+  capacity: number;
+  windowMs: number;
+  autoY?: boolean;
+};
 export type Rect = {
   x: number;
   y: number;
@@ -37,13 +71,14 @@ export type Widget = {
     max?: number;
     precision?: number;
     commit?: "release" | "apply";
+    graph?: GraphConfig;
   };
 };
 export type Workspace = {
   schemaVersion: 1;
   id: string;
   name: string;
-  sources: { id: string; provider: string; path: string }[];
+  sources: Source[];
   screens: {
     id: string;
     name: string;
@@ -62,10 +97,43 @@ export function parseWorkspace(input: unknown): Workspace {
     );
   const w = input as Workspace;
   const ids = new Set<string>();
+  let variableCount = 0;
   for (const source of w.sources) {
     if (ids.has(source.id)) throw new Error("Duplicate source");
     ids.add(source.id);
+    if (source.provider === "offline") {
+      if (!source.variables)
+        throw new Error("Offline source requires variables");
+      const variables = new Set<string>();
+      for (const v of source.variables) {
+        variableCount++;
+        if (variables.has(v.id)) throw new Error("Duplicate variable");
+        variables.add(v.id);
+        if (
+          v.max <= v.min ||
+          (v.type === "number"
+            ? typeof v.initial !== "number" ||
+              v.initial < v.min ||
+              v.initial > v.max ||
+              v.waveform === "toggle"
+            : typeof v.initial !== "boolean" ||
+              !["constant", "toggle"].includes(v.waveform))
+        )
+          throw new Error("Invalid variable type/range/waveform");
+        if (v.waveform !== "constant" && v.writable)
+          throw new Error("Waveforms are read-only");
+      }
+    } else if (source.variables)
+      throw new Error("Variables require offline provider");
   }
+  if (
+    variableCount +
+      (w.sources.some((s) => s.id === "mock-motor" && s.provider === "mock")
+        ? 4
+        : 0) >
+    128
+  )
+    throw new Error("Catalog exceeds 128 variables");
   const screens = new Set<string>(),
     widgets = new Set<string>();
   for (const s of w.screens) {
@@ -76,6 +144,43 @@ export function parseWorkspace(input: unknown): Workspace {
       widgets.add(v.id);
       if (v.binding && !ids.has(v.binding.sourceId))
         throw new Error("Unknown binding source");
+      if (v.settings.graph?.x && !ids.has(v.settings.graph.x.sourceId))
+        throw new Error("Unknown graph X source");
+      if (v.settings.graph?.mode === "xy" && !v.settings.graph.x)
+        throw new Error("XY graph requires X binding");
+      for (const binding of [v.binding, v.settings.graph?.x]) {
+        if (!binding) continue;
+        const source = w.sources.find((s) => s.id === binding.sourceId);
+        if (
+          source?.provider === "offline" ||
+          (source?.provider === "mock" && source.id === "mock-motor")
+        ) {
+          const legacy = symbols.find((x) => x.path === binding.symbolPath);
+          const variable =
+            source.provider === "offline"
+              ? source.variables?.find((x) => x.id === binding.symbolPath)
+              : legacy
+                ? {
+                    type: legacy.type === "bool" ? "boolean" : "number",
+                    writable: legacy.writable,
+                  }
+                : undefined;
+          if (!variable) throw new Error("Unknown supported variable binding");
+          const boolKind = ["led", "switch", "button"].includes(v.kind);
+          if (
+            (variable.type === "boolean") !== boolKind ||
+            (binding === v.settings.graph?.x && variable.type !== "number")
+          )
+            throw new Error("Incompatible binding type");
+          if (
+            variable.type === "boolean" &&
+            (binding.gain !== 1 || binding.offset !== 0)
+          )
+            throw new Error("Boolean binding requires identity mapping");
+          if (binding.writable && !variable.writable)
+            throw new Error("Binding cannot grant write permission");
+        }
+      }
       if ((v.settings.max ?? 100) <= (v.settings.min ?? 0))
         throw new Error("Invalid range");
     }
@@ -121,8 +226,8 @@ export function createInstrument(kind: Kind, id: string, index = 0): Widget {
     rect: {
       x: 48 + (index % 4) * 30,
       y: 48 + (index % 4) * 30,
-      width: kind === "thermometer" ? 150 : 220,
-      height: kind === "thermometer" ? 250 : 190,
+      width: kind === "graph" ? 400 : kind === "thermometer" ? 150 : 220,
+      height: kind === "graph" ? 260 : kind === "thermometer" ? 250 : 190,
       rotation: 0,
     },
     settings: {
@@ -134,6 +239,9 @@ export function createInstrument(kind: Kind, id: string, index = 0): Widget {
             ? 1
             : 100,
       precision: kind === "thermometer" ? 1 : 0,
+      ...(kind === "graph"
+        ? { graph: { mode: "time" as const, capacity: 200, windowMs: 10000 } }
+        : {}),
     },
   };
 }
@@ -142,8 +250,26 @@ export function hasMotorSimulator(workspace: Workspace) {
     (source) => source.id === "mock-motor" && source.provider === "mock",
   );
 }
-export function resetProjectSession(previous: Sim): Sim {
-  return { ...initialSim(), epoch: previous.epoch + 1 };
+export function resetProjectSession(
+  previous: Sim,
+  sources: Source[] = [],
+): Sim {
+  const values = { ...initialSim().values };
+  for (const source of sources) {
+    if (source.provider === "offline")
+      for (const variable of source.variables ?? [])
+        values[JSON.stringify([source.id, variable.id])] = variable.initial;
+    else if (source.provider === "mock" && source.id === "mock-motor")
+      for (const symbol of symbols)
+        values[JSON.stringify([source.id, symbol.path])] = values[symbol.path];
+  }
+  return {
+    ...initialSim(),
+    epoch: previous.epoch + 1,
+    catalogRevision: (previous.catalogRevision ?? 0) + 1,
+    frames: [],
+    values,
+  };
 }
 export function isDocumentDirty(workspace: Workspace, saved: string) {
   return JSON.stringify(workspace) !== saved;
@@ -164,7 +290,7 @@ export function beginDocument(
   const validated = parseWorkspace(workspace);
   return {
     history: { past: [], present: validated, future: [] } as History,
-    sim: resetProjectSession(previous),
+    sim: resetProjectSession(previous, validated.sources),
     saved: unsaved ? "" : JSON.stringify(validated),
     filePath,
   };
@@ -235,6 +361,22 @@ export type Sim = {
   tick: number;
   values: Record<string, number | boolean>;
   history: number[];
+  catalogRevision?: number;
+  frames?: RuntimeFrame[];
+};
+export type RuntimeFrame = {
+  sequence: number;
+  sessionTimeMs: number;
+  values: Record<string, number | boolean>;
+  quality: Record<
+    string,
+    | "good"
+    | "unresolved"
+    | "stale"
+    | "unsupported"
+    | "transport-error"
+    | "decode-error"
+  >;
 };
 export const initialSim = (): Sim => ({
   epoch: 1,
@@ -308,6 +450,11 @@ export function parseSim(input: unknown): Sim {
     !Number.isSafeInteger(s.epoch) ||
     !Number.isSafeInteger(s.revision) ||
     !Number.isSafeInteger(s.tick) ||
+    s.epoch < 1 ||
+    s.revision < 0 ||
+    s.tick < 0 ||
+    (s.catalogRevision !== undefined &&
+      (!Number.isSafeInteger(s.catalogRevision) || s.catalogRevision < 1)) ||
     typeof s.running !== "boolean" ||
     !Array.isArray(s.history) ||
     s.history.length > 120 ||
@@ -315,6 +462,64 @@ export function parseSim(input: unknown): Sim {
     !s.values
   )
     throw new Error("Invalid simulator frame");
+  if (
+    typeof s.values !== "object" ||
+    Array.isArray(s.values) ||
+    Object.keys(s.values).length > 132 ||
+    Object.values(s.values).some(
+      (v) =>
+        !(
+          typeof v === "boolean" ||
+          (typeof v === "number" && Number.isFinite(v))
+        ),
+    )
+  )
+    throw new Error("Invalid runtime values");
+  if (s.frames !== undefined) {
+    if (!Array.isArray(s.frames) || s.frames.length > 600)
+      throw new Error("Invalid frame history");
+    let sequence = -1,
+      time = -1;
+    for (const frame of s.frames) {
+      if (
+        !frame ||
+        !Number.isSafeInteger(frame.sequence) ||
+        frame.sequence <= sequence ||
+        !Number.isSafeInteger(frame.sessionTimeMs) ||
+        frame.sessionTimeMs <= time ||
+        !frame.values ||
+        !frame.quality ||
+        Array.isArray(frame.quality) ||
+        Array.isArray(frame.values) ||
+        Object.keys(frame.quality).length > 128
+      )
+        throw new Error("Invalid coherent frame");
+      for (const [key, quality] of Object.entries(frame.quality)) {
+        if (
+          ![
+            "good",
+            "stale",
+            "unresolved",
+            "unsupported",
+            "transport-error",
+            "decode-error",
+          ].includes(quality)
+        )
+          throw new Error("Invalid quality");
+        if (
+          quality === "good" &&
+          !(
+            typeof frame.values[key] === "boolean" ||
+            (typeof frame.values[key] === "number" &&
+              Number.isFinite(frame.values[key]))
+          )
+        )
+          throw new Error("Invalid frame value");
+      }
+      sequence = frame.sequence;
+      time = frame.sessionTimeMs;
+    }
+  }
   for (const symbol of symbols) {
     const value = s.values[symbol.path];
     if (

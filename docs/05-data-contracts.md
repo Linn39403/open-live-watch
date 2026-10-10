@@ -1,6 +1,6 @@
 # Data contracts
 
-All formats below are original proposals. `schemas/workspace.schema.json` defines the initial executable subset; this document defines the intended extensions. Keep implementation and schema revisions synchronized. `examples/demo.olw.json` uses only the initial subset.
+The workspace schema and bounded offline provider are implemented; broader debug/device formats below remain proposals. `schemas/workspace.schema.json` defines the executable subset and [provider/GUI protocol v1](17-provider-and-graph-contract.md) defines configurable offline variables, source-qualified bindings and coherent 2D plots. Keep implementation and schema revisions synchronized. `examples/demo.olw.json` remains the legacy motor example.
 
 ## Workspace
 
@@ -8,7 +8,7 @@ Top-level: `schemaVersion`, `id`, `name`, `sources[]`, `screens[]`. Sources iden
 
 Persist stable source-qualified symbolic paths, not just addresses. Binding: source ID, symbol path, gain, offset, units, requested period, writable intent. Actual write permission is determined by the backend. Runtime address/type/quality/session epoch is not serialized as permanent authority.
 
-Each widget can extend to named ports and multiple series. Initial single `binding` is for scalar widgets only. Chart series require their own bindings, style and scale. Full arrays/structures are typed collections; they must not be coerced into numbers. Keep group references acyclic and screen/widget IDs unique.
+Each widget can extend to named ports and multiple series. The implemented scalar/one-series graph uses `binding` for its value/Y and `settings.graph.x` for an optional numeric XY X binding. Graph mode, capacity, window and optional automatic Y scaling are persisted. Later multi-series charts require separate bindings/style/scales. Full arrays/structures are typed collections; they must not be coerced into numbers. Keep group references acyclic and screen/widget IDs unique.
 
 ## Type graph
 
@@ -30,4 +30,4 @@ Use `contracts/api.ts` as the initial contract sketch. Backend must enforce equi
 
 Mock symbol source includes read-only temperature, speed and setpoint, boolean enable, enum mode and an integer counter. Add generated compiler fixtures for packed structs, aliases, arrays, unions, bitfields, duplicate local-static names, 64-bit addresses, unsupported locations and missing DWARF. Fixtures are newly authored; do not commit user's actual firmware.
 
-The supplied example is declarative specification data. It is not executable simulator firmware or a working dashboard application.
+The supplied example is declarative workspace data loaded by the working offline designer. It is not executable target firmware and does not prove hardware compatibility.

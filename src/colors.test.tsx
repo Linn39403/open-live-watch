@@ -53,6 +53,7 @@ describe("portable instrument appearance", () => {
       const widget = custom.screens[0].widgets[0];
       widget.kind = kind;
       widget.settings.color = "#Ab12Cd";
+      delete widget.binding;
       widget.settings.needleColor = "#Fa9012";
       expect(instrumentPalette(widget.settings, kind).color).toBe("#Ab12Cd");
       expect(instrumentPalette(widget.settings, kind).needle).toBe("#Fa9012");

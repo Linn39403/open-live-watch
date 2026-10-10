@@ -10,6 +10,7 @@ export const DEFAULT_COLORS: Readonly<Record<Kind, string>> = {
   button: "#da8426",
   switch: "#597a92",
   thermometer: "#bf443d",
+  graph: "#327fbd",
 };
 export const defaultInstrumentColor = (kind: Kind) => DEFAULT_COLORS[kind];
 export function resetInstrumentColors(settings: Widget["settings"]) {

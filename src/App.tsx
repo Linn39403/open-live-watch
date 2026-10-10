@@ -27,6 +27,21 @@ import {
   type Kind,
 } from "./model";
 import { Instrument } from "./Instruments";
+import { Graph } from "./Graph";
+import { BindingEditor } from "./BindingEditor";
+import { SourceEditor } from "./SourceEditor";
+import {
+  catalogFor,
+  compatibleSymbol,
+  qualifiedKey,
+  readBinding,
+  newRuntime,
+  applyBatch,
+  validateMessage,
+  messageBase,
+  rawWidgetWrite,
+  writeRuntime,
+} from "./provider";
 import { ColorControl } from "./ColorControl";
 import {
   colorPresets,
@@ -64,6 +79,7 @@ export function App() {
   const [saved, setSaved] = useState(() => JSON.stringify(history.present));
   const [filePath, setFilePath] = useState<string | null>(null);
   const [newProjectOpen, setNewProjectOpen] = useState(false);
+  const [sourceEditorOpen, setSourceEditorOpen] = useState(false);
   const [projectName, setProjectName] = useState("My project");
   const [pendingReplacement, setPendingReplacement] = useState<{
     workspace: Workspace;
@@ -103,6 +119,15 @@ export function App() {
   const current = useRef({ history, sim, selected, layout });
   current.current = { history, sim, selected, layout };
   const worker = useRef<Worker | null>(null);
+  const pendingWrite = useRef<{
+    operationId: string;
+    epoch: number;
+    catalogRevision: number;
+    commandRevision: number;
+    sourceId: string;
+    symbolPath: string;
+    value: number | boolean;
+  } | null>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const gesture = useRef<{
     start: Workspace;
@@ -116,8 +141,10 @@ export function App() {
   const workspace = history.present,
     screen = workspace.screens[0],
     chosen = screen.widgets.find((w) => w.id === selected[0]);
-  const simulatorAvailable = hasMotorSimulator(workspace);
-  const catalog = simulatorAvailable ? symbols : [];
+  const motorAvailable = hasMotorSimulator(workspace);
+  const catalog = catalogFor(workspace.sources);
+  const simulatorAvailable = catalog.length > 0;
+  const sourceConfig = JSON.stringify(workspace.sources);
   const dirty = isDocumentDirty(workspace, saved);
   const replace = (w: Workspace) => {
     const validated = parseWorkspace(w);
@@ -150,19 +177,39 @@ export function App() {
         );
         if (!w?.binding?.writable)
           throw new Error("Widget binding is read-only");
-        const source = current.current.history.present.sources.find(
-          (s) => s.id === w.binding!.sourceId,
-        );
-        if (source?.provider !== "mock")
-          throw new Error("Unsupported simulator source");
-        const next = writeWidget(
-          current.current.sim,
+        if (pendingWrite.current)
+          throw new Error("Previous write is awaiting a result");
+        const state = current.current.sim;
+        const raw = rawWidgetWrite(
+          current.current.history.present,
+          state,
           w,
           c.value,
           Number(c.epoch),
         );
-        current.current.sim = next;
-        setSim(next);
+        const operationId = crypto.randomUUID();
+        pendingWrite.current = {
+          operationId,
+          epoch: state.epoch,
+          catalogRevision: state.catalogRevision ?? 1,
+          commandRevision: state.revision,
+          ...raw,
+        };
+        worker.current?.postMessage({
+          ...messageBase(state),
+          kind: "write",
+          commandRevision: state.revision,
+          operationId,
+          ...raw,
+        });
+        setTimeout(() => {
+          if (pendingWrite.current?.operationId === operationId) {
+            pendingWrite.current = null;
+            setError(
+              "Write outcome unknown: no result received. No automatic retry.",
+            );
+          }
+        }, 2000);
       }
       if (c.type === "select") setSelected([String(c.id)]);
       if (c.type === "dock") {
@@ -179,7 +226,7 @@ export function App() {
       }
       if (c.type === "patch") {
         assertProjectEpoch(current.current.sim, c.epoch);
-        if (pendingReplacement || newProjectOpen)
+        if (pendingReplacement || newProjectOpen || sourceEditorOpen)
           throw new Error("Finish the project dialog before editing");
         if (current.current.sim.running)
           throw new Error("Stop simulation before editing");
@@ -261,23 +308,95 @@ export function App() {
       type: "module",
     });
     worker.current = w;
+    w.onerror = (event) => setError("Offline worker error: " + event.message);
     w.onmessage = (e) => {
       try {
-        const frame = parseSim(e.data);
-        setSim((s) => acceptWorkerFrame(s, frame));
+        const m = validateMessage(e.data),
+          state = current.current.sim,
+          sources = current.current.history.present.sources;
+        if (
+          m.epoch !== state.epoch ||
+          m.catalogRevision !== state.catalogRevision
+        )
+          return;
+        if (m.kind === "sampleBatch") {
+          const next = applyBatch(state, m, sources);
+          current.current.sim = next;
+          setSim(next);
+        } else if (m.kind === "catalog") {
+          if (JSON.stringify(m.symbols) !== JSON.stringify(catalogFor(sources)))
+            throw new Error("Provider catalog mismatch");
+        } else if (m.kind === "writeResult") {
+          const pending = pendingWrite.current;
+          if (
+            !pending ||
+            pending.operationId !== m.operationId ||
+            pending.epoch !== m.epoch ||
+            pending.catalogRevision !== m.catalogRevision
+          )
+            return;
+          if (
+            m.sourceId !== pending.sourceId ||
+            m.symbolPath !== pending.symbolPath ||
+            m.commandRevision !==
+              pending.commandRevision + (m.status === "acknowledged" ? 1 : 0) ||
+            (m.status === "acknowledged" && m.value !== pending.value)
+          )
+            throw new Error("Invalid write acknowledgment");
+          pendingWrite.current = null;
+          if (m.status !== "acknowledged")
+            throw new Error("Write " + m.status + ": " + m.reason);
+          const next = writeRuntime(
+            state,
+            sources,
+            m.sourceId,
+            m.symbolPath,
+            m.value,
+            m.epoch,
+            m.catalogRevision,
+          );
+          current.current.sim = next;
+          setSim(next);
+        }
       } catch (error) {
         setError(String(error));
       }
     };
-    w.postMessage(current.current.sim);
+    w.postMessage({
+      ...messageBase(current.current.sim),
+      kind: "configure",
+      commandRevision: current.current.sim.revision,
+      running: current.current.sim.running,
+      sources: current.current.history.present.sources,
+    });
     return () => {
       w.terminate();
       worker.current = null;
     };
   }, []);
   useEffect(() => {
-    if (!floating) worker.current?.postMessage(sim);
+    if (!floating)
+      worker.current?.postMessage({
+        ...messageBase(sim),
+        kind: "configure",
+        commandRevision: sim.revision,
+        running: sim.running,
+        sources: workspace.sources,
+      });
   }, [sim.epoch, sim.revision, sim.running]);
+  useEffect(() => {
+    if (floating) return;
+    const state = current.current.sim;
+    const next = newRuntime(
+      current.current.history.present.sources,
+      state.epoch + 1,
+      (state.catalogRevision ?? 0) + 1,
+      false,
+    );
+    pendingWrite.current = null;
+    current.current.sim = next;
+    setSim(next);
+  }, [sourceConfig]);
   useEffect(() => {
     if (!floating)
       localStorage.setItem(
@@ -287,10 +406,11 @@ export function App() {
   }, [layout]);
   useEffect(() => {
     function key(e: KeyboardEvent) {
-      if (pendingReplacement || newProjectOpen) {
+      if (pendingReplacement || newProjectOpen || sourceEditorOpen) {
         if (e.key === "Escape" && !saving) {
           setPendingReplacement(null);
           setNewProjectOpen(false);
+          setSourceEditorOpen(false);
         }
         return;
       }
@@ -337,6 +457,7 @@ export function App() {
     sim.running,
     locked,
     pendingReplacement,
+    sourceEditorOpen,
     newProjectOpen,
     saving,
   ]);
@@ -618,7 +739,14 @@ export function App() {
           <div>▾ Sources</div>
           <div>
             {simulatorAvailable
-              ? "Motor simulator • offline"
+              ? workspace.sources
+                  .filter(
+                    (s) =>
+                      s.provider === "offline" ||
+                      (s.id === "mock-motor" && s.provider === "mock"),
+                  )
+                  .map((s) => s.id + " • " + s.provider)
+                  .join(", ")
               : workspace.sources.length
                 ? "Unsupported source • no runtime backend"
                 : "None • layout design only"}
@@ -627,6 +755,14 @@ export function App() {
             Click a toolbox instrument to add it. Shift-click selects multiple
             objects.
           </p>
+          {!floating && (
+            <button
+              disabled={sim.running}
+              onClick={() => setSourceEditorOpen(true)}
+            >
+              Configure data sources
+            </button>
+          )}
         </div>
       );
     if (panel === "toolbox")
@@ -642,6 +778,7 @@ export function App() {
               "switch",
               "button",
               "thermometer",
+              "graph",
             ] as Kind[]
           ).map((k) => (
             <button
@@ -649,13 +786,22 @@ export function App() {
               disabled={sim.running || !!floating}
               onClick={() => add(k)}
             >
-              <Instrument
-                w={createInstrument(k, "toolbox-" + k)}
-                value={NaN}
-                running={false}
-                thumbnail
-                onWrite={() => {}}
-              />
+              {k === "graph" ? (
+                <Graph
+                  w={createInstrument(k, "toolbox-graph")}
+                  sim={sim}
+                  workspace={workspace}
+                  thumbnail
+                />
+              ) : (
+                <Instrument
+                  w={createInstrument(k, "toolbox-" + k)}
+                  value={NaN}
+                  running={false}
+                  thumbnail
+                  onWrite={() => {}}
+                />
+              )}
               {k}
             </button>
           ))}
@@ -675,7 +821,15 @@ export function App() {
               : "This project has no device or simulator bindings."}{" "}
             Arrange instruments using Design previews.
           </p>
-          <p>Use File → Open motor demo to explore simulated readings.</p>
+          <p>Configure offline sources to create your own signals.</p>
+          {!floating && (
+            <button
+              disabled={sim.running}
+              onClick={() => setSourceEditorOpen(true)}
+            >
+              Configure data sources
+            </button>
+          )}
         </div>
       );
     if (panel === "symbols")
@@ -700,21 +854,34 @@ export function App() {
             </thead>
             <tbody>
               {catalog
-                .filter((s) => s.path.includes(query))
+                .filter((s) =>
+                  (s.sourceId + "/" + s.symbolPath).includes(query),
+                )
                 .map((s) => (
                   <tr
-                    key={s.path}
+                    key={qualifiedKey(s.sourceId, s.symbolPath)}
                     draggable={!floating}
                     onDragStart={(e) =>
-                      e.dataTransfer.setData("symbol", s.path)
+                      e.dataTransfer.setData(
+                        "symbol",
+                        qualifiedKey(s.sourceId, s.symbolPath),
+                      )
                     }
                   >
-                    <td>{s.path}</td>
+                    <td>
+                      {s.sourceId} / {s.symbolPath}
+                    </td>
                     <td>{s.type}</td>
                     <td>
-                      {typeof sim.values[s.path] === "boolean"
-                        ? String(sim.values[s.path])
-                        : Number(sim.values[s.path]).toFixed(1)}{" "}
+                      {typeof sim.values[
+                        qualifiedKey(s.sourceId, s.symbolPath)
+                      ] === "boolean"
+                        ? String(
+                            sim.values[qualifiedKey(s.sourceId, s.symbolPath)],
+                          )
+                        : Number(
+                            sim.values[qualifiedKey(s.sourceId, s.symbolPath)],
+                          ).toFixed(1)}{" "}
                       {s.units}
                     </td>
                     <td>
@@ -837,54 +1004,170 @@ export function App() {
             instrument. Value contrast is automatic.
           </p>
         </fieldset>
-        <label>
-          Binding
-          <select
-            value={chosen.binding?.symbolPath ?? ""}
-            disabled={sim.running}
-            onChange={(e) => {
-              if (!e.target.value) {
-                command({
-                  type: "patch",
-                  id: chosen.id,
-                  patch: { binding: undefined },
-                });
-                return;
-              }
-              const s = catalog.find((s) => s.path === e.target.value);
-              if (!s) {
-                setError("No compatible source is configured");
-                return;
-              }
-              if (!bindingCompatible(chosen.kind, s.path)) {
-                setError("Binding type is incompatible with instrument");
-                return;
-              }
-              command({
-                type: "patch",
-                id: chosen.id,
-                patch: {
-                  binding: {
-                    sourceId: "mock-motor",
-                    symbolPath: s.path,
-                    gain: 1,
-                    offset: 0,
-                    units: s.units,
-                    periodMs: 50,
-                    writable:
-                      s.writable &&
-                      ["slider", "switch", "button"].includes(chosen.kind),
-                  },
-                },
-              });
-            }}
-          >
-            <option value="">Unbound</option>
-            {catalog.map((s) => (
-              <option key={s.path}>{s.path}</option>
+        <BindingEditor
+          binding={chosen.binding}
+          sources={workspace.sources}
+          kind={chosen.kind}
+          disabled={sim.running}
+          onChange={(binding) =>
+            command({ type: "patch", id: chosen.id, patch: { binding } })
+          }
+        />
+        <fieldset disabled={sim.running}>
+          <legend>Display scale</legend>
+          {(["min", "max", "precision"] as const).map((key) => (
+            <label key={key}>
+              {key}
+              <input
+                type="number"
+                value={chosen.settings[key] ?? (key === "max" ? 100 : 0)}
+                min={key === "precision" ? 0 : undefined}
+                max={key === "precision" ? 12 : undefined}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  if (Number.isFinite(value))
+                    command({
+                      type: "patch",
+                      id: chosen.id,
+                      patch: { settings: { ...chosen.settings, [key]: value } },
+                    });
+                }}
+              />
+            </label>
+          ))}
+        </fieldset>
+        {chosen.kind === "graph" && (
+          <fieldset disabled={sim.running}>
+            <legend>2D graph</legend>
+            <label>
+              Mode
+              <select
+                aria-label="Graph mode"
+                value={chosen.settings.graph?.mode ?? "time"}
+                onChange={(e) => {
+                  const mode = e.target.value as "time" | "xy",
+                    x = catalog.find((c) => c.type === "number");
+                  if (mode === "xy" && !x) {
+                    setError("Configure a numeric X variable first");
+                    return;
+                  }
+                  command({
+                    type: "patch",
+                    id: chosen.id,
+                    patch: {
+                      settings: {
+                        ...chosen.settings,
+                        graph: {
+                          capacity: 200,
+                          windowMs: 10000,
+                          ...chosen.settings.graph,
+                          mode,
+                          ...(mode === "xy" && !chosen.settings.graph?.x && x
+                            ? {
+                                x: {
+                                  sourceId: x.sourceId,
+                                  symbolPath: x.symbolPath,
+                                  gain: 1,
+                                  offset: 0,
+                                  units: x.units,
+                                  periodMs: 50,
+                                  writable: false,
+                                },
+                              }
+                            : {}),
+                        },
+                      },
+                    },
+                  });
+                }}
+              >
+                <option value="time">Time series</option>
+                <option value="xy">XY coherent pairs</option>
+              </select>
+            </label>
+            {chosen.settings.graph?.mode === "xy" && (
+              <BindingEditor
+                label="Graph X"
+                kind="graph"
+                sources={workspace.sources}
+                binding={chosen.settings.graph.x}
+                disabled={sim.running}
+                onChange={(x) => {
+                  if (x)
+                    command({
+                      type: "patch",
+                      id: chosen.id,
+                      patch: {
+                        settings: {
+                          ...chosen.settings,
+                          graph: { ...chosen.settings.graph!, x },
+                        },
+                      },
+                    });
+                }}
+              />
+            )}
+            {(["capacity", "windowMs"] as const).map((key) => (
+              <label key={key}>
+                {key === "capacity" ? "Maximum points" : "Visible history (ms)"}
+                <input
+                  type="number"
+                  value={
+                    chosen.settings.graph?.[key] ??
+                    (key === "capacity" ? 200 : 10000)
+                  }
+                  onChange={(e) =>
+                    command({
+                      type: "patch",
+                      id: chosen.id,
+                      patch: {
+                        settings: {
+                          ...chosen.settings,
+                          graph: {
+                            mode: "time",
+                            capacity: 200,
+                            windowMs: 10000,
+                            ...chosen.settings.graph,
+                            [key]: Number(e.target.value),
+                          },
+                        },
+                      },
+                    })
+                  }
+                />
+              </label>
             ))}
-          </select>
-        </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={chosen.settings.graph?.autoY !== false}
+                onChange={(e) =>
+                  command({
+                    type: "patch",
+                    id: chosen.id,
+                    patch: {
+                      settings: {
+                        ...chosen.settings,
+                        graph: {
+                          mode: "time",
+                          capacity: 200,
+                          windowMs: 10000,
+                          ...chosen.settings.graph,
+                          autoY: e.target.checked,
+                        },
+                      },
+                    },
+                  })
+                }
+              />
+              Automatic Y axis
+            </label>
+            <p>
+              X axes auto-scale; manual Y uses Display scale limits. History is
+              bounded to 600 coherent simulation frames.
+            </p>
+          </fieldset>
+        )}
         {(["x", "y", "width", "height", "rotation"] as const).map((key) => (
           <label key={key}>
             {key}
@@ -1111,20 +1394,33 @@ export function App() {
           <>
             <div className="group">
               <button
+                disabled={sim.running}
+                onClick={() => setSourceEditorOpen(true)}
+              >
+                Configure data sources
+              </button>
+              <button
                 className={sim.running ? "stop" : "run"}
                 disabled={!simulatorAvailable}
                 title={
                   simulatorAvailable
-                    ? "Run the offline motor simulator"
-                    : "No source configured. Open the motor demo to simulate readings."
+                    ? "Run configured offline sources"
+                    : "Configure an offline source to simulate readings."
                 }
-                onClick={() =>
-                  setSim((s) => ({
-                    ...s,
-                    running: !s.running,
-                    epoch: s.epoch + 1,
-                  }))
-                }
+                onClick={() => {
+                  const state = current.current.sim;
+                  pendingWrite.current = null;
+                  const next = state.running
+                    ? { ...state, running: false, epoch: state.epoch + 1 }
+                    : newRuntime(
+                        workspace.sources,
+                        state.epoch + 1,
+                        state.catalogRevision ?? 1,
+                        true,
+                      );
+                  current.current.sim = next;
+                  setSim(next);
+                }}
               >
                 {sim.running ? "■ Stop" : "▶ Run"}
               </button>
@@ -1335,17 +1631,15 @@ export function App() {
                     onDrop={(e) => {
                       e.stopPropagation();
                       const s = catalog.find(
-                        (s) => s.path === e.dataTransfer.getData("symbol"),
+                        (s) =>
+                          qualifiedKey(s.sourceId, s.symbolPath) ===
+                          e.dataTransfer.getData("symbol"),
                       );
-                      if (
-                        s &&
-                        !sim.running &&
-                        bindingCompatible(w.kind, s.path)
-                      )
+                      if (s && !sim.running && compatibleSymbol(w.kind, s))
                         editWidget(w.id, {
                           binding: {
-                            sourceId: "mock-motor",
-                            symbolPath: s.path,
+                            sourceId: s.sourceId,
+                            symbolPath: s.symbolPath,
                             gain: 1,
                             offset: 0,
                             units: s.units,
@@ -1357,34 +1651,23 @@ export function App() {
                         });
                     }}
                   >
-                    <Instrument
-                      w={w}
-                      value={
-                        w.binding &&
-                        workspace.sources.some(
-                          (s) =>
-                            s.id === w.binding!.sourceId &&
-                            s.provider === "mock",
-                        ) &&
-                        w.binding.sourceId === "mock-motor" &&
-                        bindingCompatible(w.kind, w.binding.symbolPath)
-                          ? typeof sim.values[w.binding.symbolPath] === "number"
-                            ? Number(sim.values[w.binding.symbolPath]) *
-                                w.binding.gain +
-                              w.binding.offset
-                            : sim.values[w.binding.symbolPath]
-                          : NaN
-                      }
-                      running={sim.running}
-                      onWrite={(value) =>
-                        command({
-                          type: "write",
-                          id: w.id,
-                          value,
-                          epoch: sim.epoch,
-                        })
-                      }
-                    />
+                    {w.kind === "graph" ? (
+                      <Graph w={w} sim={sim} workspace={workspace} />
+                    ) : (
+                      <Instrument
+                        w={w}
+                        value={readBinding(workspace, sim, w)}
+                        running={sim.running}
+                        onWrite={(value) =>
+                          command({
+                            type: "write",
+                            id: w.id,
+                            value,
+                            epoch: sim.epoch,
+                          })
+                        }
+                      />
+                    )}
                     {selected.includes(w.id) &&
                       !sim.running &&
                       !locked.includes(w.id) && (
@@ -1417,7 +1700,7 @@ export function App() {
               </div>
             </div>
           </div>
-          {simulatorAvailable && (
+          {motorAvailable && (
             <div className="chart-strip">
               <span>Speed history • last 6 s</span>
               <svg viewBox="0 0 600 50" preserveAspectRatio="none">
@@ -1498,6 +1781,19 @@ export function App() {
           e.target.value = "";
         }}
       />
+      {sourceEditorOpen && (
+        <SourceEditor
+          sources={workspace.sources}
+          onCancel={() => setSourceEditorOpen(false)}
+          onApply={(sources) => {
+            if (current.current.sim.running)
+              throw new Error("Stop before configuring sources");
+            const next = { ...current.current.history.present, sources };
+            replace(next);
+            setSourceEditorOpen(false);
+          }}
+        />
+      )}
       {newProjectOpen && (
         <div className="modal-backdrop">
           <form

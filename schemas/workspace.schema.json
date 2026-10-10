@@ -9,7 +9,11 @@
     "schemaVersion": { "const": 1 },
     "id": { "type": "string", "minLength": 1 },
     "name": { "type": "string", "minLength": 1 },
-    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "sources": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/source" }
+    },
     "screens": {
       "type": "array",
       "minItems": 1,
@@ -23,8 +27,69 @@
       "required": ["id", "provider", "path"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
-        "provider": { "enum": ["mock", "elf", "custom", "svd"] },
-        "path": { "type": "string", "minLength": 1 }
+        "provider": { "enum": ["mock", "elf", "custom", "svd", "offline"] },
+        "path": { "type": "string", "minLength": 1 },
+        "variables": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/variable" }
+        }
+      }
+    },
+    "variable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "units",
+        "initial",
+        "min",
+        "max",
+        "writable",
+        "waveform",
+        "periodMs"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "type": { "enum": ["number", "boolean"] },
+        "units": { "type": "string", "maxLength": 40 },
+        "initial": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": -1000000000000,
+              "maximum": 1000000000000
+            },
+            { "type": "boolean" }
+          ]
+        },
+        "min": {
+          "type": "number",
+          "minimum": -1000000000000,
+          "maximum": 1000000000000
+        },
+        "max": {
+          "type": "number",
+          "minimum": -1000000000000,
+          "maximum": 1000000000000
+        },
+        "writable": { "type": "boolean" },
+        "waveform": { "enum": ["constant", "sine", "ramp", "toggle"] },
+        "periodMs": { "type": "integer", "minimum": 100, "maximum": 3600000 }
+      }
+    },
+    "graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "capacity", "windowMs"],
+      "properties": {
+        "mode": { "enum": ["time", "xy"] },
+        "capacity": { "type": "integer", "minimum": 10, "maximum": 600 },
+        "windowMs": { "type": "integer", "minimum": 100, "maximum": 30000 },
+        "autoY": { "type": "boolean" },
+        "x": { "$ref": "#/$defs/binding" }
       }
     },
     "binding": {
@@ -45,7 +110,7 @@
         "gain": { "type": "number" },
         "offset": { "type": "number" },
         "units": { "type": "string" },
-        "periodMs": { "type": "integer", "minimum": 1 },
+        "periodMs": { "type": "integer", "minimum": 1, "maximum": 30000 },
         "writable": { "type": "boolean" }
       }
     },
@@ -69,6 +134,7 @@
         "max": { "type": "number" },
         "precision": { "type": "integer", "minimum": 0, "maximum": 12 },
         "commit": { "enum": ["release", "apply"] },
+        "graph": { "$ref": "#/$defs/graph" },
         "color": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$",
@@ -98,7 +164,8 @@
             "led",
             "slider",
             "switch",
-            "button"
+            "button",
+            "graph"
           ]
         },
         "title": { "type": "string" },

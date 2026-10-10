@@ -1,6 +1,6 @@
 # Coding agent instructions
 
-This repository contains a runnable offline designer and its specification. Read README, docs/10-agent-handoff.md and docs/16-offline-run-guide.md before coding. New projects start blank; the motor simulator is an explicit example, and embedded-device integration remains unimplemented.
+This repository contains a runnable offline designer and its specification. Read README, docs/10-agent-handoff.md, docs/16-offline-run-guide.md and docs/17-provider-and-graph-contract.md before coding. New projects start blank; the motor simulator is an explicit example, and embedded-device integration remains unimplemented.
 
 - Distinguish observed facts, documented capabilities, proposals, and unverified claims. Do not describe proposed functionality as implemented.
 - Windows, macOS and Linux are required release platforms. Read docs/14-designer-and-platforms.md; the default UI must closely follow the µC/Probe editor workflow and light instrument styling. Implement milestone M0 first, then M1. A complete offline demo is the first acceptance gate.

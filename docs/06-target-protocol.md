@@ -2,6 +2,12 @@
 
 This is **OLW protocol v1 draft**, not the µC/Probe wire protocol. No legacy interoperability is claimed. Freeze this document with golden byte vectors before implementing M5.
 
+## Interface to GUI elements
+
+The application-facing provider interface is defined in [Provider and GUI data contract v1](17-provider-and-graph-contract.md). Every element binds through a source-qualified catalog and receives validated typed samples; elements do not parse these wire frames themselves. The offline milestone implements that interface without a device transport.
+
+A future device adapter must translate negotiated capabilities, approved symbols and target samples into this catalog and runtime message protocol. It must preserve session identity, sample quality and timing provenance, and translate confirmed, rejected or uncertain writes into the corresponding write results. Neither a GUI binding nor its writable checkbox grants a target permission. The binary protocol below remains a future draft until its codec, golden vectors and device evidence are implemented.
+
 ## Two acquisition paths
 
 Debug mode reads mapped memory through an adapter and needs no generic target communication task. Service mode implements OLW requests over UART/USB CDC or a length-delimited TCP connection. A UDP variant is deferred because fragmentation/reordering/duplicate-write behavior needs its own spec. The original reference's TCP/IP option uses UDP; our choice differs deliberately.
